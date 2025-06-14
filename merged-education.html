@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sean Script - Education Timeline</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+    body {
+      background: linear-gradient(135deg, #e3f2fd 60%, #bbdefb 100%);
+      color: #0d47a1;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      transition: background 0.3s, color 0.3s;
+    }
+    body.dark {
+      background: linear-gradient(135deg, #0f172a 60%, #1e293b 100%);
+      color: #e2e8f0;
+    }
+    .back-btn-fixed {
+      position: fixed;
+      top: 30px;
+      left: 36px;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+      background: #e3f2fd;
+      color: #1976d2;
+      border: 1.5px solid #38bdf8;
+      border-radius: 32px;
+      font-size: 1.08rem;
+      font-weight: 600;
+      padding: 0.48em 1.5em 0.48em 1.1em;
+      text-decoration: none;
+      box-shadow: 0 4px 18px #38bdf822, 0 1.5px 8px #1976d210;
+      transition: 
+        background 0.18s, 
+        color 0.16s, 
+        box-shadow 0.16s, 
+        border-color 0.18s, 
+        transform 0.22s cubic-bezier(.4,1.4,.2,1),
+        text-shadow 0.22s cubic-bezier(.4,0,.2,1);
+      outline: none;
+      cursor: pointer;
+      opacity: 0.98;
+      letter-spacing: 0.01em;
+      min-width: 0;
+      min-height: 0;
+      user-select: none;
+      will-change: transform;
+    }
+    .back-btn-fixed i {
+      display: none;
+    }
+    .back-btn-fixed:hover, .back-btn-fixed:focus {
+      background: #bbdefb;
+      color: #1592eb;
+      border-color: #1592eb;
+      box-shadow: 0 8px 32px #38bdf844, 0 2px 12px #1976d210;
+      transform: translateY(-2px) scale(1.045);
+      text-decoration: none;
+      text-shadow: 0 2px 8px #38bdf855;
+    }
+    body.dark .back-btn-fixed {
+      background: #23272b;
+      color: #38bdf8;
+      border-color: #38bdf8;
+      box-shadow: none;
+    }
+    body.dark .back-btn-fixed:hover, body.dark .back-btn-fixed:focus {
+      background: #253bae;
+      color: #90caf9;
+      border-color: #38bdf8;
+      box-shadow: none;
+    }
+    .dark-toggle-frame {
+      position: fixed;
+      top: 30px;
+      right: 36px;
+      z-index: 101;
+      background: #e3f2fd;
+      border-radius: 18px;
+      padding: 0.3em 1em;
+      border: 1px solid #bbdefb;
+      box-shadow: 0 2px 8px rgba(33,150,243,0.06);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.98rem;
+      cursor: pointer;
+      transition: background 0.3s, border 0.3s;
+    }
+    body.dark .dark-toggle-frame {
+      background: #23272b;
+      border: 1px solid #253bae;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+      color: #90caf9;
+    }
+    .dark-toggle-frame input[type="checkbox"] {
+      transform: scale(1.2);
+      cursor: pointer;
+      margin-right: 0.4em;
+    }
+    @media (max-width: 600px) {
+      .back-btn-fixed {
+        top: 10px;
+        left: 8px;
+        font-size: 0.98rem;
+        padding: 0.38em 1em 0.38em 0.8em;
+      }
+      .dark-toggle-frame {
+        top: 8px;
+        right: 8px;
+        font-size: 0.9rem;
+        padding: 0.2em 0.6em;
+      }
+    }
+    /* --- New horizontal snap scroll design --- */
+    .horiz-scroll {
+      display: flex;
+      flex-direction: row;
+      height: 100vh;
+      width: 100vw;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-behavior: smooth;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: thin;
+      scrollbar-color: #38bdf8 #e3f2fd;
+      background: transparent;
+    }
+    body.dark .horiz-scroll {
+      background: transparent;
+      scrollbar-color: #38bdf8 #23272b;
+    }
+    .horiz-scroll::-webkit-scrollbar {
+      height: 10px;
+      background: #e3f2fd;
+    }
+    .horiz-scroll::-webkit-scrollbar-thumb {
+      background: #38bdf8;
+      border-radius: 6px;
+    }
+    .edu-section {
+      flex: 0 0 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+      padding: 0;
+      position: relative;
+      background: transparent;
+      scroll-snap-align: center;
+      transition: box-shadow 0.3s;
+    }
+    body.dark .edu-section {
+      background: transparent;
+      /* Remove highlight shadow in dark mode */
+      box-shadow: none !important;
+    }
+    .edu-section:focus-within, .edu-section:target {
+      box-shadow: 0 0 0 6px #38bdf855;
+      z-index: 2;
+    }
+    /* Optional: highlight current section with a subtle shadow */
+    .edu-section.active {
+      box-shadow: 0 0 0 8px #38bdf822;
+      z-index: 2;
+    }
+    .grad-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      justify-content: center;
+    }
+    .grad-header i {
+      font-size: 2.5rem;
+      color: #1976d2;
+    }
+    body.dark .grad-header i {
+      color: #38bdf8;
+    }
+    .grad-card {
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 8px 32px #1976d233;
+      padding: 2rem 2.5rem;
+      text-align: center;
+      max-width: 900px;
+      margin: 0 auto;
+      min-width: 350px;
+    }
+    body.dark .grad-card {
+      background: #23272b;
+      color: #e2e8f0;
+      /* Remove shadow in dark mode */
+      box-shadow: none;
+    }
+    .grad-card h2 {
+      color: #1976d2;
+      margin-bottom: 1rem;
+    }
+    body.dark .grad-card h2 {
+      color: #38bdf8;
+    }
+    .grad-card p {
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+      color: #333;
+    }
+    body.dark .grad-card p {
+      color: #cbd5e1;
+    }
+    .grad-img {
+      width: 100%;
+      max-width: 400px;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px #1976d244;
+      margin: 0 1.5rem 1.5rem 1.5rem;
+      display: inline-block;
+      vertical-align: top;
+    }
+    .grad-img-large {
+      max-width: 600px;
+    }
+    .placeholder {
+      font-size: 1.2rem;
+      color: #888;
+      margin-top: 2rem;
+    }
+    body.dark .placeholder {
+      color: #90caf9;
+    }
+    .nav-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: #1976d2cc;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      font-size: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      transition: background 0.2s, transform 0.18s;
+      box-shadow: 0 2px 8px #1976d233;
+      outline: none;
+      opacity: 0.85;
+      pointer-events: auto;
+      visibility: visible;
+    }
+    body.dark .nav-arrow {
+      background: #253baecc;
+      color: #90caf9;
+      /* Remove shadow in dark mode */
+      box-shadow: none;
+    }
+    .nav-arrow:hover {
+      background: #0d47a1;
+      transform: translateY(-50%) scale(1.08);
+    }
+    body.dark .nav-arrow:hover {
+      background: #1592eb;
+      color: #fff;
+      box-shadow: none;
+    }
+    .nav-arrow.left {
+      left: 18px;
+    }
+    .nav-arrow.right {
+      right: 18px;
+    }
+    /* Hide left arrow on first, right arrow on last */
+    .edu-section:first-child .nav-arrow.left {
+      display: none;
+    }
+    .edu-section:last-child .nav-arrow.right {
+      display: none;
+    }
+    /* Hide arrows with opacity and pointer-events when the 'hide-arrows' class is applied */
+    .nav-arrow.hide-arrows {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.18s cubic-bezier(.4,0,.2,1);
+    }
+    /* Keep arrows hidden while dragging scrollbar */
+    .horiz-scroll.dragging .nav-arrow {
+      opacity: 0;
+      pointer-events: none;
+    }
+    /* Responsive */
+    @media (max-width: 600px) {
+      .grad-card {
+        padding: 1rem 0.5rem;
+        min-width: 0;
+        max-width: 98vw;
+      }
+      .grad-img, .grad-img-large {
+        max-width: 95vw;
+      }
+      .nav-arrow {
+        width: 38px;
+        height: 38px;
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <span class="back-btn-fixed">
+    <a href="portfolio.html" style="color:inherit;text-decoration:none;" id="backToPortfolio">Back to Home</a>
+  </span>
+  <span class="dark-toggle-frame">
+    <label style="display:flex;align-items:center;gap:0.4em;">
+      <input type="checkbox" id="darkToggle">
+      <span>Dark Mode</span>
+    </label>
+  </span>
+  <div class="horiz-scroll" id="timeline">
+    <!-- Elementary -->
+    <section class="edu-section" id="elem">
+      <button class="nav-arrow left" onclick="scrollToSection(0)"><i class="fa fa-arrow-left"></i></button>
+      <div class="grad-header">
+        <i class="fa fa-graduation-cap"></i>
+        <h1>Saint Augustine Academy of Pampanga</h1>
+      </div>
+      <div class="grad-card" style="max-width:600px;">
+        <h2>Elementary Diploma & Graduation</h2>
+        <p>Graduated: 2017 — With High Honors (Top 10)</p>
+        <div style="display: flex; justify-content: center;">
+          <img src="pics/elem.jpg" alt="SAAP Graduation Photo and Diploma" class="grad-img grad-img-large" style="margin: 0 auto;" />
+        </div>
+      </div>
+      <button class="nav-arrow right" onclick="scrollToSection(1)"><i class="fa fa-arrow-right"></i></button>
+    </section>
+    <!-- High School -->
+    <section class="edu-section" id="hs">
+      <button class="nav-arrow left" onclick="scrollToSection(0)"><i class="fa fa-arrow-left"></i></button>
+      <div class="grad-header">
+        <i class="fa fa-graduation-cap"></i>
+        <h1>Diosdado Macapagal Memorial High School</h1>
+      </div>
+      <div class="grad-card" style="max-width:600px;">
+        <h2>Junior High School Certificate</h2>
+        <p>Graduated: 2021 — Valedictorian</p>
+        <div style="display: flex; justify-content: center;">
+          <img src="pics/hs.jpg" alt="Diosdado Macapagal Memorial High School Certificate" class="grad-img grad-img-large" style="margin: 0 auto;" />
+        </div>
+      </div>
+      <button class="nav-arrow right" onclick="scrollToSection(2)"><i class="fa fa-arrow-right"></i></button>
+    </section>
+    <!-- Senior High School -->
+    <section class="edu-section" id="shs">
+      <button class="nav-arrow left" onclick="scrollToSection(1)"><i class="fa fa-arrow-left"></i></button>
+      <div class="grad-header">
+        <i class="fa fa-graduation-cap"></i>
+        <h1>Mary The Queen College of Pampanga</h1>
+      </div>
+      <div class="grad-card" style="max-width:520px; padding-right:2.5rem; padding-left:2.5rem; margin-right:auto; margin-left:auto;">
+        <h2>Senior High School Diploma</h2>
+        <p>Graduated: 2023 — With High Honors (STEM Strand)</p>
+        <div style="display: flex; justify-content: center;">
+          <img src="pics/shs.jpg" alt="Mary The Queen College of Pampanga Diploma" class="grad-img grad-img-large" style="margin: 0 auto;" />
+        </div>
+      </div>
+      <button class="nav-arrow right" onclick="scrollToSection(3)"><i class="fa fa-arrow-right"></i></button>
+    </section>
+    <!-- College -->
+    <section class="edu-section" id="college">
+      <button class="nav-arrow left" onclick="scrollToSection(2)"><i class="fa fa-arrow-left"></i></button>
+      <div class="grad-header">
+        <i class="fa fa-graduation-cap"></i>
+        <h1>Pampanga State University</h1>
+      </div>
+      <div class="grad-card">
+        <h2>Bachelor of Science in Computer Engineering</h2>
+        <p>Expected Graduation: 2027</p>
+        <div class="placeholder">
+          Graduation diploma will be uploaded soon.
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+    // Scroll to section by index
+    function scrollToSection(idx) {
+      const container = document.getElementById('timeline');
+      const sections = container.children;
+      if (sections[idx]) {
+        sections[idx].scrollIntoView({behavior: 'smooth', inline: 'start'});
+      }
+    }
+    // Optional: allow left/right arrow keys for navigation
+    document.addEventListener('keydown', function(e) {
+      const container = document.getElementById('timeline');
+      const sections = Array.from(container.children);
+      let current = sections.findIndex(sec => {
+        const rect = sec.getBoundingClientRect();
+        return rect.left >= -10 && rect.left <= 10;
+      });
+      if (e.key === 'ArrowRight' && current < sections.length - 1) {
+        scrollToSection(current + 1);
+      }
+      if (e.key === 'ArrowLeft' && current > 0) {
+        scrollToSection(current - 1);
+      }
+    });
+    // Prevent vertical scroll
+    window.addEventListener('wheel', function(e) {
+      if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+        e.preventDefault();
+      }
+    }, {passive: false});
+
+    // Highlight current section as active (for snap effect)
+    function updateActiveSection() {
+      const container = document.getElementById('timeline');
+      const sections = Array.from(container.children);
+      let minDist = Infinity, activeIdx = 0;
+      sections.forEach((sec, idx) => {
+        const rect = sec.getBoundingClientRect();
+        const dist = Math.abs(rect.left);
+        if (dist < minDist) {
+          minDist = dist;
+          activeIdx = idx;
+        }
+        sec.classList.remove('active');
+      });
+      sections[activeIdx].classList.add('active');
+    }
+    document.getElementById('timeline').addEventListener('scroll', () => {
+      updateActiveSection();
+    });
+    window.addEventListener('resize', updateActiveSection);
+    window.addEventListener('DOMContentLoaded', updateActiveSection);
+
+    // Hide arrows while user is scrolling horizontally, show after scroll stops
+    let arrowTimeout;
+    const timeline = document.getElementById('timeline');
+    function hideArrows() {
+      document.querySelectorAll('.nav-arrow').forEach(btn => btn.classList.add('hide-arrows'));
+    }
+    function showArrows() {
+      // Only show if not dragging
+      if (!timeline.classList.contains('dragging')) {
+        document.querySelectorAll('.nav-arrow').forEach(btn => btn.classList.remove('hide-arrows'));
+      }
+    }
+    timeline.addEventListener('scroll', () => {
+      hideArrows();
+      clearTimeout(arrowTimeout);
+      arrowTimeout = setTimeout(showArrows, 200);
+    });
+
+    // --- Detect scrollbar dragging ---
+    let isDragging = false;
+    timeline.addEventListener('mousedown', function(e) {
+      // Only if mouse is over the scrollbar area (bottom 20px)
+      if (e.offsetY > timeline.clientHeight - 20) {
+        isDragging = true;
+        timeline.classList.add('dragging');
+        hideArrows();
+      }
+    });
+    window.addEventListener('mouseup', function() {
+      if (isDragging) {
+        isDragging = false;
+        timeline.classList.remove('dragging');
+        showArrows();
+      }
+    });
+
+    // Dark mode toggle
+    const toggle = document.getElementById("darkToggle");
+    if (localStorage.getItem("darkMode") === "true") {
+      document.body.classList.add("dark");
+      if (toggle) toggle.checked = true;
+    }
+    if (toggle) {
+      toggle.addEventListener("change", () => {
+        document.body.classList.toggle("dark", toggle.checked);
+        localStorage.setItem("darkMode", toggle.checked);
+      });
+    }
+    document.getElementById('backToPortfolio').addEventListener('click', function(e) {
+      e.preventDefault();
+      sessionStorage.setItem('restoreCertBack', '1');
+      window.location.href = 'portfolio.html#education';
+    });
+  </script>
+</body>
+</html>

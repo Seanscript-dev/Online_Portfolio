@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sean Script | Computer Engineer</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      transition: background 0.3s, color 0.3s, box-shadow 0.3s, transform 0.3s;
+    }
+
+    html, body {
+      /* Add for fade-in effect */
+      opacity: 0;
+      transition: opacity 0.7s cubic-bezier(.4,0,.2,1);
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #003366;
+      background: #ffffff;
+      line-height: 1.6;
+    }
+
+    body.dark {
+      background-color: #121212;
+      color: #e0e0e0;
+    }
+
+    body.dark header,
+    body.dark nav,
+    body.dark project,
+    body.dark section,
+    body.dark footer {
+      background-color: #1e1e1e;
+      color: #e0e0e0;
+      border-color: #333;
+    }
+
+    body.dark nav a {
+      color: #fff;
+    }
+
+    body.dark a.cert-link {
+      color: #90caf9;
+    }
+
+    body.dark .social-icons a {
+      color: #90caf9;
+    }
+
+    /* ===== Redesigned Header (light mode) ===== */
+    header {
+      background: #fff;
+      padding: 2.2rem 1.5rem 1.6rem 1.5rem;
+      text-align: center;
+      border-radius: 0 0 2.5rem 2.5rem;
+      box-shadow: 0 6px 32px 0 #1976d21a, 0 1.5px 8px #1976d210;
+      position: relative;
+      margin-bottom: 0.5rem;
+      border-bottom: 2px solid #e3f2fd;
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .profile-photo {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #1976d2;
+      box-shadow: 0 2px 12px #1976d222;
+    }
+
+    .header-text {
+      max-width: 500px;
+      text-align: left;
+    }
+
+    header h1 {
+      font-size: 2.7rem;
+      color: #1976d2;
+      font-weight: 800;
+      letter-spacing: 0.01em;
+      text-shadow: 0 2px 8px #1976d210;
+    }
+    body.dark header h1 {
+      color: #90caf9; /* Light blue for dark mode */
+    }
+
+    header p {
+      margin-top: 0.7rem;
+      font-size: 1.22rem;
+      color: #1976d2;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      text-shadow: 0 1px 4px #1976d210;
+    }
+    body.dark header p {
+  color: #6288a4;  /* Bright light blue for dark mode */
+}
+
+    /* ===== Redesigned Navigation (light mode) ===== */
+    nav {
+      background: linear-gradient(90deg, #4779be 80%, #447bd2 100%);
+      padding: 0.7rem 1.2rem;
+      text-align: center;
+      border-radius: 2rem;
+      margin: -2.2rem auto 2rem auto;
+      max-width: 570px;
+      box-shadow: 0 4px 18px 0 rgba(25, 118, 210, 0.10), 0 1.5px 8px rgba(25, 118, 210, 0.06);
+      position: relative;
+      z-index: 2;
+      border: 1.5px solid #b0c4de;
+      display: flex;
+      justify-content: center;
+      gap: 0.2rem;
+      /* More formal, subtle blending */
+      backdrop-filter: blur(2px);
+    }
+    nav a {
+      color: #f5faff;
+      text-decoration: none;
+      margin: 0 8px;
+      font-weight: 600;
+      font-size: 1.05rem;
+      padding: 0.42em 0.95em;
+      border-radius: 1.5em;
+      transition: 
+        background 0.22s cubic-bezier(.4,0,.2,1),
+        color 0.22s cubic-bezier(.4,0,.2,1),
+        box-shadow 0.18s cubic-bezier(.4,0,.2,1),
+        transform 0.18s cubic-bezier(.4,0,.2,1);
+      display: inline-block;
+      position: relative;
+      box-shadow: none;
+    }
+    nav a:hover, nav a:focus {
+      background: #e3f2fd;
+      color: #1a365d;
+      box-shadow: 0 2px 12px rgba(25, 118, 210, 0.08);
+      transform: translateY(-2px) scale(1.07);
+      text-decoration: none;
+    }
+
+    /* ===== Improved Navigation (dark mode) ===== */
+body.dark nav {
+  background: #1e1e1e;
+  border-radius: 2rem;
+  border: 1px solid #333;
+  box-shadow: none;
+  /* keep other nav styles (padding, margin, flex, etc.) */
+  backdrop-filter: none;
+}
+
+body.dark nav a {
+  color: #e3f2fd;
+  background: transparent;
+  font-weight: 600;
+  /* keep other nav a styles */
+  box-shadow: none;
+}
+
+body.dark nav a:hover, body.dark nav a:focus {
+  background: #22345a;
+  color: #90caf9;
+  box-shadow: 0 2px 12px rgba(25, 118, 210, 0.18);
+  transform: translateY(-2px) scale(1.07);
+  text-decoration: none;
+}
+
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+      gap: 2rem;
+      max-width: 1100px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    section {
+      background-color: #f5faff;
+      padding: 2rem 1.5rem;
+      border-radius: 16px;
+      border: 1px solid #bbdefb;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
+    }
+
+    section:hover {
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      transform: translateY(-4px);
+    }
+
+    section h2 {
+      color: #0d47a1;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      border-bottom: 2px solid #1976d2;
+      padding-bottom: 0.5rem;
+    }
+
+    .project {
+      background: #e3f2fd;
+      padding: 1rem 1.5rem;
+      margin-bottom: 1rem;
+      border-left: 4px solid #2196f3;
+      border-radius: 8px;
+    }
+
+    .project:hover {
+      background: #d0e9fd;
+    }
+
+    ul {
+      padding-left: 1.2rem;
+    }
+
+    li {
+      margin-bottom: 0.5rem;
+    }
+
+    a {
+      color: #0d47a1;
+    }
+
+    a.cert-link {
+      text-decoration: none;
+      color: #0d47a1;
+    }
+
+    a.cert-link:hover {
+  color: #0c3873;
+  font-weight: bold;
+  text-decoration: none;
+  transform: scale(1.05);
+}
+
+
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    .social-icons a {
+      font-size: 1.5rem;
+      color: #0d47a1;
+      transition: color 0.3s, transform 0.2s;
+    }
+
+    .social-icons a:hover {
+      color: #1976d2;
+      transform: scale(1.25);
+    }
+
+    footer {
+      text-align: center;
+      background: #e3f2fd;
+      color: #003366;
+      padding: 1rem;
+      margin-top: 2rem;
+    }
+
+    /* Formal section card style */
+    .formal-section {
+      background: #f8fafc;
+      border: 1.5px solid #dbeafe;
+      border-radius: 18px;
+      box-shadow: 0 4px 18px rgba(25, 118, 210, 0.07);
+      padding: 2.2rem 2rem 2.2rem 2rem;
+      margin-bottom: 2.2rem;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      transition: box-shadow 0.22s, transform 0.22s, background 0.22s;
+      position: relative;
+    }
+    .formal-section:hover {
+      box-shadow: 0 8px 32px rgba(25, 118, 210, 0.13);
+      background: #f1f5fa;
+      transform: translateY(-2px) scale(1.01);
+      /* "jump and stay" effect: keep the transform while hovered */
+    }
+    body.dark .formal-section:hover {
+      background: #202023;
+      box-shadow: 0 8px 32px rgba(32, 38, 43, 0.097);
+      transform: translateY(-2px) scale(1.01);
+    }
+    .formal-section h2 {
+      font-size: 1.55rem;
+      color: #174ea6;
+      font-weight: 700;
+      margin-bottom: 0.7rem;
+      letter-spacing: 0.01em;
+      text-align: left;
+      border: none;
+      padding-bottom: 0;
+    }
+    .formal-section .section-divider {
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, #1976d2 60%, #42a5f5 100%);
+      border-radius: 2px;
+      margin-bottom: 1.2rem;
+      margin-top: -0.5rem;
+    }
+    .formal-section ul,
+    .formal-section table,
+    .formal-section p,
+    .formal-section .project {
+      font-size: 1.07rem;
+      color: #1a365d;
+      margin-bottom: 0.7rem;
+      line-height: 1.7;
+    }
+    .formal-section ul {
+      padding-left: 1.3rem;
+    }
+    .formal-section li {
+      margin-bottom: 0.45rem;
+    }
+    .formal-section .project {
+      background: #e8f0fe;
+      border-left: 4px solid #1976d2;
+      border-radius: 8px;
+      box-shadow: 0 1px 6px #1976d210;
+      padding: 1rem 1.5rem;
+      margin-bottom: 1.1rem;
+      color: #174ea6;
+    }
+    .formal-section .project h3 {
+      margin-top: 0;
+      margin-bottom: 0.3rem;
+      font-size: 1.13rem;
+      color: #1976d2;
+      font-weight: 600;
+    }
+    .formal-section .project p {
+      margin-bottom: 0;
+      color: #1a365d;
+      font-size: 1.01rem;
+    }
+    /* Dark mode for formal section: only change text and divider color */
+    body.dark .formal-section {
+      /* background, border, box-shadow: do not override */
+      color: #e0e0e0;
+    }
+    body.dark .formal-section h2 {
+      color: #90caf9;
+    }
+    body.dark .formal-section .section-divider {
+      background: linear-gradient(90deg, #253bae 60%, #1592eb 100%);
+    }
+    body.dark .formal-section ul,
+    body.dark .formal-section table,
+    body.dark .formal-section p,
+    body.dark .formal-section .project {
+      color: #e3f2fd;
+    }
+    body.dark .formal-section .project {
+      /* background, border-left: do not override */
+      color: #90caf9;
+    }
+    body.dark .formal-section .project h3 {
+      color: #1592eb;
+    }
+    body.dark .formal-section .project p {
+      color: #e3f2fd;
+    }
+    body.dark .formal-section:hover {
+    background: #29292c99;
+    box-shadow: 0 8px 32px rgba(32, 38, 43, 0.097);
+    /* Slightly blue-tinted shadow for dark mode */
+    transform: translateY(-2px) scale(1.01);
+  }
+
+    @media (max-width: 480px) {
+      .header-content {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .header-text {
+        max-width: 100%;
+      }
+      nav {
+        flex-direction: column;
+        gap: 0.2rem;
+        max-width: 98vw;
+        padding: 0.7rem 0.3rem;
+      }
+      nav a {
+        margin: 0 0.2rem;
+        font-size: 1rem;
+        padding: 0.4em 0.9em;
+      }
+    }
+    .contact-section {
+  max-width: 700px;
+  margin: 2rem auto;
+  background-color: #f5faff;
+  padding: 2rem;
+  border-radius: 16px;
+  border: 1px solid #bbdefb;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.06);
+}
+
+body.dark .contact-section {
+  background-color: #1e1e1e;
+  border-color: #333;
+  color: #e0e0e0;
+  box-shadow: 0 6px 14px rgba(255,255,255,0.1);
+}
+.projects-section {
+  background-color: #f5faff;
+  padding: 2rem 1.5rem;
+  border-radius: 16px;
+  border: 1px solid #bbdefb;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
+}
+
+.projects-section:hover {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  transform: translateY(-4px);
+}
+
+.project {
+  background: #e3f2fd;
+  padding: 1rem 1.5rem;
+  margin-bottom: 1rem;
+  border-left: 4px solid #2196f3;
+  border-radius: 8px;
+}
+
+.project:hover {
+  background: #d0e9fd;
+}
+
+/* 🔥 DARK MODE FIX */
+body.dark .projects-section {
+  background-color: #1e1e1e;
+  border-color: #333;
+  color: #e0e0e0;
+  box-shadow: 0 6px 14px rgba(255, 255, 255, 0.06);
+}
+
+body.dark .projects-section .project {
+  background: #2a2a2a;
+  border-left-color: #64b5f6;
+}
+
+body.dark .projects-section .project:hover {
+  background: #333;
+}
+.intro-text {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: #0d47a1;
+  max-width: 700px;
+  margin: 2rem auto;
+  text-align: justify;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  
+  background: #f5faff;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  
+  border-radius: 20px;
+  padding: 2rem 2.5rem;
+  
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+  
+  transition: color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+  
+  /* Smooth fade-in animation */
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeSlideUp 0.6s forwards ease-out;
+  animation-delay: 0.3s;
+}
+
+@keyframes fadeSlideUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Dark mode */
+body.dark .intro-text {
+  background: rgba(30, 30, 30, 0.6);
+  border: 1px solid  #070809;
+  color: #f8f8f8;
+}
+
+/* Override all normal links in dark mode */
+body.dark a {
+  color: #ffffff;  /* Light blue, easy to read on dark */
+}
+
+/* Override cert-link color in dark mode */
+body.dark a.cert-link {
+  color: #edf1f4;
+}
+
+/* Optional: link hover color in dark mode */
+body.dark a:hover {
+  text-decoration: none;
+  color: #1592eb;  /* even lighter on hover */
+}
+.title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.dark-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.dark-toggle input[type="checkbox"] {
+  transform: scale(1.2);
+  cursor: pointer;
+}
+.corner-logo {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 20px; /* increased from 14px */
+  color: #00BFFF;
+  z-index: 1000;
+}
+
+.corner-logo img {
+  height: 35px; /* increased from 24px */
+  width: 48px;
+}
+.dark-toggle-frame {
+  display: inline-flex;
+  align-items: center;
+  background: #e3f2fd;
+  border-radius: 18px;
+  padding: 0.3em 1em;
+  border: 1px solid #bbdefb;
+  box-shadow: 0 2px 8px rgba(33,150,243,0.06);
+  margin-left: 1em;
+  transition: background 0.3s, border 0.3s;
+}
+body.dark .dark-toggle-frame {
+  background: #23272b;
+  border: 1px solid #333;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+}
+
+/* Education section card hover effect */
+    #education .edu-card {
+      transition: box-shadow 0.22s, transform 0.22s, background 0.22s, color 0.22s;
+      cursor: pointer;
+    }
+    #education .edu-card:hover {
+      box-shadow: 0 6px 24px #1976d233, 0 1.5px 8px #1976d210;
+      background: #e0f2ff;
+      transform: translateY(-4px) scale(1.012);
+    }
+    /* Remove underline and add hover effect for school/university links (light mode only) */
+    body:not(.dark) #education .edu-card a.cert-link,
+    body:not(.dark) #education .edu-card .psu-school {
+      text-decoration: none !important;
+      color: #0d47a1;
+      font-weight: 500;
+      transition: color 0.18s, font-weight 0.18s;
+    }
+    body:not(.dark) #education .edu-card a.cert-link:hover,
+    body:not(.dark) #education .edu-card .psu-school:hover {
+      color: #1592eb !important;
+      font-weight: bold !important;
+      text-decoration: none !important;
+    }
+    /* In dark mode, set university/school links to dark blue and keep weight */
+    body.dark #education .edu-card a.cert-link,
+    body.dark #education .edu-card .psu-school {
+      color: #0d47a1 !important;
+      font-weight: 500 !important;
+      text-decoration: none !important;
+      transition: color 0.18s, font-weight 0.18s;
+    }
+    body.dark #education .edu-card a.cert-link:hover,
+    body.dark #education .edu-card .psu-school:hover {
+      color: #1592eb !important;
+      font-weight: bold !important;
+      text-decoration: none !important;
+    }
+    body.dark #education .edu-card {
+      background: #2a2a2a !important; /* Match project card dark mode */
+      color: #e0e0e0;
+      box-shadow: 0 1px 6px #253bae22;
+      border: 1px solid #333;
+    }
+    body.dark #education .edu-card:hover {
+      background: #333 !important; /* Match .project:hover in dark mode */
+      box-shadow: 0 6px 24px #38bdf833, 0 1.5px 8px #253bae22;
+      color: #b3e5fc;
+    }
+    body.dark #education .edu-card div,
+    body.dark #education .edu-card span {
+      color: #f8e7e7 !important;
+    }
+    body.dark #education .edu-card div[style*="font-weight: bold"] {
+  color: #64b5f6 !important; /* Light blue for degree/title */
+  font-weight: bold !important;
+  font-size: 1.13rem !important; /* Match light mode size */
+}
+
+body.dark #education .edu-card span[style*="font-weight: 500"] {
+  color: #1976d2 !important; /* Dark blue for school names */
+  font-weight: normal !important;
+  font-size: 1.02rem !important; /* Match light mode size */
+}
+
+body.dark #education .edu-card span[style*="font-weight: 500"][style*="Pampanga State University"] {
+  color: #0d47a1 !important; /* Dark blue for Pampanga State University only */
+}
+
+body.dark #education .edu-card span[style*="color:#388e3c"] {
+  color: #388e3c !important; /* Darker green for honors */
+  font-weight: normal !important;
+  font-size: 0.98rem !important;
+}
+
+body.dark #education .edu-card span[style*="color:#333"] {
+  color: #fff !important; /* White for years */
+  font-weight: normal !important;
+  font-size: 1rem !important; /* Match light mode size */
+}
+
+body.dark #education .edu-card span[style*="color:#555"] {
+  color: #fff !important; /* White for extra info */
+  font-weight: normal !important;
+  font-size: 0.97rem !important; /* Match light mode size */
+}
+
+body.dark #education .edu-card div[style*="font-size: 1.02rem"][style*="Pampanga State University"] {
+  color: #0d47a1 !important;
+}
+body.dark #education .edu-card .psu-school {
+  color: #1976d2 !important; /* Match Mary The Queen College of Pampanga blue in dark mode */
+}
+.psa-fab {
+  position: absolute;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.7em;
+  background: linear-gradient(90deg, #1976d2 60%, #42a5f5 100%);
+  color: #fff;
+  padding: 0.65em 1.5em;
+  border-radius: 2em;
+  font-weight: 600;
+  font-size: 1.05rem;
+  text-decoration: none;
+  box-shadow: 0 4px 18px #1976d244, 0 1.5px 8px #1976d210;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: 
+    background 0.25s cubic-bezier(.4,0,.2,1),
+    box-shadow 0.22s cubic-bezier(.4,0,.2,1),
+    transform 0.18s cubic-bezier(.4,0,.2,1);
+  animation: psa-fab-fadein 0.7s 0.2s backwards cubic-bezier(.4,0,.2,1);
+  z-index: 10;
+}
+.psa-fab i {
+  font-size: 1.25em;
+  transition: transform 0.22s cubic-bezier(.4,0,.2,1);
+}
+.psa-fab:hover {
+  background: linear-gradient(90deg, #0d47a1 60%, #1976d2 100%);
+  box-shadow: 0 8px 32px #1976d277, 0 2px 12px #1976d210;
+  transform: translateY(-3px) scale(1.06) rotate(-2deg);
+  text-decoration: none;
+}
+.psa-fab:hover i {
+  transform: scale(1.18) rotate(-8deg);
+}
+@keyframes psa-fab-fadein {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+/* Dark mode for PSA button */
+body.dark .psa-fab {
+  background: linear-gradient(90deg, #145a9f 60%, #3078b3 100%);
+  color: #fff;
+  box-shadow: 0 4px 18px #1976d244, 0 1.5px 8px #1976d210;
+}
+body.dark .psa-fab:hover {
+  background: linear-gradient(90deg, #0c4395 60%, #1668ba 100%);
+  box-shadow: 0 8px 32px #1976d277, 0 2px 12px #1976d210;
+}
+.skill-anim {
+  transition: box-shadow 0.35s cubic-bezier(.4,0,.2,1),
+              background 0.35s cubic-bezier(.4,0,.2,1),
+              color 0.22s cubic-bezier(.4,0,.2,1),
+              transform 0.22s cubic-bezier(.4,1.4,.2,1);
+  border-radius: 6px;
+  position: relative;
+  z-index: 1;
+}
+.skill-anim.clicked {
+  animation: skillClickAnim 0.55s cubic-bezier(.4,1.4,.2,1);
+}
+@keyframes skillClickAnim {
+  0% {
+    box-shadow: 0 0 0 0 #38bdf8aa;
+    background: #e3f2fd;
+    color: #1976d2;
+    transform: scale(1);
+  }
+  40% {
+    box-shadow: 0 0 0 10px #38bdf822;
+    background: #b3e5fc;
+    color: #0d47a1;
+    transform: scale(1.08);
+  }
+  100% {
+    box-shadow: 0 0 0 0 #38bdf800;
+    background: transparent;
+    color: inherit;
+    transform: scale(1);
+  }
+}
+
+/* Only jump on hover in light mode */
+body:not(.dark) .formal-section:hover,
+body:not(.dark) .projects-section:hover {
+  box-shadow: 0 8px 32px rgba(25, 118, 210, 0.13);
+  background: #fafbfff5;
+  transform: translateY(-2px) scale(1.01);
+}
+
+/* Remove or neutralize the global .formal-section:hover and .projects-section:hover */
+.formal-section:hover,
+.projects-section:hover {
+  /* No jump by default, only in light mode above */
+  /* box-shadow, background, transform handled above */
+}
+  </style>
+</head>
+<body>
+  <div class="corner-logo" aria-label="Site logo">
+  <img src="pics/dp2.svg" alt="Logo" />
+  <span>Seanscript.dev</span>
+</div>
+  <header>
+    <div class="header-content">
+      <img src="pics/dp3.jpg" alt="Sean Script Profile Photo" class="profile-photo" />
+      <div class="header-text">
+        <div class="title-row">
+          <h1>Sean Script</h1>
+          <span class="dark-toggle-frame" role="region" aria-label="Toggle dark mode">
+    <label class="dark-toggle">
+      <input type="checkbox" id="darkToggle">
+      <span>Dark Mode</span>
+    </label>
+  </span>
+        </div>
+        <p>Computer Engineer | Full-Stack Developer | Tech Enthusiast</p>
+      </div>
+    </div>
+  </header>
+
+  <nav>
+    <a href="#about">About</a>
+    <a href="#projects">Projects</a>
+    <a href="#skills">Skills</a>
+    <a href="#Certifications">Certifications</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <main role="main">
+    <div class="grid-container">
+      <!-- Personal Information Section -->
+      <section id="personal-info" class="formal-section" data-aos="fade-up" style="position: relative;">
+        <h2>Personal Information</h2>
+        <div class="section-divider"></div>
+        <ul style="list-style: none; padding-left: 0;">
+          <li style="margin-bottom: 0.5rem;"><strong>Name:</strong> Sean Darrell L. Tungcol</li>
+          <li style="margin-bottom: 0.5rem;"><strong>Location:</strong> <a href="location.html" class="cert-link" target="_blank">Calantas, Floridablanca, Pampanga, Philippines</a></li>
+          <li style="margin-bottom: 0.5rem;"><strong>Birthday:</strong> November 26, 2004</li>
+          <li style="margin-bottom: 0.5rem;"><strong>Age:</strong> 20</li>
+          <li style="margin-bottom: 0.5rem;"><strong>Nationality:</strong> Filipino</li>
+          <li style="margin-bottom: 0.5rem;"><strong>Civil Status:</strong> Single</li>
+          <li style="margin-bottom: 0.5rem;"><strong>Religion:</strong> Catholic</li>
+          <li style="margin-bottom: 0.5rem;"><strong>Height and Weight:</strong> 6'0 and 85Kg</li>
+          <!-- Add more personal info as needed -->
+        </ul>
+        <!-- View PSA Button -->
+        <a href="pics/circuit.png" target="_blank" class="psa-fab">
+          <i class="fa fa-id-card"></i>
+          <span>View PSA</span>
+        </a>
+      </section>
+
+      <!-- Education Section -->
+      <section id="education" class="formal-section" data-aos="fade-up">
+        <h2>Education</h2>
+        <div class="section-divider"></div>
+        <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+          <div class="edu-card" onclick="goToMergedEducation('college')" style="cursor:pointer; background: #f5faff; border-radius: 10px; padding: 1.2rem 1.5rem; box-shadow: 0 2px 8px #1976d210;">
+            <div style="font-size: 1.13rem; font-weight: bold; color: #1976d2; margin-bottom: 0.2rem;">
+              Bachelor of Science in Computer Engineering
+            </div>
+            <div style="font-size: 1.02rem; color: #0d47a1; font-weight: 500;">
+              <a href="psu.html" class="cert-link psu-school" style="text-decoration: underline; cursor: pointer;" target="_blank">Pampanga State University</a>
+              <span style="color:#333;font-weight:400;">| Expected 2027</span>
+            </div>
+          </div>
+          <div class="edu-card" style="background: #f5faff; border-radius: 10px; padding: 1.1rem 1.5rem; box-shadow: 0 1px 6px #1976d210;">
+            <div style="font-size: 1.08rem; font-weight: bold; color: #1976d2; margin-bottom: 0.15rem;">
+              Secondary Education (High School & Senior High School)
+            </div>
+            <div>
+              <a href="merged-education.html#shs" class="cert-link psu-school edu-link-shs" style="font-weight: 500; color: #0d47a1; text-decoration: underline; cursor: pointer;">Mary The Queen College of Pampanga</a>
+              <span style="color:#333;font-weight:400;">| 2023</span><br>
+              <span style="font-size:0.98rem; color:#388e3c; font-weight:500;">With High Honors</span>
+              <span style="color:#555; font-size:0.97rem;">— STEM Strand</span>
+            </div>
+            <div style="margin-top:0.5rem;">
+              <a href="merged-education.html#hs" class="cert-link edu-link-hs" style="font-weight: 500; color: #0d47a1; text-decoration: underline; cursor: pointer;">Diosdado Macapagal Memorial High School</a>
+              <span style="color:#333;font-weight:400;">| 2021</span><br>
+              <span style="font-size:0.98rem; color:#388e3c; font-weight:500;">Valedictorian</span>
+            </div>
+          </div>
+          <div class="edu-card" onclick="goToMergedEducation('elem')" style="cursor:pointer; background: #f5faff; border-radius: 10px; padding: 1.1rem 1.5rem; box-shadow: 0 1px 6px #1976d210;">
+            <div style="font-size: 1.08rem; font-weight: bold; color: #1976d2; margin-bottom: 0.15rem;">
+              Primary Education (Elementary)
+            </div>
+            <div>
+              <a href="saap.html" class="cert-link" style="font-weight: 500; color: #0d47a1; text-decoration: underline; cursor: pointer;" target="_blank">Saint Augustine Academy of Pampanga</a>
+              <span style="color:#333;font-weight:400;">| 2017</span><br>
+              <span style="font-size:0.98rem; color:#388e3c; font-weight:500;">With High Honors</span>
+              <span style="color:#555; font-size:0.97rem;">— Top 10</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="about" class="formal-section" data-aos="fade-up">
+        <h2>About Me</h2>
+        <div class="section-divider"></div>
+        <p class="intro-text">
+  I’m a passionate Computer Engineer with experience in designing, building, and optimizing software and hardware systems. I specialize in full-stack web development, embedded systems, and tech consulting. My mission is to solve problems with efficient code and intuitive design.
+</p>
+
+      </section>
+
+   <section id="projects" class="formal-section projects-section" data-aos="fade-up">
+  <h2>Projects</h2>
+  <div class="section-divider"></div>
+  <div class="project">
+    <h3>Smart Home Controller</h3>
+    <p>Built a Python-powered system to automate home devices using Raspberry Pi and MQTT.</p>
+  </div>
+  <div class="project">
+    <h3>Portfolio Website</h3>
+    <p>Created using HTML, CSS, and JavaScript. Fully responsive and hosted on GitHub Pages.</p>
+  </div>
+  <div class="project">
+    <h3>Code Review Platform</h3>
+    <p>A Django-based web application that enables teams to submit, review, and approve code changes collaboratively.</p>
+  </div>
+</section>
+
+
+    <section id="skills" class="formal-section" data-aos="fade-up">
+      <h2>Skills</h2>
+      <div class="section-divider"></div>
+      <table style="width:100%; border-collapse:separate; border-spacing:0 0.7rem; font-size:1rem;">
+        <tr>
+          <td style="vertical-align:top; font-weight:bold; width:160px; padding-right:1.2rem; padding-top:0.3rem;">Languages:</td>
+          <td style="padding-top:0.3rem;">
+            <a href="language.html" class="cert-link skill-anim" target="_blank">Python</a>,
+            <a href="language.html" class="cert-link skill-anim" target="_blank">Java</a>,
+            <a href="language.html" class="cert-link skill-anim" target="_blank">C++</a>,
+            <a href="language.html" class="cert-link skill-anim" target="_blank">HTML</a>,
+            <a href="language.html" class="cert-link skill-anim" target="_blank">CSS</a>,
+            <a href="language.html" class="cert-link skill-anim" target="_blank">JavaScript</a>
+          </td>
+        </tr>
+        <tr>
+          <td style="vertical-align:top; font-weight:bold; padding-right:1.2rem;">Frameworks:</td>
+          <td>
+            <a href="framework.html" class="cert-link skill-anim" target="_blank">Django</a>,
+            <a href="framework.html" class="cert-link skill-anim" target="_blank">React</a>,
+            <a href="framework.html" class="cert-link skill-anim" target="_blank">Tkinter</a>
+          </td>
+        </tr>
+        <tr>
+          <td style="vertical-align:top; font-weight:bold; padding-right:1.2rem;">Tools:</td>
+          <td>
+            <a href="tool.html" class="cert-link skill-anim" target="_blank">GitHub</a>,
+            <a href="tool.html" class="cert-link skill-anim" target="_blank">Pycharm</a>,
+            <a href="tool.html" class="cert-link skill-anim" target="_blank">VS Code</a>,
+            <a href="tool.html" class="cert-link skill-anim" target="_blank">Postman</a>,
+            <a href="tool.html" class="cert-link skill-anim" target="_blank">Git</a>,
+            <a href="tool.html" class="cert-link skill-anim" target="_blank">Heroku</a>,
+            <a href="tool.html" class="cert-link skill-anim" target="_blank">Pip</a>,
+            <a href="tool.html" class="cert-link skill-anim" target="_blank">Figma</a>
+          </td>
+        </tr>
+        <tr>
+          <td style="vertical-align:top; font-weight:bold; padding-right:1.2rem;">Platforms & Systems:</td>
+          <td>
+            <a href="platforms.html" class="cert-link skill-anim" target="_blank">Raspberry Pi</a>,
+            <a href="platforms.html" class="cert-link skill-anim" target="_blank">Linux</a>,
+            <a href="platforms.html" class="cert-link skill-anim" target="_blank">AWS</a>
+          </td>
+        </tr>
+        <tr>
+          <td style="vertical-align:top; font-weight:bold; padding-right:1.2rem;">Additional Expertise:</td>
+          <td>
+            <a href="additional-expertise.html" class="cert-link skill-anim" target="_blank">AutoCAD</a>,
+            <a href="additional-expertise.html" class="cert-link skill-anim" target="_blank">Cisco</a>,
+            <a href="additional-expertise.html" class="cert-link skill-anim" target="_blank">Circuit Wizard</a>
+          </td>
+        </tr>
+      </table>
+    </section>
+
+    <section id="Certifications" class="formal-section" data-aos="fade-up">
+      <h2>Certifications</h2>
+      <div class="section-divider"></div>
+      <ul>
+        <li><a href="certif.html?file=pics/certif1.pdf" class="cert-link" target="_blank">Digital Transformation 101: A Webinar Series on Technology Adoption
+of MSMEs</a></li>
+        <li><a href="certif.html?file=pics/certif2.jpeg" class="cert-link" target="_blank">Resilience and Response: Cybersecurity & Digital Forensics for Cyber and Critical Technologies</a></li>
+        <li><a href="certif.html?file=pics/certif3.png" class="cert-link" target="_blank">Digital Security and Data Privacy: How to Safeguard Our Data in Today's World</a></li>
+        <li><a href="certif.html?file=pics/certif4.png" class="cert-link" target="_blank">How to Start Content Creating: from Ideas to Execution</a></li>
+        <li><a href="certif.html?file=pics/certif5.pdf" class="cert-link" target="_blank">Be Smart, Stay Safe: Protecting Yourself in the Digital Age</a></li>
+        <li><a href="certif.html?file=pics/certif6.pdf" class="cert-link" target="_blank">Introduction to Data Science: Roles and Basic MySQL Skills</a></li>
+      </ul>
+    </section>
+  </div>
+  <section id="contact" class="formal-section contact-section" data-aos="fade-up">
+    <h2>Contact</h2>
+    <div class="section-divider"></div>
+    <ul style="list-style: none; padding-left: 0; margin-bottom: 1.5rem;">
+      <li style="margin-bottom: 0.7rem;"><strong>Facebook:</strong> <a href="https://www.facebook.com/share/16kuKNujQM/" class="cert-link">Sean Darrell</a></li>
+      <li style="margin-bottom: 0.7rem;"><strong>Email:</strong> <a href="mailto:seanlansangtungcol1126@gmail.com" class="cert-link">seanlansangtungcol1126@gmail.com</a></li>
+      <li style="margin-bottom: 0.7rem;"><strong>GitHub:</strong> <a href="https://github.com/Seanscript-dev" class="cert-link">Seanscript.dev</a></li>
+      <li style="margin-bottom: 0.7rem;"><strong>Contacts:</strong> <a href="tel:+639307281638" class="cert-link">+639307281630</a></li>
+    </ul>
+    <div class="social-icons">
+      <a href="https://www.facebook.com/share/16kuKNujQM/" target="_blank"><i class="fab fa-facebook"></i></a>
+      <a href="mailto:seanlansangtungcol1126@gmail.com"><i class="fas fa-envelope"></i></a>
+      <a href="https://github.com/Seanscript-dev" target="_blank"><i class="fab fa-github"></i></a>
+      <a href="tel:+639307281638"><i class="fas fa-phone"></i></a>
+</div>
+
+  </section>
+
+  <footer style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.3rem 0.5rem; ">
+  <img src="pics/dp2.svg" alt="Logo" style="height: 60px;">
+  <p>&copy; 2025 Sean Script. All rights reserved.</p>
+</footer>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    // Fade-in animation on page load
+    window.addEventListener('DOMContentLoaded', function() {
+      document.documentElement.style.opacity = '1';
+      document.body.style.opacity = '1';
+    });
+
+    AOS.init();
+    const toggle = document.getElementById("darkToggle");
+
+    // Load dark mode state from localStorage
+    if (localStorage.getItem("darkMode") === "true") {
+      document.body.classList.add("dark");
+      toggle.checked = true;
+    }
+
+    toggle.addEventListener("change", () => {
+      document.body.classList.toggle("dark", toggle.checked);
+      localStorage.setItem("darkMode", toggle.checked);
+    });
+
+    // Store scroll position before opening certificate (only for certif.html links)
+    document.querySelectorAll('a.cert-link').forEach(function(link) {
+      link.addEventListener('click', function() {
+        if (link.getAttribute('href') && link.getAttribute('href').indexOf('certif.html') !== -1) {
+          sessionStorage.setItem('certBackScroll', window.scrollY);
+        }
+      });
+    });
+
+    // Restore scroll position or center section after returning from certif.html
+    window.addEventListener('load', function() {
+      // Center Certifications section if coming back from certif.html back button
+      if (sessionStorage.getItem('restoreCertBack') === '1') {
+        // If hash is #Certifications, center Certifications section
+        if (window.location.hash === "#Certifications") {
+          var certSection = document.getElementById('Certifications');
+          if (certSection) {
+            var rect = certSection.getBoundingClientRect();
+            var scrollY = window.scrollY + rect.top + rect.height / 2 - window.innerHeight / 2;
+            window.scrollTo(0, scrollY);
+          }
+        // Center Skills section if hash is #skills
+        } else if (window.location.hash === "#skills") {
+          var skillsSection = document.getElementById('skills');
+          if (skillsSection) {
+            var rect = skillsSection.getBoundingClientRect();
+            var scrollY = window.scrollY + rect.top + rect.height / 2 - window.innerHeight / 2;
+            window.scrollTo(0, scrollY);
+          }
+        } else {
+          // Otherwise, center Personal Information section
+          var personalSection = document.getElementById('personal-info');
+          if (personalSection) {
+            var rect = personalSection.getBoundingClientRect();
+            var scrollY = window.scrollY + rect.top + rect.height / 2 - window.innerHeight / 2;
+            window.scrollTo(0, scrollY);
+          }
+        }
+        sessionStorage.removeItem('restoreCertBack');
+        sessionStorage.removeItem('certBackScroll');
+        return;
+      }
+      // Otherwise, restore previous scroll position if available
+      var scrollY = sessionStorage.getItem('certBackScroll');
+      if (scrollY !== null) {
+        window.scrollTo(0, parseFloat(scrollY));
+        sessionStorage.removeItem('certBackScroll');
+      }
+      // Restore scroll position if available (for other navigation)
+      var scrollPos = sessionStorage.getItem("scrollPos");
+      if (scrollPos !== null) {
+        window.scrollTo(0, parseInt(scrollPos, 10));
+        sessionStorage.removeItem("scrollPos");
+      }
+    });
+
+    // Navigation to merged-education.html with section scroll
+    function goToMergedEducation(sectionId) {
+      window.location.href = "merged-education.html#" + sectionId;
+    }
+
+    // Add direct navigation for secondary schools (hover and click)
+    document.addEventListener('DOMContentLoaded', function() {
+      // Mary The Queen College of Pampanga (SHS)
+      var mtqcpLink = document.querySelector('.edu-link-shs');
+      if (mtqcpLink) {
+        mtqcpLink.addEventListener('mouseenter', function() {
+          mtqcpLink.style.color = '#1592eb';
+          mtqcpLink.style.textDecoration = 'underline';
+        });
+        mtqcpLink.addEventListener('mouseleave', function() {
+          mtqcpLink.style.color = '#0d47a1';
+          mtqcpLink.style.textDecoration = 'underline';
+        });
+        mtqcpLink.addEventListener('click', function(e) {
+          e.preventDefault();
+          window.location.href = "merged-education.html#shs";
+        });
+      }
+      // Diosdado Macapagal Memorial High School (HS)
+      var dmhsLink = document.querySelector('.edu-link-hs');
+      if (dmhsLink) {
+        dmhsLink.addEventListener('mouseenter', function() {
+          dmhsLink.style.color = '#1592eb';
+          dmhsLink.style.textDecoration = 'underline';
+        });
+        dmhsLink.addEventListener('mouseleave', function() {
+          dmhsLink.style.color = '#0d47a1';
+          dmhsLink.style.textDecoration = 'underline';
+        });
+        dmhsLink.addEventListener('click', function(e) {
+          e.preventDefault();
+          window.location.href = "merged-education.html#hs";
+        });
+      }
+      // Saint Augustine Academy of Pampanga (elementary)
+      var saapLink = document.querySelector('a[href="saap.html"]');
+      if (saapLink) {
+        saapLink.addEventListener('click', function(e) {
+          e.preventDefault();
+          window.location.href = "saap.html";
+        });
+      }
+    });
+    document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.skill-anim').forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      link.classList.remove('clicked');
+      // Force reflow to restart animation
+      void link.offsetWidth;
+      link.classList.add('clicked');
+    });
+  });
+});
+    // Center section on nav click for About, Projects, Skills, Certifications
+    document.addEventListener('DOMContentLoaded', function() {
+      const navMap = {
+        about: 'about',
+        projects: 'projects',
+        skills: 'skills',
+        Certifications: 'Certifications'
+      };
+      document.querySelectorAll('nav a[href^="#"]').forEach(function(link) {
+        const hash = link.getAttribute('href').replace('#', '');
+        if (navMap[hash]) {
+          link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const section = document.getElementById(navMap[hash]);
+            if (section) {
+              const rect = section.getBoundingClientRect();
+              const scrollY = window.scrollY + rect.top + rect.height / 2 - window.innerHeight / 2;
+              window.scrollTo({ top: scrollY, behavior: 'smooth' });
+              // Update hash in URL for accessibility/history
+              history.replaceState(null, '', '#' + navMap[hash]);
+            }
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>

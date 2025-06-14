@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sean Script - My Location</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #003366;
+      min-height: 100vh;
+      min-width: 100vw;
+      width: 100vw;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #e3f2fd;
+      position: relative;
+      transition: background 0.3s, color 0.3s;
+    }
+    body.dark {
+      background: #181f2a;
+      color: #e0e0e0;
+    }
+    /* Formal SVG background with technology touch */
+    body::before {
+      content: "";
+      position: fixed;
+      z-index: 0;
+      left: 0; top: 0; width: 100vw; height: 100vh;
+      background: url('data:image/svg+xml;utf8,<svg width="1600" height="1200" viewBox="0 0 1600 1200" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="bggrad" x1="0" y1="0" x2="1600" y2="1200" gradientUnits="userSpaceOnUse"><stop stop-color="%23e3f2fd"/><stop offset="1" stop-color="%23bbdefb"/></linearGradient></defs><rect width="1600" height="1200" fill="url(%23bggrad)"/><!-- Left side map lines --><polyline points="80,200 120,400 160,600 200,900" fill="none" stroke="%2390caf9" stroke-width="5" stroke-opacity="0.10"/><!-- Left side pin --><g><circle cx="120" cy="400" r="16" fill="%23fff" fill-opacity="0.8"/><circle cx="120" cy="400" r="8" fill="%2338bdf8" fill-opacity="0.7"/></g><!-- Left document icon --><g><rect x="60" y="700" width="50" height="65" rx="8" fill="%23fff" fill-opacity="0.85" stroke="%2390caf9" stroke-width="2"/><rect x="72" y="720" width="26" height="7" rx="2" fill="%2390caf9" fill-opacity="0.25"/></g><!-- Right side map lines --><polyline points="1520,300 1480,500 1440,700 1400,1000" fill="none" stroke="%2390caf9" stroke-width="5" stroke-opacity="0.10"/><!-- Right side pin --><g><circle cx="1480" cy="500" r="12" fill="%23fff" fill-opacity="0.8"/><circle cx="1480" cy="500" r="6" fill="%230d47a1" fill-opacity="0.7"/></g><!-- Right document icon --><g><rect x="1470" y="800" width="40" height="55" rx="6" fill="%23fff" fill-opacity="0.85" stroke="%231976d2" stroke-width="2"/><rect x="1480" y="815" width="20" height="6" rx="2" fill="%231976d2" fill-opacity="0.18"/></g></svg>');
+      background-size: cover;
+      background-repeat: no-repeat;
+      pointer-events: none;
+      transition: background 0.3s;
+      filter: none;
+    }
+    body.dark::before {
+      background: url('data:image/svg+xml;utf8,<svg width="1600" height="1200" viewBox="0 0 1600 1200" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="bggradDark" x1="0" y1="0" x2="1600" y2="1200" gradientUnits="userSpaceOnUse"><stop stop-color="%23121a26"/><stop offset="1" stop-color="%23202b3a"/></linearGradient></defs><rect width="1600" height="1200" fill="url(%23bggradDark)"/><!-- Left side map lines --><polyline points="80,200 120,400 160,600 200,900" fill="none" stroke="%2390caf9" stroke-width="4" stroke-opacity="0.13"/><!-- Left side pin --><g><circle cx="120" cy="400" r="16" fill="%231e293b" fill-opacity="0.8"/><circle cx="120" cy="400" r="8" fill="%2390caf9" fill-opacity="0.8"/></g><!-- Left document icon --><g><rect x="60" y="700" width="50" height="65" rx="8" fill="%231e293b" fill-opacity="0.92" stroke="%2390caf9" stroke-width="2"/><rect x="72" y="720" width="26" height="7" rx="2" fill="%2390caf9" fill-opacity="0.22"/></g><!-- Right side map lines --><polyline points="1520,300 1480,500 1440,700 1400,1000" fill="none" stroke="%2390caf9" stroke-width="4" stroke-opacity="0.13"/><!-- Right side pin --><g><circle cx="1480" cy="500" r="12" fill="%231e293b" fill-opacity="0.8"/><circle cx="1480" cy="500" r="6" fill="%2390caf9" fill-opacity="0.8"/></g><!-- Right document icon --><g><rect x="1470" y="800" width="40" height="55" rx="6" fill="%231e293b" fill-opacity="0.92" stroke="%2390caf9" stroke-width="2"/><rect x="1480" y="815" width="20" height="6" rx="2" fill="%2390caf9" fill-opacity="0.22"/></g></svg>');
+      background-size: cover;
+      background-repeat: no-repeat;
+      pointer-events: none;
+      transition: background 0.3s;
+      filter: blur(10px);
+    }
+    .container {
+      width: 100vw;
+      max-width: 900px;
+      min-width: 0;
+      min-height: 0;
+      margin: 0 auto;
+      padding: 2rem 2.5rem 2rem 2.5rem;
+      background: #fff; /* white background */
+      border-radius: 32px;
+      border: 1.5px solid #f3f3f3;
+      box-shadow: 0 4px 24px 0 rgba(255,255,255,0.10);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      animation: fadeInBg 0.7s cubic-bezier(.4,0,.2,1);
+      position: relative;
+      backdrop-filter: blur(18px) saturate(140%);
+      z-index: 1;
+      max-height: 92vh;
+      overflow-y: auto;
+      transition: box-shadow 0.2s, background 0.2s;
+    }
+    body.dark .container {
+      background: rgba(24, 31, 42, 0.85);
+      border: 1.5px solid #23272b;
+      color: #e0e0e0;
+      box-shadow: 0 4px 24px 0 rgba(255,255,255,0.07);
+    }
+    /* Back button like tool.html */
+    .back-container {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      margin-bottom: 1.2rem;
+      padding: 0;
+      background: none;
+      border: none;
+      border-radius: 0;
+      opacity: 1;
+      width: 100%;
+    }
+    .back-line {
+      display: inline-block;
+      width: 3px;
+      height: 28px;
+      background: #38bdf8;
+      margin-right: 14px;
+      border-radius: 2px;
+      vertical-align: middle;
+      box-shadow: 0 0 8px #38bdf855;
+    }
+    .back-button {
+      display: inline-block;
+      color: #1976d2;
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      font-size: 1.2rem;
+      font-weight: 500;
+      padding: 0.1rem 0.2rem;
+      text-decoration: none;
+      box-shadow: none;
+      transition: 
+        color 0.22s cubic-bezier(.4,0,.2,1), 
+        border-color 0.22s cubic-bezier(.4,0,.2,1),
+        background 0.22s cubic-bezier(.4,0,.2,1),
+        transform 0.22s cubic-bezier(.4,1.4,.2,1),
+        box-shadow 0.22s cubic-bezier(.4,0,.2,1);
+      outline: none;
+      letter-spacing: 0.01em;
+      min-height: 2rem;
+      border-bottom: 2px solid transparent;
+    }
+    .back-button:hover,
+    .back-button:focus {
+      color: #0d47a1;
+      border-bottom: 2px solid #38bdf8;
+      background: transparent;
+      transform: translateY(-2px) scale(1.045);
+      box-shadow: 0 2px 12px #38bdf822;
+      text-shadow: 0 2px 8px #38bdf855;
+    }
+    h1 {
+      color: #0d47a1;
+      margin: 0 0 1.2rem 0;
+      font-size: 2.2rem;
+      text-align: center;
+      letter-spacing: 0.01em;
+      font-weight: 700;
+      animation: fadeInDown 0.7s cubic-bezier(.4,0,.2,1);
+      text-shadow: 0 2px 8px #bbdefb55;
+    }
+    body.dark h1 {
+      color: #b3e5fc;
+      text-shadow: 0 2px 8px #90caf955;
+    }
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+    .map-frame {
+      width: 90%;
+      max-width: 1000px;
+      height: 420px;
+      min-height: 220px;
+      border: none;
+      border-radius: 36px;
+      box-shadow: 0 3px 12px rgba(33,150,243,0.09);
+      margin-bottom: 1.5rem;
+      background: #e3f2fd;
+      animation: popMap 0.7s cubic-bezier(.4,0,.2,1);
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    @keyframes popMap {
+      from { opacity: 0; transform: scale(0.97);}
+      to { opacity: 1; transform: scale(1);}
+    }
+    .map-link {
+      display: inline-block;
+      text-align: center;
+      margin-top: 0.7rem;
+      font-size: 1.15rem;
+      color: #1976d2;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.7em 2em;
+      border-radius: 12px;
+      background: #e3f2fd;
+      border: 1px solid #bbdefb;
+      transition: background 0.15s, color 0.15s, box-shadow 0.15s, transform 0.15s;
+      box-shadow: 0 2px 8px rgba(33,150,243,0.04);
+      animation: fadeInUp 0.7s cubic-bezier(.4,0,.2,1);
+    }
+    .map-link:hover {
+      color: #0d47a1;
+      background: #bbdefb;
+      text-decoration: none;
+      box-shadow: 0 4px 16px rgba(33,150,243,0.09);
+      transform: scale(1.04);
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+    /* Decorative animated dots - bottom right, bigger */
+    .dots {
+      position: absolute;
+      bottom: 2.2rem;
+      right: 2.2rem;
+      display: flex;
+      gap: 14px;
+      z-index: 2;
+    }
+    .dot {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #38bdf8 60%, #e3f2fd 100%);
+      opacity: 0.6;
+      animation: bounceDot 1.5s infinite alternate;
+    }
+    .dot:nth-child(2) { animation-delay: 0.2s; background: linear-gradient(135deg, #1976d2 60%, #bbdefb 100%);}
+    .dot:nth-child(3) { animation-delay: 0.4s; background: linear-gradient(135deg, #0d47a1 60%, #90caf9 100%);}
+    @keyframes bounceDot {
+      from { transform: translateY(0);}
+      to { transform: translateY(-14px);}
+    }
+    /* Dark mode toggle button */
+    .dark-toggle-frame {
+      position: absolute;
+      top: 18px;
+      right: 32px;
+      z-index: 10;
+      background: #e3f2fd;
+      border-radius: 18px;
+      padding: 0.3em 1em;
+      border: 1px solid #bbdefb;
+      box-shadow: 0 2px 8px rgba(33,150,243,0.06);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: background 0.3s, border 0.3s;
+    }
+    body.dark .dark-toggle-frame {
+      background: #23272b;
+      border: 1px solid #b3e5fc;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+      color: #b3e5fc;
+    }
+    .dark-toggle-frame input[type="checkbox"] {
+      transform: scale(1.2);
+      cursor: pointer;
+      margin-right: 0.4em;
+    }
+    @media (max-width: 1300px) {
+      .container {
+        max-width: 98vw;
+        padding-left: 1.2rem;
+        padding-right: 1.2rem;
+      }
+      .map-frame {
+        max-width: 98vw;
+      }
+    }
+    @media (max-width: 900px) {
+      .container {
+        padding: 1.2rem 0.7rem 1.2rem 0.7rem;
+        max-width: 99vw;
+        border-radius: 28px;
+        max-height: 98vh;
+      }
+      .map-frame {
+        width: 98vw;
+        height: 260px;
+        border-radius: 18px;
+        max-width: 99vw;
+      }
+      h1 {
+        font-size: 1.4rem;
+        margin: 0.7rem 0 0.7rem 0;
+      }
+      .map-link, .back-button {
+        font-size: 1rem;
+        padding: 0.5em 1em;
+        border-radius: 8px;
+      }
+      .dots {
+        bottom: 1rem;
+        right: 1rem;
+        gap: 8px;
+      }
+      .dot {
+        width: 11px;
+        height: 11px;
+      }
+    }
+    @media (max-width: 600px) {
+      .container {
+        padding: 0.7rem 0.3rem 1rem 0.3rem;
+        max-width: 99vw;
+        border-radius: 16px;
+        max-height: 99vh;
+      }
+      .map-frame {
+        width: 98vw;
+        height: 140px;
+        border-radius: 10px;
+      }
+      h1 {
+        font-size: 1.02rem;
+        margin: 0.5rem 0 0.5rem 0;
+      }
+      .map-link, .back-button {
+        font-size: 0.93rem;
+        padding: 0.4em 0.7em;
+        border-radius: 5px;
+      }
+      .dots {
+        bottom: 0.5rem;
+        right: 0.5rem;
+        gap: 4px;
+      }
+      .dot {
+        width: 7px;
+        height: 7px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <span class="dark-toggle-frame">
+    <label style="display:flex;align-items:center;gap:0.4em;">
+      <input type="checkbox" id="darkToggle">
+      <span>Dark Mode</span>
+    </label>
+  </span>
+  <div class="container">
+    <div class="back-container">
+      <span class="back-line"></span>
+      <a class="back-button" href="portfolio.html" id="backToPortfolio">Back to Home</a>
+    </div>
+    <div style="width:100%; display:flex; justify-content:center; align-items:center; margin-bottom:0.2rem;">
+      <h1 style="margin: 0;">My Location</h1>
+    </div>
+    <iframe
+      class="map-frame"
+      src="https://www.google.com/maps?q=Calantas,+Floridablanca,+Pampanga,+Philippines&output=embed"
+      allowfullscreen
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+      title="Google Maps - Calantas, Floridablanca, Pampanga, Philippines"
+      style="margin-top: 0;"
+    ></iframe>
+    <a class="map-link" href="https://www.google.com/maps/place/Calantas,+Floridablanca,+Pampanga,+Philippines" target="_blank">
+      View on Google Maps
+    </a>
+    <div class="dots">
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+    </div>
+  </div>
+  <script>
+    // Dark mode toggle logic
+    const toggle = document.getElementById("darkToggle");
+    // Load dark mode state from localStorage
+    if (localStorage.getItem("darkMode") === "true") {
+      document.body.classList.add("dark");
+      toggle.checked = true;
+    }
+    toggle.addEventListener("change", () => {
+      document.body.classList.toggle("dark", toggle.checked);
+      localStorage.setItem("darkMode", toggle.checked);
+    });
+    document.getElementById('backToPortfolio').addEventListener('click', function(e) {
+      e.preventDefault();
+      sessionStorage.setItem('restoreCertBack', '1');
+      window.location.href = 'portfolio.html#personal-info';
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Modern Web Frameworks</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f5faff;
+      color: #0f172a;
+      padding: 2rem;
+      transition: background 0.3s, color 0.3s;
+      animation: fadeSlideUp 1.2s cubic-bezier(.4,0,.2,1);
+    }
+
+    body.dark {
+      background: #0f172a;
+      color: #e2e8f0;
+    }
+
+    a:focus {
+      outline: 2px solid #38bdf8;
+      outline-offset: 4px;
+    }
+
+    .back-container {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      margin-bottom: 1.2rem;
+      padding: 0;
+      background: none;
+      border: none;
+      border-radius: 0;
+      opacity: 1;
+    }
+
+    .back-line {
+      display: inline-block;
+      width: 3px;
+      height: 28px;
+      background: #38bdf8;
+      margin-right: 14px;
+      border-radius: 2px;
+      vertical-align: middle;
+      box-shadow: 0 0 8px #38bdf855;
+    }
+
+    .back-button {
+      display: inline-block;
+      color: #1976d2;
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      font-size: 1rem;
+      font-weight: 500;
+      padding: 0.1rem 0.2rem;
+      text-decoration: none;
+      box-shadow: none;
+      transition: 
+        color 0.22s cubic-bezier(.4,0,.2,1), 
+        border-color 0.22s cubic-bezier(.4,0,.2,1),
+        background 0.22s cubic-bezier(.4,0,.2,1),
+        transform 0.22s cubic-bezier(.4,1.4,.2,1),
+        box-shadow 0.22s cubic-bezier(.4,0,.2,1);
+      outline: none;
+      letter-spacing: 0.01em;
+      min-height: 2rem;
+      border-bottom: 2px solid transparent;
+    }
+
+    .back-button::before {
+      content: "";
+      /* Arrow removed */
+    }
+
+    .back-button:hover,
+    .back-button:focus {
+      color: #38bdf8;
+      border-bottom: 2px solid #38bdf8;
+      background: transparent;
+      transform: translateY(-2px) scale(1.045);
+      box-shadow: 0 2px 12px #38bdf822;
+      text-shadow: 0 2px 8px #38bdf855;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2.75rem;
+      color: #1976d2;
+      margin-bottom: 2rem;
+      text-shadow: 0 0 10px rgba(56, 189, 248, 0.13);
+    }
+    body.dark h1 {
+      color: #38bdf8;
+      text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+    }
+
+    .frameworks-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .framework-card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 16px rgba(56, 189, 248, 0.08), 0 0 0 2px #2223;
+      border: 1.5px solid #2223; /* dark outline for light mode */
+      padding: 2rem 1.2rem 1.2rem 1.2rem;
+      transition: transform 0.18s, box-shadow 0.18s;
+      margin-bottom: 0.5rem;
+      color: #0f172a;
+    }
+    body.dark .framework-card {
+      background: #192339;
+      color: #e2e8f0;
+      border: none;
+      box-shadow: 0 2px 16px rgba(56, 189, 248, 0.08);
+    }
+
+    .framework-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 30px rgba(56, 189, 248, 0.3);
+    }
+
+    .framework-image {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      background: #0f172a;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      border: 2px solid #38bdf8;
+      padding: 0.5rem;
+    }
+
+    .framework-card h2 {
+      font-size: 1.5rem;
+      color: #1976d2;
+      margin-bottom: 0.5rem;
+    }
+    body.dark .framework-card h2 {
+      color: #38bdf8;
+    }
+
+    .framework-card p {
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      color: #333;
+    }
+    body.dark .framework-card p {
+      color: #cbd5e1;
+    }
+
+    .framework-card a {
+      color: #1976d2;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+    body.dark .framework-card a {
+      color: #ffffff;
+    }
+    .framework-card a:hover,
+    .framework-card a:focus {
+      color: #38bdf8;
+    }
+    body.dark .framework-card a:hover,
+    body.dark .framework-card a:focus {
+      color: #155fa0;
+    }
+
+    /* Dark mode toggle styles */
+    .dark-toggle-frame {
+      position: absolute;
+      top: 18px;
+      right: 32px;
+      z-index: 10;
+      background: #e3f2fd;
+      border-radius: 18px;
+      padding: 0.3em 1em;
+      border: 1px solid #bbdefb;
+      box-shadow: 0 2px 8px rgba(33,150,243,0.06);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: background 0.3s, border 0.3s;
+    }
+    body.dark .dark-toggle-frame {
+      background: #23272b;
+      border: 1px solid #253bae;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+      color: #90caf9;
+    }
+    .dark-toggle-frame input[type="checkbox"] {
+      transform: scale(1.2);
+      cursor: pointer;
+      margin-right: 0.4em;
+    }
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2rem;
+      }
+      .dark-toggle-frame {
+        top: 8px;
+        right: 8px;
+        font-size: 0.9rem;
+        padding: 0.2em 0.6em;
+      }
+    }
+
+    @keyframes fadeSlideUp {
+      0% { opacity: 0; transform: translateY(24px);}
+      100% { opacity: 1; transform: translateY(0);}
+    }
+  </style>
+</head>
+<body>
+  <span class="dark-toggle-frame">
+    <label style="display:flex;align-items:center;gap:0.4em;">
+      <input type="checkbox" id="darkToggle">
+      <span>Dark Mode</span>
+    </label>
+  </span>
+
+<div class="back-container">
+  <span class="back-line"></span>
+  <a href="portfolio.html" class="back-button" id="backToPortfolio">Back to Home</a>
+</div>
+
+<h1>Explore Modern Web Frameworks</h1>
+
+<div class="frameworks-container">
+
+  <div class="framework-card">
+    <img src="pics/django.jpg" alt="Django web framework logo" class="framework-image" loading="lazy">
+    <h2>Django</h2>
+    <p>Django is a high-level Python web framework that promotes rapid development and clean, pragmatic design. It comes with built-in admin, authentication, and more.</p>
+    <a href="https://www.djangoproject.com/" target="_blank" rel="noopener noreferrer">Learn more →</a>
+  </div>
+
+  <div class="framework-card">
+    <img src="pics/react.jpg" alt="React JavaScript library logo" class="framework-image" loading="lazy">
+    <h2>React</h2>
+    <p>React is a JavaScript library for building user interfaces. Its component-based architecture powers fast, dynamic apps used by companies like Meta, Netflix, and Airbnb.</p>
+    <a href="https://reactjs.org/" target="_blank" rel="noopener noreferrer">Learn more →</a>
+  </div>
+
+  <div class="framework-card">
+  <img src="pics/tkinter.png" alt="Tkinter GUI library logo" class="framework-image" loading="lazy">
+  <h2>Tkinter</h2>
+  <p>Tkinter is Python’s standard GUI library for creating desktop applications. It provides a fast and easy way to build simple graphical interfaces using native elements.</p>
+  <a href="https://docs.python.org/3/library/tkinter.html" target="_blank" rel="noopener noreferrer">Learn more →</a>
+</div>
+
+
+</div>
+
+<script>
+  // Persist dark mode across navigation
+  const toggle = document.getElementById("darkToggle");
+  if (localStorage.getItem("darkMode") === "true") {
+    document.body.classList.add("dark");
+    if (toggle) toggle.checked = true;
+  }
+  if (toggle) {
+    toggle.addEventListener("change", () => {
+      document.body.classList.toggle("dark", toggle.checked);
+      localStorage.setItem("darkMode", toggle.checked);
+    });
+  }
+  // Instantly go back to portfolio and restore scroll (no animation)
+  document.getElementById('backToPortfolio').addEventListener('click', function(e) {
+    e.preventDefault();
+    sessionStorage.setItem('restoreCertBack', '1');
+    window.location.href = 'portfolio.html#skills';
+  });
+</script>
+
+</body>
+</html>

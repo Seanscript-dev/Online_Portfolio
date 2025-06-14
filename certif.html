@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Certification - Sean Script</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #0d1b2a;
+      color: #e0f7fa;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .bg-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+      opacity: 0.15;
+      filter: blur(2px);
+      pointer-events: none;
+    }
+
+    .certificate-container {
+      width: 90vw;
+      height: 90vh;
+      padding: 1rem;
+      border-radius: 12px;
+      background: rgba(0, 30, 60, 0.7);
+      box-shadow: 0 0 30px rgba(0,188,212,0.3);
+      animation: zoomIn 1s ease-out;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    img, iframe {
+      width: 100%;
+      height: calc(100% - 3rem); /* Leaves space for the back button */
+      max-height: 100%;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 188, 212, 0.5);
+      border: none;
+      object-fit: contain;
+    }
+
+    @keyframes zoomIn {
+      from { transform: scale(0.85); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .back-link {
+      position: absolute;
+      bottom: calc(1rem + 23px);
+      right: calc(1rem + 96px);
+      display: flex;
+      align-items: center;
+      gap: 0.7em;
+      background: none;
+      border: none;
+      box-shadow: none;
+      color: #2196f3;
+      font-size: 1.08rem;
+      font-weight: 600;
+      text-decoration: none;
+      padding: 0.18em 0.7em;
+      border-radius: 8px;
+      transition: color 0.18s, background 0.18s, transform 0.18s;
+      cursor: pointer;
+      outline: none;
+      z-index: 10;
+    }
+
+    .back-link .back-svg svg {
+      transition: background 0.2s, box-shadow 0.2s, stroke 0.2s;
+      border-radius: 50%;
+      background: transparent;
+    }
+
+    .back-link:hover,
+    .back-link:focus {
+      color: #3973de;
+      
+    }
+
+    .back-link:hover .back-svg svg,
+    .back-link:focus .back-svg svg {
+      box-shadow: 0 1px 3px #3973de;
+      stroke: #fff;
+    }
+
+    .back-link .back-text {
+      font-size: 1.08rem;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      user-select: none;
+    }
+
+    /* Add this block for hover effect on text */
+    .back-link:hover .back-text,
+    .back-link:focus .back-text {
+      color: #7ecbff; /* light blue */
+      text-shadow: 0 1px 3px #3973de;
+      
+    }
+
+    @media (max-width: 600px) {
+      .back-link {
+        right: 1.2rem;
+        bottom: 1.2rem;
+        font-size: 1rem;
+      }
+      .back-link .back-text {
+        font-size: 1rem;
+      }
+    }
+
+    .error {
+      font-size: 1.2rem;
+      color: #ff6f61;
+    }
+    
+  </style>
+</head>
+<body>
+
+  <div class="certificate-container" id="viewer">
+    <!-- Dynamic content gets loaded here -->
+  </div>
+
+  <script>
+    const viewer = document.getElementById('viewer');
+    const params = new URLSearchParams(window.location.search);
+    const file = params.get("file");
+
+    if (!file) {
+      viewer.innerHTML = "<p class='error'>No certificate file specified in the URL.</p>";
+    } else if (file.match(/\.(pdf)$/i)) {
+      viewer.innerHTML = `
+        <iframe src="${file}"></iframe>
+      `;
+    } else if (file.match(/\.(jpg|jpeg|png|gif)$/i)) {
+      viewer.innerHTML = `
+        <img src="${file}" alt="Certificate Image" />
+      `;
+    } else {
+      viewer.innerHTML = "<p class='error'>Unsupported file format.</p>";
+    }
+  </script>
+
+  <!-- Replace the back-link with a modern SVG-based button -->
+  <a class="back-link" href="#" id="backToCertifications" aria-label="Back to Home">
+    <span class="back-svg">
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" style="vertical-align:middle;">
+        <circle cx="14" cy="14" r="13" stroke="#2196f3" stroke-width="2" fill="none"/>
+        <polyline points="16,9 11,14 16,19" fill="none" stroke="#2196f3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </span>
+    <span class="back-text">Back to Home</span>
+  </a>
+  <script>
+    // Persist dark mode across navigation
+    if (localStorage.getItem("darkMode") === "true") {
+      document.body.classList.add("dark");
+    }
+
+    // Back button: go to portfolio and center Certifications section
+    document.getElementById('backToCertifications').addEventListener('click', function(e) {
+      e.preventDefault();
+      sessionStorage.setItem('restoreCertBack', '1');
+      window.location.href = 'portfolio.html#Certifications';
+    });
+  </script>
+</body>
+</html>

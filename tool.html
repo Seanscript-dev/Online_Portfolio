@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Programming Tools</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f5faff;
+      color: #0f172a;
+      padding: 2rem;
+      transition: background 0.3s, color 0.3s;
+      animation: fadeSlideUp 1.2s cubic-bezier(.4,0,.2,1);
+    }
+
+    body.dark {
+      background: #0f172a;
+      color: #e2e8f0;
+    }
+
+    a:focus {
+      outline: 2px solid #38bdf8;
+      outline-offset: 4px;
+    }
+
+    .back-container {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      margin-bottom: 1.2rem;
+      padding: 0;
+      background: none;
+      border: none;
+      border-radius: 0;
+      opacity: 1;
+    }
+
+    .back-line {
+      display: inline-block;
+      width: 3px;
+      height: 28px;
+      background: #38bdf8;
+      margin-right: 14px;
+      border-radius: 2px;
+      vertical-align: middle;
+      box-shadow: 0 0 8px #38bdf855;
+    }
+
+    .back-button {
+      display: inline-block;
+      color: #1976d2;
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      font-size: 1rem;
+      font-weight: 500;
+      padding: 0.1rem 0.2rem;
+      text-decoration: none;
+      box-shadow: none;
+      transition: 
+        color 0.22s cubic-bezier(.4,0,.2,1), 
+        border-color 0.22s cubic-bezier(.4,0,.2,1),
+        background 0.22s cubic-bezier(.4,0,.2,1),
+        transform 0.22s cubic-bezier(.4,1.4,.2,1),
+        box-shadow 0.22s cubic-bezier(.4,0,.2,1);
+      outline: none;
+      letter-spacing: 0.01em;
+      min-height: 2rem;
+      border-bottom: 2px solid transparent;
+    }
+    body.dark .back-button {
+      color: #e2e8f0;
+    }
+    .back-button:hover,
+    .back-button:focus {
+      color: #38bdf8;
+      border-bottom: 2px solid #38bdf8;
+      background: transparent;
+      transform: translateY(-2px) scale(1.045);
+      box-shadow: 0 2px 12px #38bdf822;
+      text-shadow: 0 2px 8px #38bdf855;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2.75rem;
+      color: #1976d2;
+      margin-bottom: 2rem;
+      text-shadow: 0 0 10px rgba(56, 189, 248, 0.13);
+    }
+    body.dark h1 {
+      color: #38bdf8;
+      text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+    }
+
+    .frameworks-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .framework-card {
+      background-color: #fff;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 0 25px rgba(56, 189, 248, 0.1), 0 0 0 2px #2223; /* dark outline */
+      border: 1.5px solid #2223; /* dark outline for light mode */
+      transition: transform 1.5s ease, box-shadow 0.3s ease, opacity 0.5s ease;
+      /* Remove animation property so cards don't fade in/bounce on load */
+      /* animation: popup 1.5s ease forwards; */
+      opacity: 1;
+      color: #0f172a;
+    }
+    body.dark .framework-card {
+      background-color: #1e293b;
+      color: #e2e8f0;
+      border: none;
+      box-shadow: 0 0 25px rgba(56, 189, 248, 0.1);
+    }
+
+    @keyframes popup {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .framework-card:hover {
+      animation: bounce-tool-stay 0.28s cubic-bezier(.28,1.5,.6,1) forwards;
+      box-shadow: 0 0 30px rgba(56, 189, 248, 0.3);
+    }
+
+    @keyframes bounce-tool-stay {
+      0%   { transform: translateY(0);}
+      60%  { transform: translateY(-10px);}
+      100% { transform: translateY(-10px);}
+    }
+
+    .framework-image {
+      width: 100%;
+      height: 180px;
+      object-fit: contain;
+      background: #0f172a;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      border: 2px solid #38bdf8;
+      padding: 0.5rem;
+    }
+
+    .framework-card h2 {
+      font-size: 1.5rem;
+      color: #1976d2;
+      margin-bottom: 0.5rem;
+    }
+    body.dark .framework-card h2 {
+      color: #38bdf8;
+    }
+
+    .framework-card p {
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      color: #333;
+    }
+    body.dark .framework-card p {
+      color: #cbd5e1;
+    }
+
+    .framework-card a {
+      color: #1976d2;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+    body.dark .framework-card a {
+      color: #ffffff;
+    }
+    .framework-card a:hover,
+    .framework-card a:focus {
+      color: #38bdf8;
+    }
+    body.dark .framework-card a:hover,
+    body.dark .framework-card a:focus {
+      color: #155fa0;
+    }
+
+    /* Dark mode toggle styles */
+    .dark-toggle-frame {
+      position: absolute;
+      top: 18px;
+      right: 32px;
+      z-index: 10;
+      background: #e3f2fd;
+      border-radius: 18px;
+      padding: 0.3em 1em;
+      border: 1px solid #bbdefb;
+      box-shadow: 0 2px 8px rgba(33,150,243,0.06);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: background 0.3s, border 0.3s;
+    }
+    body.dark .dark-toggle-frame {
+      background: #23272b;
+      border: 1px solid #253bae;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+      color: #90caf9;
+    }
+    .dark-toggle-frame input[type="checkbox"] {
+      transform: scale(1.2);
+      cursor: pointer;
+      margin-right: 0.4em;
+    }
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2rem;
+      }
+      .dark-toggle-frame {
+        top: 8px;
+        right: 8px;
+        font-size: 0.9rem;
+        padding: 0.2em 0.6em;
+      }
+    }
+
+    @keyframes fadeSlideUp {
+      0% { opacity: 0; transform: translateY(24px);}
+      100% { opacity: 1; transform: translateY(0);}
+    }
+  </style>
+</head>
+<body>
+  <span class="dark-toggle-frame">
+    <label style="display:flex;align-items:center;gap:0.4em;">
+      <input type="checkbox" id="darkToggle">
+      <span>Dark Mode</span>
+    </label>
+  </span>
+
+<div class="back-container">
+  <span class="back-line"></span>
+  <a href="portfolio.html" class="back-button" id="backToPortfolio">Back to Home</a>
+</div>
+
+<h1>Programming Tools</h1>
+
+<div class="frameworks-container">
+
+  <div class="framework-card">
+    <img src="pics/github.png" alt="GitHub logo" class="framework-image" loading="lazy">
+    <h2>GitHub</h2>
+    <p>GitHub is a platform for hosting and collaborating on Git repositories. It supports version control and project collaboration in the cloud.</p>
+    <a href="https://github.com/" target="_blank" rel="noopener noreferrer">Visit GitHub →</a>
+  </div>
+
+  <div class="framework-card">
+    <img src="pics/pycharm.png" alt="PyCharm IDE logo" class="framework-image" loading="lazy">
+    <h2>PyCharm</h2>
+    <p>PyCharm is a powerful Python IDE developed by JetBrains. It offers intelligent code completion, debugging, and integration with version control.</p>
+    <a href="https://www.jetbrains.com/pycharm/" target="_blank" rel="noopener noreferrer">Learn about PyCharm →</a>
+  </div>
+
+  <div class="framework-card">
+    <img src="pics/vscode.png" alt="VS Code logo" class="framework-image" loading="lazy">
+    <h2>VS Code</h2>
+    <p>Visual Studio Code is a free, open-source code editor developed by Microsoft. It supports many languages and extensions for productivity.</p>
+    <a href="https://code.visualstudio.com/" target="_blank" rel="noopener noreferrer">Explore VS Code →</a>
+  </div>
+
+  <div class="framework-card">
+    <img src="pics/postman.svg" alt="Postman API tool logo" class="framework-image" loading="lazy">
+    <h2>Postman</h2>
+    <p>Postman is a popular tool for testing and documenting APIs. It allows developers to send requests, inspect responses, and automate workflows.</p>
+    <a href="https://www.postman.com/" target="_blank" rel="noopener noreferrer">Try Postman →</a>
+  </div>
+
+  <div class="framework-card">
+    <img src="pics/git.png" alt="Git logo" class="framework-image" loading="lazy">
+    <h2>Git</h2>
+    <p>Git is a distributed version control system used to track changes in source code during software development. It's fast, reliable, and essential.</p>
+    <a href="https://git-scm.com/" target="_blank" rel="noopener noreferrer">Learn Git →</a>
+  </div>
+
+  <div class="framework-card">
+    <img src="pics/heroku.png" alt="Heroku logo" class="framework-image" loading="lazy">
+    <h2>Heroku</h2>
+    <p>Heroku is a cloud platform that allows developers to deploy, manage, and scale apps. It supports several programming languages.</p>
+    <a href="https://www.heroku.com/" target="_blank" rel="noopener noreferrer">Deploy with Heroku →</a>
+  </div>
+
+  <div class="framework-card">
+    <img src="pics/pip.png" alt="Pip package manager logo" class="framework-image" loading="lazy">
+    <h2>Pip</h2>
+    <p>Pip is the package installer for Python. It allows you to install and manage libraries and dependencies for your Python projects.</p>
+    <a href="https://pip.pypa.io/en/stable/" target="_blank" rel="noopener noreferrer">Use Pip →</a>
+  </div>
+
+  <div class="framework-card">
+  <img src="pics/figma.png" alt="Figma design tool logo" class="framework-image" loading="lazy">
+  <h2>Figma</h2>
+  <p>Figma is a collaborative interface design tool. It's cloud-based and widely used for UI/UX design, prototyping, and collaboration.</p>
+  <a href="https://figma.com/" target="_blank" rel="noopener noreferrer">Design with Figma →</a>
+</div>
+
+</div>
+
+<script>
+  // Persist dark mode across navigation
+  const toggle = document.getElementById("darkToggle");
+  if (localStorage.getItem("darkMode") === "true") {
+    document.body.classList.add("dark");
+    if (toggle) toggle.checked = true;
+  }
+  if (toggle) {
+    toggle.addEventListener("change", () => {
+      document.body.classList.toggle("dark", toggle.checked);
+      localStorage.setItem("darkMode", toggle.checked);
+    });
+  }
+  // Back button: go to portfolio and center Skills section
+  document.getElementById('backToPortfolio').addEventListener('click', function(e) {
+    e.preventDefault();
+    sessionStorage.setItem('restoreCertBack', '1');
+    window.location.href = 'portfolio.html#skills';
+  });
+</script>
+</body>
+</html>

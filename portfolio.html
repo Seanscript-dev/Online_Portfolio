@@ -39,6 +39,7 @@
       background-color: #1e1e1e;
       color: #e0e0e0;
       border-color: #333;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.8); /* Black shadow */
     }
 
     body.dark nav a {
@@ -239,10 +240,9 @@ body.dark nav a:hover, body.dark nav a:focus {
     }
 
     a.cert-link:hover {
-  color: #0c3873;
-  font-weight: bold;
+  color: #6ca9ff;
   text-decoration: none;
-  transform: scale(1.05);
+  
 }
 
 
@@ -292,7 +292,7 @@ body.dark nav a:hover, body.dark nav a:focus {
     }
     body.dark .formal-section:hover {
       background: #202023;
-      box-shadow: 0 8px 32px rgba(32, 38, 43, 0.097);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.632);
       transform: translateY(-2px) scale(1.01);
     }
     .formal-section h2 {
@@ -378,7 +378,7 @@ body.dark nav a:hover, body.dark nav a:focus {
     }
     body.dark .formal-section:hover {
     background: #29292c99;
-    box-shadow: 0 8px 32px rgba(32, 38, 43, 0.097);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.862);
     /* Slightly blue-tinted shadow for dark mode */
     transform: translateY(-2px) scale(1.01);
   }
@@ -418,7 +418,7 @@ body.dark .contact-section {
   background-color: #1e1e1e;
   border-color: #333;
   color: #e0e0e0;
-  box-shadow: 0 6px 14px rgba(255,255,255,0.1);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.85);
 }
 .projects-section {
   background-color: #f5faff;
@@ -450,7 +450,7 @@ body.dark .projects-section {
   background-color: #1e1e1e;
   border-color: #333;
   color: #e0e0e0;
-  box-shadow: 0 6px 14px rgba(255, 255, 255, 0.06);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.85); /* black shadow */
 }
 
 body.dark .projects-section .project {
@@ -479,7 +479,7 @@ body.dark .projects-section .project:hover {
   padding: 2rem 2.5rem;
   
   border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+  box-shadow: 0 8px 20px rgba(70, 131, 176, 0.267);
   
   transition: color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
   
@@ -499,9 +499,10 @@ body.dark .projects-section .project:hover {
 
 /* Dark mode */
 body.dark .intro-text {
-  background: rgba(30, 30, 30, 0.6);
+  background: rgba(45, 45, 45, 0.6);
   border: 1px solid  #070809;
   color: #f8f8f8;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.432);
 }
 
 /* Override all normal links in dark mode */
@@ -517,7 +518,8 @@ body.dark a.cert-link {
 /* Optional: link hover color in dark mode */
 body.dark a:hover {
   text-decoration: none;
-  color: #1592eb;  /* even lighter on hover */
+  color: #88c8fd; 
+  /* even lighter on hover */
 }
 .title-row {
   display: flex;
@@ -599,7 +601,7 @@ body.dark .dark-toggle-frame {
     /* In dark mode, set university/school links to dark blue and keep weight */
     body.dark #education .edu-card a.cert-link,
     body.dark #education .edu-card .psu-school {
-      color: #0d47a1 !important;
+      color:#ffffff !important;
       font-weight: 500 !important;
       text-decoration: none !important;
       transition: color 0.18s, font-weight 0.18s;
@@ -648,13 +650,13 @@ body.dark #education .edu-card span[style*="color:#388e3c"] {
 }
 
 body.dark #education .edu-card span[style*="color:#333"] {
-  color: #fff !important; /* White for years */
+  color: #9b9a9a !important; /* White for years */
   font-weight: normal !important;
   font-size: 1rem !important; /* Match light mode size */
 }
 
 body.dark #education .edu-card span[style*="color:#555"] {
-  color: #fff !important; /* White for extra info */
+  color: #878686 !important; /* White for extra info */
   font-weight: normal !important;
   font-size: 0.97rem !important; /* Match light mode size */
 }
@@ -762,6 +764,9 @@ body:not(.dark) .projects-section:hover {
   box-shadow: 0 8px 32px rgba(25, 118, 210, 0.13);
   background: #fafbfff5;
   transform: translateY(-2px) scale(1.01);
+}
+body:not(.dark) {
+  font-weight: 550;/* or 1.1rem for a bigger step */
 }
 
 /* Remove or neutralize the global .formal-section:hover and .projects-section:hover */
@@ -956,13 +961,13 @@ body:not(.dark) .projects-section:hover {
       <h2>Certifications</h2>
       <div class="section-divider"></div>
       <ul>
-        <li><a href="certif.html?file=certif1.pdf" class="cert-link" target="_blank">Digital Transformation 101: A Webinar Series on Technology Adoption
+        <li><a href="certif.html?file=pics/certif1.pdf" class="cert-link" target="_blank">Digital Transformation 101: A Webinar Series on Technology Adoption
 of MSMEs</a></li>
-        <li><a href="certif.html?file=certif2.jpeg" class="cert-link" target="_blank">Resilience and Response: Cybersecurity & Digital Forensics for Cyber and Critical Technologies</a></li>
-        <li><a href="certif.html?file=certif3.png" class="cert-link" target="_blank">Digital Security and Data Privacy: How to Safeguard Our Data in Today's World</a></li>
-        <li><a href="certif.html?file=certif4.png" class="cert-link" target="_blank">How to Start Content Creating: from Ideas to Execution</a></li>
-        <li><a href="certif.html?file=certif5.pdf" class="cert-link" target="_blank">Be Smart, Stay Safe: Protecting Yourself in the Digital Age</a></li>
-        <li><a href="certif.html?file=certif6.pdf" class="cert-link" target="_blank">Introduction to Data Science: Roles and Basic MySQL Skills</a></li>
+        <li><a href="certif.html?file=pics/certif2.jpeg" class="cert-link" target="_blank">Resilience and Response: Cybersecurity & Digital Forensics for Cyber and Critical Technologies</a></li>
+        <li><a href="certif.html?file=pics/certif3.png" class="cert-link" target="_blank">Digital Security and Data Privacy: How to Safeguard Our Data in Today's World</a></li>
+        <li><a href="certif.html?file=pics/certif4.png" class="cert-link" target="_blank">How to Start Content Creating: from Ideas to Execution</a></li>
+        <li><a href="certif.html?file=pics/certif5.pdf" class="cert-link" target="_blank">Be Smart, Stay Safe: Protecting Yourself in the Digital Age</a></li>
+        <li><a href="certif.html?file=pics/certif6.pdf" class="cert-link" target="_blank">Introduction to Data Science: Roles and Basic MySQL Skills</a></li>
       </ul>
     </section>
   </div>

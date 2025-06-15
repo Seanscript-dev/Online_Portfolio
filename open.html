@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Loading | SeanScript Development</title>
+  <style>
+    :root {
+      --bg-dark: #0f172a;
+      --text-dark: #f1f5f9;
+      --bg-light: #f8fafc;
+      --text-light: #0f172a;
+      --accent: #3b82f6;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 100vh;
+      background-color: var(--bg-dark);
+      color: var(--text-dark);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      animation: fadeIn 1s ease-in;
+      transition: background-color 0.4s ease, color 0.4s ease, opacity 1s ease;
+    }
+
+    @media (prefers-color-scheme: light) {
+      body {
+        background-color: var(--bg-light);
+        color: var(--text-light);
+      }
+    }
+
+    .logo-loader {
+      width: 180px;
+      height: 180px;
+      background: url('pics/dp2.svg') no-repeat center/contain;
+      animation: pulse 1.8s ease-in-out infinite, glow 2s ease-in-out infinite;
+      margin-bottom: 1.4rem;
+    }
+
+    .brand {
+      text-align: center;
+      margin-bottom: 1rem;
+      line-height: 1.3;
+    }
+
+    .brand .main-name {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .brand .main-name span {
+      color: var(--accent);
+    }
+
+    .brand .sub-name {
+      font-size: 0.9rem;
+      letter-spacing: 5px;
+      font-weight: 400;
+      opacity: 0.75;
+    }
+
+    .loading-text {
+      font-size: 1rem;
+      font-weight: 500;
+      display: inline-block;
+      border-right: 2px solid currentColor;
+      white-space: nowrap;
+      overflow: hidden;
+      width: 0;
+      animation: typing 2s steps(20, end) forwards, blink 0.8s infinite;
+      opacity: 0.85;
+    }
+
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 160px; }
+    }
+
+    @keyframes blink {
+      0%, 100% { border-color: transparent; }
+      50% { border-color: currentColor; }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.07); }
+    }
+
+    @keyframes glow {
+      0%, 100% { filter: drop-shadow(0 0 0px var(--accent)); }
+      50% { filter: drop-shadow(0 0 12px var(--accent)); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    .fade-out {
+      opacity: 0;
+    }
+  </style>
+
+  <script>
+    setTimeout(() => {
+      document.body.classList.add('fade-out');
+      setTimeout(() => {
+        window.location.href = "portfolio.html?fadein=1";
+      }, 1000);
+    }, 2500);
+  </script>
+</head>
+
+<body>
+  <div class="logo-loader"></div>
+
+  <div class="brand">
+    <div class="main-name"><span>Sean</span>Script</div>
+    <div class="sub-name">DEVELOPMENT</div>
+  </div>
+
+  <div class="loading-text">Loading portfolio...</div>
+</body>
+</html>

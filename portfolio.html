@@ -784,24 +784,65 @@ body:not(.dark) {
   /* box-shadow, background, transform handled above */
 }
   </style>
+ <style>
+    /* General light mode font weight */
+    body:not(.dark) {
+      font-weight: 550;
+    }
+
+    /* Hover effect only in light mode */
+    body:not(.dark) .formal-section:hover,
+    body:not(.dark) .projects-section:hover {
+      box-shadow: 0 8px 32px rgba(25, 118, 210, 0.13);
+      background: #fafbfff5;
+      transform: translateY(-2px) scale(1.01);
+    }
+
+    /* Neutralize global hovers by default */
+    .formal-section:hover,
+    .projects-section:hover {
+      /* No jump by default */
+    }
+
+    /* Fade-in effect when ?fadein=1 is present */
+    body.fadein {
+      animation: fadeIn 1s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+  </style>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('fadein') === '1') {
+        document.body.classList.add('fadein');
+      }
+    });
+  </script>
 </head>
+
 <body>
   <div class="corner-logo" aria-label="Site logo">
-  <img src="dp2.svg" alt="Logo" />
-  <span>Seanscript.dev</span>
-</div>
+    <img src="pics/dp2.svg" alt="Logo" />
+    <span>Seanscript.dev</span>
+  </div>
+
   <header>
     <div class="header-content">
-      <img src="dp3.jpg" alt="Sean Script Profile Photo" class="profile-photo" />
+      <img src="pics/dp3.jpg" alt="Sean Script Profile Photo" class="profile-photo" />
       <div class="header-text">
         <div class="title-row">
           <h1>Sean Script</h1>
           <span class="dark-toggle-frame" role="region" aria-label="Toggle dark mode">
-    <label class="dark-toggle">
-      <input type="checkbox" id="darkToggle">
-      <span>Dark Mode</span>
-    </label>
-  </span>
+            <label class="dark-toggle">
+              <input type="checkbox" id="darkToggle">
+              <span>Dark Mode</span>
+            </label>
+          </span>
         </div>
         <p>Computer Engineer | Full-Stack Developer | Tech Enthusiast</p>
       </div>

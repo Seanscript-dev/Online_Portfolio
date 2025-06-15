@@ -573,6 +573,13 @@ body.dark .dark-toggle-frame {
   border: 1px solid #333;
   box-shadow: 0 2px 8px rgba(0,0,0,0.12);
 }
+body:not(.dark) a.cert-link[href*="location.html"] {
+  color:  #1a365d !important;
+}
+body:not(.dark) a.cert-link[href*="location.html"]:hover {
+  color: #6ca9ff !important;
+  text-decoration: none;
+}
 
 /* Education section card hover effect */
     #education .edu-card {
@@ -779,12 +786,12 @@ body:not(.dark) {
 </head>
 <body>
   <div class="corner-logo" aria-label="Site logo">
-  <img src="dp2.svg" alt="Logo" />
+  <img src="pics/dp2.svg" alt="Logo" />
   <span>Seanscript.dev</span>
 </div>
   <header>
     <div class="header-content">
-      <img src="dp3.jpg" alt="Sean Script Profile Photo" class="profile-photo" />
+      <img src="pics/dp3.jpg" alt="Sean Script Profile Photo" class="profile-photo" />
       <div class="header-text">
         <div class="title-row">
           <h1>Sean Script</h1>
@@ -990,7 +997,7 @@ of MSMEs</a></li>
   </section>
 
   <footer style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.3rem 0.5rem; ">
-  <img src="dp2.svg" alt="Logo" style="height: 60px;">
+  <img src="pics/dp2.svg" alt="Logo" style="height: 60px;">
   <p>&copy; 2025 Sean Script. All rights reserved.</p>
 </footer>
 

@@ -462,14 +462,15 @@ body.dark .projects-section .project:hover {
   background: #333;
 }
 .intro-text {
-  font-size: 1.2rem;
+  font-weight: 10000;        /* Up from 500 */
+  color: #08306b;          /* Deeper than #0d47a1 */
+  font-size: 1.22rem;      /* Slight size increase for presence */
+  letter-spacing: 0.01em;
   line-height: 1.6;
-  color: #0d47a1;
   max-width: 700px;
   margin: 2rem auto;
   text-align: justify;
-  font-weight: 500;
-  letter-spacing: 0.02em;
+  
   
   background: #f5faff;
   backdrop-filter: blur(12px);
@@ -608,7 +609,7 @@ body:not(.dark) a.cert-link[href*="location.html"]:hover {
     /* In dark mode, set university/school links to dark blue and keep weight */
     body.dark #education .edu-card a.cert-link,
     body.dark #education .edu-card .psu-school {
-      color:#e3f2fd; !important;
+      color:#e3f2fd !important;
       font-weight: 500 !important;
       text-decoration: none !important;
       transition: color 0.18s, font-weight 0.18s;
@@ -832,7 +833,7 @@ body:not(.dark) {
           <!-- Add more personal info as needed -->
         </ul>
         <!-- View PSA Button -->
-        <a href="circuit.png" target="_blank" class="psa-fab">
+        <a href="pics/circuit.png" target="_blank" class="psa-fab">
           <i class="fa fa-id-card"></i>
           <span>View PSA</span>
         </a>

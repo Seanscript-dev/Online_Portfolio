@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PSA Official Document Viewer - Philippine Statistics Authority</title>
+    <style>
+        :root {
+            --bg-color: #f0f2f5;
+            --card-bg: #ffffff;
+            --text-primary: #212529;
+            --text-secondary: #495057;
+            --header-bg: #003366;
+            --header-text: #ffffff;
+            --border-color: #dee2e6;
+            --accent-color: #d9534f;
+            --seal-color: #8b0000;
+            --button-bg: #0056b3;
+            --nav-bg: #002244;
+            --footer-bg: #001a33;
+            --gold-accent: #d4af37;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Government Header */
+        .government-banner {
+            background-color: #002244;
+            color: white;
+            padding: 5px 0;
+            text-align: center;
+            font-size: 0.9em;
+            border-bottom: 2px solid var(--gold-accent);
+        }
+
+        .agency-header {
+            background-color: var(--header-bg);
+            color: var(--header-text);
+            padding: 15px 0;
+            border-bottom: 5px solid var(--accent-color);
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .agency-branding {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .agency-logo {
+            height: 60px;
+            width: auto;
+        }
+
+        .agency-titles {
+            text-align: left;
+        }
+
+        .agency-name {
+            font-size: 1.5em;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        .agency-subtitle {
+            font-size: 0.8em;
+            margin-top: 3px;
+            color: rgba(255,255,255,0.9);
+        }
+
+        .government-seal {
+            height: 50px;
+            width: auto;
+            opacity: 0.9;
+        }
+
+        /* Navigation */
+        .main-navigation {
+            background-color: var(--nav-bg);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .nav-menu {
+            list-style: none;
+            display: flex;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 12px 15px;
+            font-size: 0.9em;
+            transition: background-color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+            width: 100%;
+        }
+
+        .breadcrumb {
+            padding: 10px 0;
+            font-size: 0.9em;
+            color: var(--text-secondary);
+        }
+
+        .breadcrumb a {
+            color: var(--button-bg);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        /* Document Viewer */
+        .document-viewer-container {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 15px;
+            align-self: flex-start;
+            position: sticky;
+            top: 140px;
+        }
+
+        .sidebar-title {
+            font-size: 1.1em;
+            color: var(--header-bg);
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 15px;
+        }
+
+        .document-menu {
+            list-style: none;
+        }
+
+        .document-menu li {
+            margin-bottom: 8px;
+        }
+
+        .document-menu a {
+            display: block;
+            padding: 8px 10px;
+            color: var(--text-primary);
+            text-decoration: none;
+            border-left: 3px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .document-menu a:hover, .document-menu a.active {
+            border-left: 3px solid var(--accent-color);
+            background-color: var(--bg-color);
+            color: var(--header-bg);
+        }
+
+        .document-container {
+            flex: 1;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            position: relative;
+            padding: 25px;
+        }
+
+        .document-container::after {
+            content: "";
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 80px;
+            height: 80px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="10" y="50" font-family="Arial" font-size="10" fill="%238b0000" opacity="0.1">OFFICIAL DOCUMENT</text></svg>');
+            background-repeat: repeat;
+            opacity: 0.2;
+        }
+
+        .document-title {
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--border-color);
+            position: relative;
+        }
+
+        .document-title h1 {
+            font-size: 1.8em;
+            color: var(--header-bg);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .document-title p {
+            font-size: 1em;
+            color: var(--text-secondary);
+            margin-top: 5px;
+        }
+
+        .document-image-container {
+            margin: 25px auto;
+            max-width: 800px;
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            background-color: var(--bg-color);
+            text-align: center;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+        }
+
+        .document-image {
+            max-width: 100%;
+            max-height: 70vh;
+            object-fit: contain;
+            cursor: zoom-in;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.2s ease;
+        }
+
+        .document-image:hover {
+            transform: scale(1.01);
+        }
+
+        .document-actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .action-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: var(--button-bg);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 0.9em;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .action-button:hover {
+            background-color: #004494;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .action-button.secondary {
+            background-color: var(--text-secondary);
+        }
+
+        .action-button.secondary:hover {
+            background-color: #3d4d5d;
+        }
+
+        .document-info {
+            margin-top: 30px;
+            border-top: 2px solid var(--border-color);
+            padding-top: 20px;
+        }
+
+        .document-info h2 {
+            color: var(--header-bg);
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .info-item {
+            padding: 12px;
+            border-left: 3px solid var(--header-bg);
+            background-color: var(--bg-color);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .info-label {
+            font-weight: bold;
+            color: var(--header-bg);
+            font-size: 0.85em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .info-value {
+            color: var(--text-primary);
+            font-size: 0.95em;
+            margin-top: 8px;
+        }
+
+        /* Footer */
+        .official-footer {
+            background-color: var(--footer-bg);
+            color: white;
+            padding: 30px 0 20px;
+            margin-top: 40px;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            padding: 0 20px;
+        }
+
+        .footer-section h3 {
+            color: var(--gold-accent);
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 8px;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            font-size: 0.85em;
+            transition: color 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            margin-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.8em;
+            color: rgba(255,255,255,0.6);
+        }
+
+        /* Zoom functionality */
+        .zoom-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .zoomed-image {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            border: 2px solid var(--border-color);
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+
+        .close-zoom {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            color: white;
+            font-size: 2.5em;
+            cursor: pointer;
+            background: rgba(0,0,0,0.5);
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            transition: all 0.2s ease;
+        }
+
+        .close-zoom:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .document-viewer-container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                position: static;
+                margin-bottom: 20px;
+            }
+            
+            .document-image {
+                max-height: 60vh;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+            
+            .agency-branding {
+                flex-direction: column;
+            }
+            
+            .agency-titles {
+                text-align: center;
+            }
+            
+            .agency-name {
+                font-size: 1.3em;
+            }
+            
+            .government-seal {
+                display: none;
+            }
+            
+            .nav-menu {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .document-title h1 {
+                font-size: 1.4em;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .document-container::after {
+                width: 60px;
+                height: 60px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .agency-name {
+                font-size: 1.1em;
+            }
+            
+            .agency-subtitle {
+                font-size: 0.75em;
+            }
+            
+            .nav-link {
+                padding: 10px 8px;
+                font-size: 0.8em;
+            }
+            
+            .document-title h1 {
+                font-size: 1.2em;
+            }
+            
+            .document-actions {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .action-button {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        @media print {
+            body {
+                background-color: white;
+                color: black;
+            }
+            
+            .government-banner, .agency-header, .main-navigation, .sidebar, .footer {
+                display: none;
+            }
+            
+            .document-container {
+                box-shadow: none;
+                border: none;
+                padding: 0;
+            }
+            
+            .document-image-container {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Government Banner -->
+    <div class="government-banner">
+        Republic of the Philippines - Official Gazette
+    </div>
+
+    <!-- Agency Header -->
+    <header class="agency-header">
+        <div class="header-container">
+            <div class="agency-branding">
+                <img src="pics/psa1.png" alt="PSA Logo" class="agency-logo">
+                <div class="agency-titles">
+                    <div class="agency-name">PHILIPPINE STATISTICS AUTHORITY</div>
+                    <div class="agency-subtitle">The Philippines' National Statistical System</div>
+                </div>
+            </div>
+            <img src="pics/seal.png" alt="Philippine Seal" class="government-seal">
+        </div>
+    </header>
+
+    <!-- Main Navigation -->
+    <nav class="main-navigation">
+        <div class="nav-container">
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="#" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">About PSA</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">Services</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">Statistics</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">Publications</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">News</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="breadcrumb">
+            <a href="#">Home</a> &raquo; <a href="#">Services</a> &raquo; <a href="#">Document Verification</a> &raquo; Certificate of Live Birth
+        </div>
+
+        <div class="document-viewer-container">
+            <aside class="sidebar">
+                <h3 class="sidebar-title">Civil Registry Documents</h3>
+                <ul class="document-menu">
+                    <li><a href="#" class="active">Certificate of Live Birth</a></li>
+                    <li><a href="#">Certificate of Marriage</a></li>
+                    <li><a href="">Certificate of Death</a></li>
+                    <li><a href="#">Certificate of No Marriage</a></li>
+                    <li><a href="#">Certificate of Foreign Marriage</a></li>
+                    <li><a href="#">Certificate of Foundling</a></li>
+                    <li><a href="#">Certificate of Late Registration</a></li>
+                </ul>
+            </aside>
+
+            <div class="document-container">
+                <div class="document-title">
+                    <h1>CERTIFICATE OF LIVE BIRTH</h1>
+                    <p>Official Document Issued by the Philippine Statistics Authority</p>
+                </div>
+
+                <div class="document-image-container">
+                    <img src="pics/psa.jpg" alt="PSA Birth Certificate" class="document-image" onclick="zoomImage(this)">
+                </div>
+
+                <div class="document-actions">
+                  
+                    
+                    <button class="action-button" onclick="window.print()">
+                        <span>Print Document</span>
+                    </button>
+                </div>
+
+                <div class="document-info">
+                    <h2>Document Information</h2>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">Document Type</div>
+                            <div class="info-value">Birth Certificate (NSO/PSA)</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Security Features</div>
+                            <div class="info-value">Security Paper, Barcode, Serial Number, PSA Seal</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Document Number</div>
+                            <div class="info-value">PSA-XXXX-XXXXXX</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Date Issued</div>
+                            <div class="info-value">MM/DD/YYYY</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Purpose</div>
+                            <div class="info-value">Legal Identification, Passport Application, etc.</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Authentication</div>
+                            <div class="info-value">Official PSA Seal and Signature</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="official-footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About PSA</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">FAQs</a></li>
+                    <li><a href="#">Sitemap</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Services</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Civil Registry</a></li>
+                    <li><a href="#">Census</a></li>
+                    <li><a href="#">Surveys</a></li>
+                    <li><a href="#">Data Request</a></li>
+                    <li><a href="#">Document Verification</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Legal</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Use</a></li>
+                    <li><a href="#">Data Privacy Act</a></li>
+                    <li><a href="#">FOI</a></li>
+                    <li><a href="#">Transparency Seal</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Information</h3>
+                <ul class="footer-links">
+                    <li>PSA Building, East Avenue</li>
+                    <li>Diliman, Quezon City</li>
+                    <li>Philippines 1101</li>
+                    <li>Phone: (02) 8462-6600</li>
+                    <li>Email: info@psa.gov.ph</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2023 Philippine Statistics Authority. All Rights Reserved.</p>
+            <p>This is the official website of the Philippine Statistics Authority.</p>
+        </div>
+    </footer>
+
+    <!-- Zoom Overlay -->
+    <div class="zoom-overlay" id="zoomOverlay" onclick="closeZoom(event)">
+        <span class="close-zoom" onclick="closeZoom(event)">&times;</span>
+        <img id="zoomedImage" class="zoomed-image" alt="Zoomed PSA Document">
+    </div>
+
+    <script>
+        // Image zoom functionality
+        function zoomImage(img) {
+            const overlay = document.getElementById('zoomOverlay');
+            const zoomedImg = document.getElementById('zoomedImage');
+            
+            zoomedImg.src = img.src;
+            overlay.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeZoom(event) {
+            if (event) {
+                event.stopPropagation();
+            }
+            
+            const overlay = document.getElementById('zoomOverlay');
+            overlay.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close zoom with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeZoom();
+            }
+        });
+
+        // Add loading animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const image = document.querySelector('.document-image');
+            image.style.opacity = '0';
+            
+            image.onload = function() {
+                setTimeout(() => {
+                    image.style.transition = 'opacity 0.5s ease';
+                    image.style.opacity = '1';
+                }, 100);
+            };
+            
+            if (image.complete) {
+                image.onload();
+            }
+        });
+    </script>
+</body>
+</html>

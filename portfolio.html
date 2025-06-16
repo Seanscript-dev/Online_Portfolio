@@ -382,7 +382,74 @@ body.dark nav a:hover, body.dark nav a:focus {
     /* Slightly blue-tinted shadow for dark mode */
     transform: translateY(-2px) scale(1.01);
   }
+.main-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.3rem 0.8rem; /* ✅ smaller top/bottom */
+  font-size: 0.78rem;      /* ✅ smaller text */
+  line-height: 1.2;
+  background: inherit;
+  color: inherit;
+  border-top: 1px solid rgba(100, 100, 100, 0.08);
+}
 
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  white-space: nowrap;
+}
+
+.footer-brand img {
+  height: 36px; /* ✅ smaller logo */
+  flex-shrink: 0;
+}
+
+.footer-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.05;
+}
+
+.footer-title {
+  font-weight: 600;
+  font-size: 1.05rem;
+}
+
+.footer-subtitle {
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+}
+
+.footer-tagline {
+  font-style: italic;
+  margin-left: 0.8rem;
+  flex-shrink: 0;
+  white-space: nowrap;
+  opacity: 0.85;
+}
+
+.footer-links {
+  display: flex;
+  gap: 0.7rem;
+  margin-left: 0.8rem;
+  flex-shrink: 0;
+}
+
+.footer-links a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  font-weight: 500;
+}
+
+.footer-links a:hover {
+  color: #90caf9;
+}
     @media (max-width: 480px) {
       .header-content {
         flex-direction: column;
@@ -547,17 +614,38 @@ body.dark a:hover {
   left: 10px;
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
   font-family: 'Segoe UI', sans-serif;
-  font-size: 20px; /* increased from 14px */
-  color: #00BFFF;
   z-index: 1000;
+  color: inherit;
 }
 
 .corner-logo img {
-  height: 35px; /* increased from 24px */
-  width: 48px;
+  height: 50px;
+  width: auto;
+  flex-shrink: 0;
 }
+
+.corner-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.corner-name {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: inherit;
+}
+
+.corner-sub {
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-align:center;
+  letter-spacing: 0.05em;
+  color: inherit;
+}
+
 .dark-toggle-frame {
   display: inline-flex;
   align-items: center;
@@ -575,7 +663,7 @@ body.dark .dark-toggle-frame {
   box-shadow: 0 2px 8px rgba(0,0,0,0.12);
 }
 body:not(.dark) a.cert-link[href*="location.html"] {
-  color:  #5d1a39  !important;
+  color:  #1a365d !important;
 }
 body:not(.dark) a.cert-link[href*="location.html"]:hover {
   color: #6ca9ff !important;
@@ -825,11 +913,13 @@ body:not(.dark) {
   </script>
 </head>
 
-<body>
-  <div class="corner-logo" aria-label="Site logo">
-    <img src="dp2.svg" alt="Logo" />
-    <span>Seanscript.dev</span>
+<div class="corner-logo" aria-label="Site logo">
+  <img src="dp2.svg" alt="Logo" />
+  <div class="corner-text">
+    <span class="corner-name">Seanscript</span>
+    <span class="corner-sub">DEVELOPMENT</span>
   </div>
+</div>
 
   <header>
     <div class="header-content">
@@ -874,7 +964,7 @@ body:not(.dark) {
           <!-- Add more personal info as needed -->
         </ul>
         <!-- View PSA Button -->
-        <a href="pics/circuit.png" target="_blank" class="psa-fab">
+        <a href="psa.html" target="_blank" class="psa-fab">
           <i class="fa fa-id-card"></i>
           <span>View PSA</span>
         </a>
@@ -1038,11 +1128,25 @@ of MSMEs</a></li>
 
   </section>
 
-  <footer style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.3rem 0.5rem; ">
-  <img src="dp2.svg" alt="Logo" style="height: 60px;">
-  <p>&copy; 2025 Sean Script. All rights reserved.</p>
-</footer>
+<footer class="main-footer">
+  <div class="footer-brand">
+    <img src="dp2.svg" alt="Logo">
+    <div class="footer-text">
+      <span class="footer-title">Seanscript</span>
+      <span class="footer-subtitle">DEVELOPMENT</span>
+    </div>
+  </div>
 
+  <div class="footer-tagline">
+    Delivering innovative, reliable, and efficient software solutions with passion and integrity.
+  </div>
+
+  <div class="footer-links">
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="terms.html">Terms of Service</a>
+    <a href="disclaimer.html">Disclaimer</a>
+  </div>
+</footer>
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>
     // Fade-in animation on page load

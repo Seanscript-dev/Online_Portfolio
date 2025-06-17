@@ -433,23 +433,32 @@ body.dark nav a:hover, body.dark nav a:focus {
   opacity: 0.85;
 }
 
-.footer-links {
-  display: flex;
-  gap: 0.7rem;
-  margin-left: 0.8rem;
-  flex-shrink: 0;
-}
-
-.footer-links a {
-  color: inherit;
-  text-decoration: none;
-  transition: color 0.2s ease;
+.footer-links button {
+  background: none;
+  border: none;
+  color: #2b4692; /* Default blue for light mode */
+  font-size: 0.9rem;
   font-weight: 500;
+  cursor: pointer;
+  margin: 0 8px;
+  padding: 4px 8px;
+  transition: color 0.3s, text-decoration 0.3s;
 }
 
-.footer-links a:hover {
-  color: #90caf9;
+.footer-links button:hover {
+  text-decoration: none;
+  color: #88c8fd; 
 }
+
+/* Dark mode support */
+body.dark .footer-links button {
+  color: #cfd5dc; /* Lighter blue for dark mode */
+}
+
+body.dark .footer-links button:hover {
+  color: #88c8fd; /* Even lighter on hover */
+}
+
     @media (max-width: 480px) {
       .header-content {
         flex-direction: column;
@@ -524,6 +533,9 @@ body.dark .projects-section .project {
   background: #2a2a2a;
   border-left-color: #64b5f6;
 }
+
+ 
+
 
 body.dark .projects-section .project:hover {
   background: #333;
@@ -830,6 +842,25 @@ body.dark .psa-fab:hover {
   position: relative;
   z-index: 1;
 }
+.aproject {
+  color: var(--link-color-light);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* Dark mode support for link */
+body.dark .aproject {
+  color: #0e7fdc; /* soft blue for dark mode */
+}
+
+/* Hover effect (applies in both light and dark mode) */
+.aproject:hover {
+  color: rgb(90, 181, 211); /* light blue */
+}body:not(.dark-mode) .aproject:hover {
+  color: rgb(89, 198, 253); /* Light blue for light mode hover */
+}
+  
+}
 .skill-anim.clicked {
   animation: skillClickAnim 0.55s cubic-bezier(.4,1.4,.2,1);
 }
@@ -1027,8 +1058,8 @@ body:not(.dark) {
   <h2>Projects</h2>
   <div class="section-divider"></div>
   <div class="project">
-    <h3>Smart Home Controller</h3>
-    <p>Built a Python-powered system to automate home devices using Raspberry Pi and MQTT.</p>
+    <h3><a href="https://seanscriptmath.netlify.app/" class="aproject"  target="_blank">Seanscript Education Math Game</a></h3>
+    <p>MathQuest is a fun, timed math challenge game with multiple question types and difficulty levels.</p>
   </div>
   <div class="project">
     <h3>Portfolio Website</h3>
@@ -1142,9 +1173,9 @@ of MSMEs</a></li>
   </div>
 
   <div class="footer-links">
-    <a href="privacy.html">Privacy Policy</a>
-    <a href="terms.html">Terms of Service</a>
-    <a href="disclaimer.html">Disclaimer</a>
+    <button onclick="window.location.href='policy.html?tab=privacy'">Privacy Policy</button>
+    <button onclick="window.location.href='policy.html?tab=terms'">Terms of Service</button>
+    <button onclick="window.location.href='policy.html?tab=disclaimer'">Disclaimer</button>
   </div>
 </footer>
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>

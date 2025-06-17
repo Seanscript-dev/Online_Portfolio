@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legal Documents - Seanscript DEVELOPMENT</title>
+    <style>
+        :root {
+            --bg-color: #f0f2f5;
+            --card-bg: #ffffff;
+            --text-primary: #212529;
+            --text-secondary: #495057;
+            --header-bg: #003366;
+            --header-text: #ffffff;
+            --border-color: #dee2e6;
+            --accent-color: #d9534f;
+            --seal-color: #8b0000;
+            --button-bg: #0056b3;
+            --nav-bg: #002244;
+            --footer-bg: #001a33;
+            --gold-accent: #d4af37;
+            --brand-color: #2c3e50;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Brand Header */
+        .brand-banner {
+            background-color: var(--brand-color);
+            color: white;
+            padding: 5px 0;
+            text-align: center;
+            font-size: 0.9em;
+            border-bottom: 2px solid var(--gold-accent);
+        }
+
+        .agency-header {
+            background-color: var(--brand-color);
+            color: var(--header-text);
+            padding: 15px 0;
+            border-bottom: 5px solid var(--accent-color);
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .agency-branding {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .agency-logo {
+            height: 50px;
+            width: auto;
+        }
+
+        .agency-titles {
+            text-align: left;
+        }
+
+        .agency-name {
+            font-size: 1.5em;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            color: white;
+        }
+
+        .agency-subtitle {
+            font-size: 0.8em;
+            margin-top: 3px;
+            color: rgba(255,255,255,0.9);
+        }
+
+        /* Back Button */
+        .back-button-container {
+            background-color: var(--bg-color);
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: var(--button-bg);
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 0.9em;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .back-button:hover {
+            background-color: #004494;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+            width: 100%;
+        }
+
+        .legal-tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .tab-button {
+            padding: 12px 20px;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .tab-button.active {
+            color: var(--brand-color);
+            border-bottom: 3px solid var(--accent-color);
+        }
+
+        .tab-button:hover:not(.active) {
+            color: var(--text-primary);
+            border-bottom: 3px solid var(--border-color);
+        }
+
+        .document-container {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .document-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .document-header h1 {
+            color: var(--brand-color);
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .document-header p {
+            color: var(--text-secondary);
+            font-size: 1em;
+        }
+
+        .document-section {
+            margin-bottom: 25px;
+        }
+
+        .document-section h2 {
+            color: var(--brand-color);
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .document-section p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .document-section ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .document-section li {
+            margin-bottom: 8px;
+        }
+
+        .cookie-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 0.9em;
+        }
+
+        .cookie-table th,
+        .cookie-table td {
+            border: 1px solid var(--border-color);
+            padding: 10px;
+            text-align: left;
+        }
+
+        .cookie-table th {
+            background-color: var(--bg-color);
+            font-weight: 600;
+            color: var(--brand-color);
+        }
+
+        .cookie-table tr:nth-child(even) {
+            background-color: rgba(0,0,0,0.02);
+        }
+
+        .last-updated {
+            font-style: italic;
+            color: var(--text-secondary);
+            text-align: right;
+            margin-top: 30px;
+            font-size: 0.9em;
+        }
+
+        /* Footer */
+        .official-footer {
+            background-color: var(--footer-bg);
+            color: white;
+            padding: 30px 0 20px;
+            margin-top: 40px;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            padding: 0 20px;
+        }
+
+        .footer-section h3 {
+            color: var(--gold-accent);
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 8px;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            font-size: 0.85em;
+            transition: color 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            margin-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.8em;
+            color: rgba(255,255,255,0.6);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+            
+            .agency-branding {
+                flex-direction: column;
+            }
+            
+            .agency-titles {
+                text-align: center;
+            }
+            
+            .agency-name {
+                font-size: 1.3em;
+            }
+            
+            .legal-tabs {
+                flex-wrap: nowrap;
+                padding-bottom: 10px;
+            }
+            
+            .tab-button {
+                padding: 8px 15px;
+                font-size: 0.9em;
+            }
+            
+            .document-header h1 {
+                font-size: 1.5em;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+
+            .cookie-table {
+                font-size: 0.8em;
+            }
+
+            .cookie-table th,
+            .cookie-table td {
+                padding: 8px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .agency-name {
+                font-size: 1.1em;
+            }
+            
+            .agency-subtitle {
+                font-size: 0.75em;
+            }
+            
+            .document-container {
+                padding: 20px;
+            }
+            
+            .document-header h1 {
+                font-size: 1.3em;
+            }
+
+            .cookie-table {
+                font-size: 0.75em;
+            }
+
+            .cookie-table th,
+            .cookie-table td {
+                padding: 6px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Brand Banner -->
+    <div class="brand-banner">
+        Seanscript DEVELOPMENT - Official Website
+    </div>
+
+    <!-- Agency Header -->
+    <header class="agency-header">
+        <div class="header-container">
+            <div class="agency-branding">
+                <img src="pics/dp2.svg" alt="Seanscript Logo" class="agency-logo">
+                <div class="agency-titles">
+                    <div class="agency-name">SEANSCRIPT DEVELOPMENT</div>
+                    <div class="agency-subtitle">Building Digital Solutions for the Future</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Back Button -->
+    <div class="back-button-container">
+        <button class="back-button" onclick="window.location.href='portfolio.html'">
+            <span>←</span>
+            <span>Back to Portfolio</span>
+        </button>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="legal-tabs">
+            <button class="tab-button active" onclick="showTab('privacy')">Privacy Policy</button>
+            <button class="tab-button" onclick="showTab('terms')">Terms of Service</button>
+            <button class="tab-button" onclick="showTab('disclaimer')">Disclaimer</button>
+            <button class="tab-button" onclick="showTab('cookies')">Cookie Policy</button>
+        </div>
+
+        <!-- Privacy Policy -->
+        <div id="privacy" class="document-container" style="display: block;">
+            <div class="document-header">
+                <h1>PRIVACY POLICY</h1>
+                <p>Last Updated: June 2023</p>
+            </div>
+
+            <div class="document-section">
+                <h2>1. Introduction</h2>
+                <p>Welcome to Seanscript DEVELOPMENT ("we," "our," or "us"). We are committed to protecting your privacy and ensuring the security of your personal information. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our services, including our website, applications, and other digital platforms.</p>
+                <p>By accessing or using our services, you agree to the terms of this Privacy Policy. If you do not agree with our policies and practices, please do not use our services.</p>
+            </div>
+
+            <div class="document-section">
+                <h2>2. Information We Collect</h2>
+                <p>We may collect various types of information from and about users of our services, including:</p>
+                <ul>
+                    <li><strong>Personal Information:</strong> Name, email address, phone number, and other contact details when you register for an account or contact us.</li>
+                    <li><strong>Usage Data:</strong> Information about how you interact with our services, including IP addresses, browser type, pages visited, and time spent on pages.</li>
+                    <li><strong>Technical Data:</strong> Device information, operating system, and other technical details about your access method.</li>
+                    <li><strong>Cookies:</strong> We use cookies and similar tracking technologies to enhance your experience and analyze service usage.</li>
+                </ul>
+            </div>
+
+            <div class="document-section">
+                <h2>3. How We Use Your Information</h2>
+                <p>We use the collected information for various purposes including:</p>
+                <ul>
+                    <li>Providing and maintaining our services</li>
+                    <li>Improving user experience and service functionality</li>
+                    <li>Communicating with users about services and updates</li>
+                    <li>Analyzing usage patterns and trends</li>
+                    <li>Ensuring security and preventing fraud</li>
+                </ul>
+            </div>
+
+            <div class="document-section">
+                <h2>4. Information Sharing and Disclosure</h2>
+                <p>We do not sell, trade, or otherwise transfer your personal information to third parties without your consent, except as described in this policy. We may share information in the following circumstances:</p>
+                <ul>
+                    <li>With service providers who assist us in operating our services</li>
+                    <li>When required by law or to protect our rights</li>
+                    <li>In connection with a business transfer or merger</li>
+                    <li>With your explicit consent</li>
+                </ul>
+            </div>
+
+            <div class="document-section">
+                <h2>5. Data Security</h2>
+                <p>We implement appropriate technical and organizational measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction. However, no method of transmission over the internet is 100% secure.</p>
+            </div>
+
+            <div class="document-section">
+                <h2>6. Your Rights</h2>
+                <p>You have certain rights regarding your personal information, including:</p>
+                <ul>
+                    <li>The right to access your personal data</li>
+                    <li>The right to rectify inaccurate data</li>
+                    <li>The right to erase your data under certain circumstances</li>
+                    <li>The right to restrict processing</li>
+                    <li>The right to data portability</li>
+                </ul>
+            </div>
+
+            <div class="last-updated">
+                <p>This document was last updated on June 15, 2023</p>
+            </div>
+        </div>
+
+        <!-- Terms of Service -->
+        <div id="terms" class="document-container" style="display: none;">
+            <div class="document-header">
+                <h1>TERMS OF SERVICE</h1>
+                <p>Last Updated: June 2023</p>
+            </div>
+
+            <div class="document-section">
+                <h2>1. Acceptance of Terms</h2>
+                <p>By accessing or using any services provided by Seanscript DEVELOPMENT ("we," "us," or "our"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, you may not access or use our services.</p>
+            </div>
+
+            <div class="document-section">
+                <h2>2. Description of Services</h2>
+                <p>Seanscript DEVELOPMENT provides web and software development services, including but not limited to:</p>
+                <ul>
+                    <li>Custom website development</li>
+                    <li>Web application development</li>
+                    <li>Mobile application development</li>
+                    <li>UI/UX design services</li>
+                    <li>Technical consulting</li>
+                </ul>
+            </div>
+
+            <div class="document-section">
+                <h2>3. User Responsibilities</h2>
+                <p>When using our services, you agree to:</p>
+                <ul>
+                    <li>Provide accurate and complete information when required</li>
+                    <li>Comply with all applicable laws and regulations</li>
+                    <li>Not engage in any illegal or prohibited activities</li>
+                    <li>Not attempt to interfere with or disrupt our services</li>
+                    <li>Not use our services to transmit any harmful or malicious content</li>
+                </ul>
+            </div>
+
+            <div class="document-section">
+                <h2>4. Intellectual Property</h2>
+                <p>All content, features, and functionality of our services are owned by Seanscript DEVELOPMENT and are protected by copyright, trademark, and other intellectual property laws. You may not reproduce, distribute, or create derivative works without our express written permission.</p>
+            </div>
+
+            <div class="document-section">
+                <h2>5. Payment Terms</h2>
+                <p>If you purchase services from us, you agree to pay all fees and charges as specified in your service agreement. All payments are due according to the payment schedule outlined in your contract.</p>
+            </div>
+
+            <div class="document-section">
+                <h2>6. Termination</h2>
+                <p>We reserve the right to terminate or suspend your access to our services at any time, without prior notice, for conduct that we believe violates these Terms or is harmful to other users or our business.</p>
+            </div>
+
+            <div class="last-updated">
+                <p>This document was last updated on June 15, 2023</p>
+            </div>
+        </div>
+
+        <!-- Disclaimer -->
+        <div id="disclaimer" class="document-container" style="display: none;">
+            <div class="document-header">
+                <h1>DISCLAIMER</h1>
+                <p>Last Updated: June 2023</p>
+            </div>
+
+            <div class="document-section">
+                <h2>1. No Warranties</h2>
+                <p>All information and services provided by Seanscript DEVELOPMENT are provided "as is" without warranty of any kind, either express or implied, including, but not limited to, the implied warranties of merchantability, fitness for a particular purpose, or non-infringement.</p>
+                <p>We do not warrant that our services will be uninterrupted, timely, secure, or error-free, or that defects will be corrected. We make no warranty as to the results that may be obtained from the use of our services.</p>
+            </div>
+
+            <div class="document-section">
+                <h2>2. Limitation of Liability</h2>
+                <p>In no event shall Seanscript DEVELOPMENT, its directors, employees, or agents be liable for any indirect, incidental, special, consequential, or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses, resulting from:</p>
+                <ul>
+                    <li>Your access to or use of or inability to access or use our services</li>
+                    <li>Any conduct or content of any third party on our services</li>
+                    <li>Any content obtained from our services</li>
+                    <li>Unauthorized access, use, or alteration of your transmissions or content</li>
+                </ul>
+            </div>
+
+            <div class="document-section">
+                <h2>3. External Links</h2>
+                <p>Our services may contain links to third-party websites or services that are not owned or controlled by Seanscript DEVELOPMENT. We have no control over, and assume no responsibility for, the content, privacy policies, or practices of any third-party websites or services.</p>
+                <p>You acknowledge and agree that Seanscript DEVELOPMENT shall not be responsible or liable, directly or indirectly, for any damage or loss caused or alleged to be caused by or in connection with the use of or reliance on any such content, goods, or services available on or through any such websites or services.</p>
+            </div>
+
+            <div class="document-section">
+                <h2>4. Professional Advice</h2>
+                <p>The information provided through our services is for general informational purposes only and should not be considered as professional advice. You should consult with appropriate professionals for specific advice tailored to your particular circumstances.</p>
+            </div>
+
+            <div class="document-section">
+                <h2>5. Changes to Services</h2>
+                <p>We reserve the right to modify, suspend, or discontinue any aspect of our services at any time without notice. We shall not be liable to you or any third party for any modification, suspension, or discontinuation of our services.</p>
+            </div>
+
+            <div class="last-updated">
+                <p>This document was last updated on June 15, 2023</p>
+            </div>
+        </div>
+
+        <!-- Cookie Policy -->
+        <div id="cookies" class="document-container" style="display: none;">
+            <div class="document-header">
+                <h1>COOKIE POLICY</h1>
+                <p>Last Updated: June 2023</p>
+            </div>
+
+            <div class="document-section">
+                <h2>1. What Are Cookies</h2>
+                <p>Cookies are small text files that are stored on your computer, tablet, or mobile device when you visit our website. They are widely used to make websites work more efficiently and provide information to website owners.</p>
+                <p>Cookies allow us to recognize your device and store some information about your preferences or past actions on our website. This helps us provide you with a more personalized experience and improve our services.</p>
+            </div>
+
+            <div class="document-section">
+                <h2>2. How We Use Cookies</h2>
+                <p>Seanscript DEVELOPMENT uses cookies for several purposes:</p>
+                <ul>
+                    <li><strong>Essential Cookies:</strong> These are necessary for the website to function properly and cannot be disabled.</li>
+                    <li><strong>Performance Cookies:</strong> These help us understand how visitors interact with our website by collecting and reporting information anonymously.</li>
+                    <li><strong>Functionality Cookies:</strong> These enable the website to provide enhanced functionality and personalization.</li>
+                    <li><strong>Targeting Cookies:</strong> These may be set through our site by our advertising partners to build a profile of your interests.</li>
+                </ul>
+            </div>
+
+            <div class="document-section">
+                <h2>3. Types of Cookies We Use</h2>
+                <table class="cookie-table">
+                    <thead>
+                        <tr>
+                            <th>Cookie Type</th>
+                            <th>Purpose</th>
+                            <th>Duration</th>
+                            <th>Essential</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Session Cookies</td>
+                            <td>Maintain user session and authentication</td>
+                            <td>Until browser closes</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>Preference Cookies</td>
+                            <td>Remember user preferences and settings</td>
+                            <td>Up to 1 year</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>Analytics Cookies</td>
+                            <td>Track website usage and performance</td>
+                            <td>Up to 2 years</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>Security Cookies</td>
+                            <td>Protect against fraud and security threats</td>
+                            <td>Until browser closes</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>Marketing Cookies</td>
+                            <td>Deliver relevant advertisements</td>
+                            <td>Up to 90 days</td>
+                            <td>No</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="document-section">
+                <h2>4. Third-Party Cookies</h2>
+                <p>We may also use third-party cookies from trusted partners for analytics, advertising, and social media integration. These cookies are governed by the privacy policies of the respective third parties:</p>
+                <ul>
+                    <li><strong>Google Analytics:</strong> Used to analyze website traffic and user behavior</li>
+                    <li><strong>Social Media Platforms:</strong> For social sharing and integration features</li>
+                    <li><strong>Advertising Networks:</strong> To deliver targeted advertisements</li>
+                    <li><strong>Payment Processors:</strong> For secure payment processing</li>
+                </ul>
+            </div>
+
+            <div class="document-section">
+                <h2>5. Managing Cookies</h2>
+                <p>You have the right to control how cookies are used on your device. You can manage cookies through:</p>
+                <ul>
+                    <li><strong>Browser Settings:</strong> Most browsers allow you to block or delete cookies through their settings menu</li>
+                    <li><strong>Cookie Preferences:</strong> Use our cookie preference center (if available) to customize your settings</li>
+                    <li><strong>Opt-out Tools:</strong> Many advertising networks provide opt-out tools for targeted advertising</li>
+                    <li><strong>Do Not Track:</strong> You can enable "Do Not Track" in your browser settings</li>
+                </ul>
+                <p>Please note that disabling certain cookies may affect the functionality of our website and limit your user experience.</p>
+            </div>
+
+            <div class="document-section">
+                <h2>6. Browser-Specific Cookie Management</h2>
+                <p>Here's how to manage cookies in popular browsers:</p>
+                <ul>
+                    <li><strong>Google Chrome:</strong> Settings > Privacy and Security > Cookies and other site data</li>
+                    <li><strong>Mozilla Firefox:</strong> Options > Privacy & Security > Cookies and Site Data</li>
+                    <li><strong>Safari:</strong> Preferences > Privacy > Manage Website Data</li>
+                    <li><strong>Microsoft Edge:</strong> Settings > Cookies and site permissions</li>
+                    <li><strong>Internet Explorer:</strong> Tools > Internet Options > Privacy</li>
+                </ul>
+            </div>
+
+            <div class="document-section">
+                <h2>7. Cookie Consent</h2>
+                <p>By continuing to use our website, you consent to our use of cookies as described in this policy. If you do not agree to our use of cookies, you should set your browser settings accordingly or stop using our website.</p>
+                <p>We may update our use of cookies from time to time, and we will notify you of any significant changes to this Cookie Policy.</p>
+            </div>
+
+            <div class="document-section">
+                <h2>8. Data Protection and Privacy</h2>
+                <p>The information collected through cookies is treated in accordance with our Privacy Policy. We implement appropriate security measures to protect cookie data and ensure it is not accessible to unauthorized parties.</p>
+                <p>Personal data collected through cookies is processed lawfully, fairly, and transparently in accordance with applicable data protection regulations.</p>
+            </div>
+
+            <div class="document-section">
+                <h2>9. Contact Us About Cookies</h2>
+                <p>If you have any questions about our use of cookies or this Cookie Policy, please contact us at:</p>
+                <ul>
+                    <li>Email: privacy@seanscript.dev</li>
+                    <li>Phone: (123) 456-7890</li>
+                    <li>Address: 123 Developer Street, Tech City, TC 12345</li>
+                </ul>
+            </div>
+
+            <div class="last-updated">
+                <p>This document was last updated on June 15, 2023</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer id="footer" class="official-footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="portfolio.html">Home</a></li>
+                    <li><a href="#footer">Services</a></li>
+                    <li><a href="portfolio.html">Portfolio</a></li>
+                    <li><a href="https://github.com/Seanscript-dev">Blog</a></li>
+                    <li><a href="tel:+639307281638">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Services</h3>
+                <ul class="footer-links">
+                    <li><a href="portfolio.html #projects">Web Development</a></li>
+                    <li><a href="portfolio.html #projects">Mobile Apps</a></li>
+                    <li><a href="portfolio.html #projects">UI/UX Design</a></li>
+                    <li><a href="portfolio.html #projects">Consulting</a></li>
+                    <li><a href="portfolio.html #projects">Maintenance</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Legal</h3>
+                <ul class="footer-links">
+                    <li><a href="#" onclick="showTab('privacy')">Privacy Policy</a></li>
+                    <li><a href="#" onclick="showTab('terms')">Terms of Service</a></li>
+                    <li><a href="#" onclick="showTab('disclaimer')">Disclaimer</a></li>
+                    <li><a href="#" onclick="showTab('cookies')">Cookie Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <ul class="footer-links">
+                    <li>Seanscript DEVELOPMENT</li>
+                    <li>Purok 2, Bayabas Street</li>
+                    <li>Floridablanca, Pampanga</li>
+                    <li>Email: seanlansangtungcol1126@gmail.com</li>
+                    <li>Phone: (+63) 9307 281 638</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2023 Seanscript DEVELOPMENT. All Rights Reserved.</p>
+            <p>Building digital solutions for the modern world.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Tab functionality
+        function showTab(tabId) {
+            // Hide all tabs
+            document.querySelectorAll('.document-container').forEach(tab => {
+                tab.style.display = 'none';
+            });
+            
+            // Show selected tab
+            document.getElementById(tabId).style.display = 'block';
+            
+            // Update active tab button
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active');
+            });
+            
+            // Find the button that was clicked and add active class
+            const clickedButton = event ? event.currentTarget : document.querySelector(`[onclick="showTab('${tabId}')"]`);
+            if (clickedButton) {
+                clickedButton.classList.add('active');
+            }
+        }
+
+        // Check URL parameters and show appropriate tab
+        function getTabFromURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const tab = urlParams.get('tab');
+            return tab && ['privacy', 'terms', 'disclaimer', 'cookies'].includes(tab) ? tab : 'privacy';
+        }
+
+        // Set the appropriate tab as active based on URL or default
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hide all tabs first
+            document.querySelectorAll('.document-container').forEach(tab => {
+                tab.style.display = 'none';
+            });
+            
+            // Remove active class from all buttons
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active');
+            });
+            
+            // Get the tab to show from URL or default to privacy
+            const activeTab = getTabFromURL();
+            
+            // Show the appropriate tab
+            document.getElementById(activeTab).style.display = 'block';
+            
+            // Set the corresponding button as active
+            const activeButton = document.querySelector(`[onclick="showTab('${activeTab}')"]`);
+            if (activeButton) {
+                activeButton.classList.add('active');
+            }
+        });
+    </script>
+</body>
+</html>

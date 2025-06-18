@@ -117,8 +117,6 @@
       margin-bottom: 0.5rem;
       color: #0f172a;
       cursor: pointer;
-      /* Remove animation property so cards don't fade in on load */
-      /* animation: popup 1.5s ease forwards; */
       opacity: 1;
     }
     body.dark .language-card {
@@ -229,7 +227,6 @@
         font-size: 0.9rem;
         padding: 0.2em 0.6em;
       }
-     
     }
   </style>
 </head>
@@ -241,82 +238,174 @@
     </label>
   </span>
 
-<div class="back-container">
-  <span class="back-line"></span>
-  <a href="portfolio.html" class="back-button" id="backToPortfolio">Back to Home</a>
-</div>
-
-<h1>Programming Languages</h1>
-
-<div class="languages-container">
-
-  <div class="language-card">
-    <img src="python.jpg" alt="Python Logo" class="language-image">
-    <h2>Python</h2>
-    <p>A beginner-friendly, readable language used in web development, AI, data science, and automation.</p>
-    <a href="https://www.python.org" target="_blank">Learn Python →</a>
+  <div class="back-container">
+    <span class="back-line"></span>
+    <a href="portfolio.html" class="back-button" id="backToPortfolio">Back to Home</a>
   </div>
 
-  <div class="language-card">
-    <img src="javaS.jpg" alt="JavaScript Logo" class="language-image">
-    <h2>JavaScript</h2>
-    <p>Essential for web interactivity. Common with frameworks like React, Node.js, and Vue.</p>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">Explore JavaScript →</a>
+  <h1>Programming Languages</h1>
+
+  <div class="languages-container">
+
+    <div class="language-card">
+      <img src="python.jpg" alt="Python Logo" class="language-image">
+      <h2>Python</h2>
+      <p>A beginner-friendly, readable language used in web development, AI, data science, and automation.</p>
+      <a href="https://www.python.org" target="_blank">Learn Python →</a>
+    </div>
+
+    <div class="language-card">
+      <img src="javaS.jpg" alt="JavaScript Logo" class="language-image">
+      <h2>JavaScript</h2>
+      <p>Essential for web interactivity. Common with frameworks like React, Node.js, and Vue.</p>
+      <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">Explore JavaScript →</a>
+    </div>
+
+    <div class="language-card">
+      <img src="cpp.png" alt="C++ Logo" class="language-image">
+      <h2>C++</h2>
+      <p>High-performance language used in games, operating systems, and real-time systems.</p>
+      <a href="https://isocpp.org/" target="_blank">Discover C++ →</a>
+    </div>
+
+    <div class="language-card" id="java">
+      <img src="java.png" alt="Java Logo" class="language-image">
+      <h2>Java</h2>
+      <p>Object-oriented language for enterprise software, Android apps, and large systems.</p>
+      <a href="https://www.java.com/" target="_blank">Visit Java →</a>
+    </div>
+
+    <div class="language-card" id="html">
+      <img src="html1.jpg" alt="HTML Logo" class="language-image">
+      <h2>HTML</h2>
+      <p>Structures web pages with headings, paragraphs, images, links, and more.</p>
+      <a href="https://developer.mozilla.org/en-US/docs/Web/HTML" target="_blank">Learn HTML →</a>
+    </div>
+
+    <div class="language-card" id="css">
+      <img src="css.png" alt="CSS Logo" class="language-image">
+      <h2>CSS</h2>
+      <p>Styles web pages, controlling layout, colors, fonts, and responsiveness.</p>
+      <a href="https://developer.mozilla.org/en-US/docs/Web/CSS" target="_blank">Style with CSS →</a>
+    </div>
+
   </div>
 
-  <div class="language-card">
-    <img src="cpp.png" alt="C++ Logo" class="language-image">
-    <h2>C++</h2>
-    <p>High-performance language used in games, operating systems, and real-time systems.</p>
-    <a href="https://isocpp.org/" target="_blank">Discover C++ →</a>
-  </div>
+  <script>
+    // Dark Mode Toggle + Persistence
+    const toggle = document.getElementById("darkToggle");
+    if (localStorage.getItem("darkMode") === "true") {
+      document.body.classList.add("dark");
+      if (toggle) toggle.checked = true;
+    }
+    if (toggle) {
+      toggle.addEventListener("change", () => {
+        document.body.classList.toggle("dark", toggle.checked);
+        localStorage.setItem("darkMode", toggle.checked);
+      });
+    }
 
-  <div class="language-card">
-    <img src="java.png" alt="Java Logo" class="language-image">
-    <h2>Java</h2>
-    <p>Object-oriented language for enterprise software, Android apps, and large systems.</p>
-    <a href="https://www.java.com/" target="_blank">Visit Java →</a>
-  </div>
-
-  <div class="language-card">
-    <img src="html1.jpg" alt="HTML Logo" class="language-image">
-    <h2>HTML</h2>
-    <p>Structures web pages with headings, paragraphs, images, links, and more.</p>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/HTML" target="_blank">Learn HTML →</a>
-  </div>
-
-  <div class="language-card">
-    <img src="css.png" alt="CSS Logo" class="language-image">
-    <h2>CSS</h2>
-    <p>Styles web pages, controlling layout, colors, fonts, and responsiveness.</p>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/CSS" target="_blank">Style with CSS →</a>
-  </div>
-
-</div>
-
-<script>
-  // Persist dark mode across navigation
-  const toggle = document.getElementById("darkToggle");
-  if (localStorage.getItem("darkMode") === "true") {
-    document.body.classList.add("dark");
-    if (toggle) toggle.checked = true;
-  }
-  if (toggle) {
-    toggle.addEventListener("change", () => {
-      document.body.classList.toggle("dark", toggle.checked);
-      localStorage.setItem("darkMode", toggle.checked);
+    // Back Button to Portfolio
+    document.getElementById('backToPortfolio').addEventListener('click', function(e) {
+      e.preventDefault();
+      sessionStorage.setItem('restoreCertBack', '1');
+      window.location.href = 'portfolio.html#skills';
     });
-  }
-  // Instantly go back to portfolio and restore scroll (no animation)
-  document.getElementById('backToPortfolio').addEventListener('click', function(e) {
-    e.preventDefault();
-    sessionStorage.setItem('restoreCertBack', '1');
-    window.location.href = 'portfolio.html#skills';
-  });
-</script>
+
+    // Enhanced Smooth Scroll Function
+    function smoothScrollToElement(element, offset = 0, duration = 1200) {
+      const startY = window.scrollY;
+      const targetY = element.getBoundingClientRect().top + startY - offset;
+      const startTime = performance.now();
+
+      function scroll(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        // More pronounced easing function for better visibility
+        const ease = progress < 0.5 
+          ? 2 * progress * progress 
+          : 1 - Math.pow(-2 * progress + 2, 2) / 2;
+        window.scrollTo(0, startY + (targetY - startY) * ease);
+        if (progress < 1) requestAnimationFrame(scroll);
+      }
+
+      requestAnimationFrame(scroll);
+    }
+
+    // Function to handle initial scroll to anchor
+    function handleInitialScroll() {
+      const hash = window.location.hash;
+      if (hash && hash !== '#') {
+        // Remove the hash to prevent default jump
+        history.replaceState(null, null, ' ');
+        
+        // Scroll to top immediately
+        window.scrollTo(0, 0);
+        
+        const target = document.querySelector(hash);
+        if (target) {
+          // Wait for the next frame to ensure we're at top
+          requestAnimationFrame(() => {
+            // Restore the hash without scrolling
+            history.replaceState(null, null, hash);
+            
+            // Add slight delay to ensure top position is settled
+            setTimeout(() => {
+              smoothScrollToElement(target, 20);
+            }, 50);
+          });
+        }
+      }
+    }
+
+    // Handle anchor clicks
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const targetId = this.getAttribute('href').substring(1);
+        
+        if (targetId === '' || targetId === 'top') {
+          e.preventDefault();
+          smoothScrollToElement(document.body, 0);
+          history.pushState(null, '', '#');
+        } else {
+          const targetElement = document.getElementById(targetId);
+          if (targetElement) {
+            e.preventDefault();
+            // First scroll to top immediately
+            window.scrollTo(0, 0);
+            
+            // Then animate to target
+            requestAnimationFrame(() => {
+              history.pushState(null, '', `#${targetId}`);
+              setTimeout(() => {
+                smoothScrollToElement(targetElement, 20);
+              }, 50);
+            });
+          }
+        }
+      });
+    });
+
+    // Run initial scroll handling when DOM is ready
+    document.addEventListener('DOMContentLoaded', function() {
+      // First ensure we're at top
+      window.scrollTo(0, 0);
+      
+      // Then handle any anchor scrolling
+      setTimeout(handleInitialScroll, 100);
+    });
+
+    // Also handle when page is fully loaded
+    window.addEventListener('load', function() {
+      if (window.location.hash) {
+        setTimeout(handleInitialScroll, 100);
+      }
+    });
+
+    // Handle browser back/forward navigation
+    window.addEventListener('popstate', function() {
+      setTimeout(handleInitialScroll, 100);
+    });
+  </script>
 </body>
 </html>
-<!--     <img src="pics/docker.png" alt="Docker logo" class="framework-image" loading="lazy"> -->
-<!--     <h2>Docker</h2> -->
-<!--     <p>Docker is a platform for developing, shipping, and running applications in containers. It simplifies deployment and scaling.</p> -->
-<!--     <a href="https://www.docker.com/" target="_blank" rel="noopener noreferrer">Get started with Docker →</a> -->

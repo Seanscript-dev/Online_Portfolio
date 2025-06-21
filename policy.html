@@ -376,6 +376,19 @@
                 padding: 6px;
             }
         }
+        /* Add these transition styles */
+.document-container {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    display: none;
+}
+
+.document-container.active {
+    opacity: 1;
+    transform: translateY(0);
+    display: block;
+}
     </style>
 </head>
 <body>
@@ -408,11 +421,11 @@
     <!-- Main Content -->
     <main class="main-content">
         <div class="legal-tabs">
-            <button class="tab-button active" onclick="showTab('privacy')">Privacy Policy</button>
-            <button class="tab-button" onclick="showTab('terms')">Terms of Service</button>
-            <button class="tab-button" onclick="showTab('disclaimer')">Disclaimer</button>
-            <button class="tab-button" onclick="showTab('cookies')">Cookie Policy</button>
-        </div>
+    <button class="tab-button active" onclick="showTab('privacy', event)">Privacy Policy</button>
+    <button class="tab-button" onclick="showTab('terms', event)">Terms of Service</button>
+    <button class="tab-button" onclick="showTab('disclaimer', event)">Disclaimer</button>
+    <button class="tab-button" onclick="showTab('cookies', event)">Cookie Policy</button>
+</div>
 
         <!-- Privacy Policy -->
         <div id="privacy" class="document-container" style="display: block;">
@@ -726,7 +739,7 @@
                     <li><a href="portfolio.html">Home</a></li>
                     <li><a href="#footer">Services</a></li>
                     <li><a href="portfolio.html">Portfolio</a></li>
-                    <li><a href="https://github.com/Seanscript-dev" target="blank" >Blog</a></li>
+                    <li><a href="https://github.com/Seanscript-dev" target="blank">Blog</a></li>
                     <li><a href="tel:+639307281638">Contact</a></li>
                 </ul>
             </div>
@@ -767,59 +780,77 @@
     </footer>
 
     <script>
-        // Tab functionality
-        function showTab(tabId) {
-            // Hide all tabs
-            document.querySelectorAll('.document-container').forEach(tab => {
+       // Tab functionality
+function showTab(tabId, event) {
+    event.preventDefault();
+    
+    // Hide all tabs with fade out
+    document.querySelectorAll('.document-container').forEach(tab => {
+        if (tab.classList.contains('active')) {
+            tab.classList.remove('active');
+            // After transition completes, set display to none
+            setTimeout(() => {
                 tab.style.display = 'none';
-            });
-            
-            // Show selected tab
-            document.getElementById(tabId).style.display = 'block';
-            
-            // Update active tab button
-            document.querySelectorAll('.tab-button').forEach(button => {
-                button.classList.remove('active');
-            });
-            
-            // Find the button that was clicked and add active class
-            const clickedButton = event ? event.currentTarget : document.querySelector(`[onclick="showTab('${tabId}')"]`);
-            if (clickedButton) {
-                clickedButton.classList.add('active');
-            }
+            }, 300); // Match this with your CSS transition duration
         }
+    });
+    
+    // Show selected tab with fade in
+    const tabToShow = document.getElementById(tabId);
+    tabToShow.style.display = 'block';
+    // Force reflow to enable transition
+    void tabToShow.offsetWidth;
+    tabToShow.classList.add('active');
+    
+    // Update active tab button
+    document.querySelectorAll('.tab-button').forEach(button => {
+        button.classList.remove('active');
+    });
+    
+    // Add active class to clicked button
+    event.currentTarget.classList.add('active');
+    
+    // Update URL without reloading
+    history.pushState(null, null, `?tab=${tabId}`);
+}
 
-        // Check URL parameters and show appropriate tab
-        function getTabFromURL() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const tab = urlParams.get('tab');
-            return tab && ['privacy', 'terms', 'disclaimer', 'cookies'].includes(tab) ? tab : 'privacy';
-        }
+// Check URL parameters and show appropriate tab
+function getTabFromURL() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const tab = urlParams.get('tab');
+    return tab && ['privacy', 'terms', 'disclaimer', 'cookies'].includes(tab) ? tab : 'privacy';
+}
 
-        // Set the appropriate tab as active based on URL or default
-        document.addEventListener('DOMContentLoaded', function() {
-            // Hide all tabs first
-            document.querySelectorAll('.document-container').forEach(tab => {
-                tab.style.display = 'none';
-            });
-            
-            // Remove active class from all buttons
-            document.querySelectorAll('.tab-button').forEach(button => {
-                button.classList.remove('active');
-            });
-            
-            // Get the tab to show from URL or default to privacy
-            const activeTab = getTabFromURL();
-            
-            // Show the appropriate tab
-            document.getElementById(activeTab).style.display = 'block';
-            
-            // Set the corresponding button as active
-            const activeButton = document.querySelector(`[onclick="showTab('${activeTab}')"]`);
-            if (activeButton) {
-                activeButton.classList.add('active');
-            }
-        });
+// Set the appropriate tab as active based on URL or default
+function initializeTabs() {
+    // Hide all tabs first
+    document.querySelectorAll('.document-container').forEach(tab => {
+        tab.style.display = 'none';
+        tab.classList.remove('active');
+    });
+    
+    // Get the tab to show from URL or default to privacy
+    const activeTab = getTabFromURL();
+    
+    // Show the appropriate tab
+    const tabToShow = document.getElementById(activeTab);
+    tabToShow.style.display = 'block';
+    // Force reflow to enable transition
+    void tabToShow.offsetWidth;
+    tabToShow.classList.add('active');
+    
+    // Set the corresponding button as active
+    const activeButton = document.querySelector(`.tab-button[onclick*="${activeTab}"]`);
+    if (activeButton) {
+        activeButton.classList.add('active');
+    }
+}
+
+// Initialize tabs when page loads
+document.addEventListener('DOMContentLoaded', initializeTabs);
+
+// Handle back/forward navigation
+window.addEventListener('popstate', initializeTabs);
     </script>
 </body>
 </html>

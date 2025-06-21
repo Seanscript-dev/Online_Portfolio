@@ -483,12 +483,13 @@ body.dark .footer-links button:hover {
     .contact-section {
   max-width: 700px;
   margin: 2rem auto;
-  background-color: #f8fafc
-  padding: 2rem;
+  background-color: #f8fafc;
   border-radius: 16px;
   border: 1px solid #bbdefb;
   box-shadow: 0 6px 14px rgba(0,0,0,0.06);
-}
+  padding: 2rem 1.5rem;
+  }
+
 
 body.dark .contact-section {
   background-color: #1e1e1e;
@@ -782,14 +783,13 @@ body.dark #education .edu-card .psu-school {
   display: flex;
   align-items: center;
   gap: 0.7em;
-  background: linear-gradient(90deg, #1976d2 60%, #42a5f5 100%);
+  background: linear-gradient(90deg, #1976d2 60%, #1b76d0 100%);
   color: #fff;
   padding: 0.65em 1.5em;
   border-radius: 2em;
   font-weight: 600;
   font-size: 1.05rem;
   text-decoration: none;
-  box-shadow: 0 4px 18px #1976d244, 0 1.5px 8px #1976d210;
   border: none;
   outline: none;
   cursor: pointer;
@@ -806,7 +806,7 @@ body.dark #education .edu-card .psu-school {
 }
 .psa-fab:hover {
   background: linear-gradient(90deg, #0d47a1 60%, #1976d2 100%);
-  box-shadow: 0 8px 32px #1976d277, 0 2px 12px #1976d210;
+  
   transform: translateY(-3px) scale(1.06) rotate(-2deg);
   text-decoration: none;
 }
@@ -827,11 +827,11 @@ body.dark #education .edu-card .psu-school {
 body.dark .psa-fab {
   background: linear-gradient(90deg, #145a9f 60%, #3078b3 100%);
   color: #fff;
-  box-shadow: 0 4px 18px #1976d244, 0 1.5px 8px #1976d210;
+  
 }
 body.dark .psa-fab:hover {
   background: linear-gradient(90deg, #0c4395 60%, #1668ba 100%);
-  box-shadow: 0 8px 32px #1976d277, 0 2px 12px #1976d210;
+  
 }
 .skill-anim {
   transition: box-shadow 0.35s cubic-bezier(.4,0,.2,1),
@@ -860,7 +860,7 @@ body.dark .aproject {
   color: rgb(89, 198, 253); /* Light blue for light mode hover */
 }
   
-}
+
 .skill-anim.clicked {
   animation: skillClickAnim 0.55s cubic-bezier(.4,1.4,.2,1);
 }
@@ -897,13 +897,6 @@ body:not(.dark) {
 }
 
 /* Remove or neutralize the global .formal-section:hover and .projects-section:hover */
-.formal-section:hover,
-.projects-section:hover {
-  /* No jump by default, only in light mode above */
-  /* box-shadow, background, transform handled above */
-}
-  </style>
- <style>
     /* General light mode font weight */
     body:not(.dark) {
       font-weight: 550;
@@ -917,11 +910,7 @@ body:not(.dark) {
       transform: translateY(-2px) scale(1.01);
     }
 
-    /* Neutralize global hovers by default */
-    .formal-section:hover,
-    .projects-section:hover {
-      /* No jump by default */
-    }
+  
 
     /* Fade-in effect when ?fadein=1 is present */
     body.fadein {
@@ -1011,7 +1000,7 @@ body:not(.dark) {
               Bachelor of Science in Computer Engineering
             </div>
             <div style="font-size: 1.02rem; color: #0d47a1; font-weight: 500;">
-              <a href="psu.html" class="cert-link psu-school" style="text-decoration: underline; cursor: pointer;" >Pampanga State University</a>
+              <a href="merged-education.html#college" class="cert-link psu-school" style="text-decoration: underline; cursor: pointer;" >Pampanga State University</a>
               <span style="color:#333;font-weight:400;">| Expected 2027</span>
             </div>
           </div>

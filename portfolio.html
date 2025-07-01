@@ -1117,18 +1117,123 @@ body:not(.dark) {
     </section>
 
     <section id="Certifications" class="formal-section" data-aos="fade-up">
-      <h2>Certifications</h2>
-      <div class="section-divider"></div>
-      <ul>
-        <li><a href="certif.html?file=certif1.pdf" class="cert-link" >Digital Transformation 101: A Webinar Series on Technology Adoption
-of MSMEs</a></li>
-        <li><a href="certif.html?file=certif2.jpeg" class="cert-link" >Resilience and Response: Cybersecurity & Digital Forensics for Cyber and Critical Technologies</a></li>
-        <li><a href="certif.html?file=certif3.png" class="cert-link" >Digital Security and Data Privacy: How to Safeguard Our Data in Today's World</a></li>
-        <li><a href="certif.html?file=certif4.png" class="cert-link" >How to Start Content Creating: from Ideas to Execution</a></li>
-        <li><a href="certif.html?file=certif5.pdf" class="cert-link" >Be Smart, Stay Safe: Protecting Yourself in the Digital Age</a></li>
-        <li><a href="certif.html?file=certif6.pdf" class="cert-link" >Introduction to Data Science: Roles and Basic MySQL Skills</a></li>
-      </ul>
-    </section>
+  <h2>Certifications</h2>
+  <div class="section-divider"></div>
+  <div class="certifications-wrapper">
+    <div class="slide-arrow prev-slide-arrow">‹</div>
+    <div class="certifications-container">
+      <div class="certifications-slide active-slide">
+        <ul>
+          <li><a href="certif.html?file=certif1.pdf" class="cert-link">Digital Transformation 101: A Webinar Series on Technology Adoption of MSMEs</a></li>
+          <li><a href="certif.html?file=certif2.jpeg" class="cert-link">Resilience and Response: Cybersecurity & Digital Forensics for Cyber and Critical Technologies</a></li>
+          <li><a href="certif.html?file=certif3.png" class="cert-link">Digital Security and Data Privacy: How to Safeguard Our Data in Today's World</a></li>
+          <li><a href="certif.html?file=certif4.png" class="cert-link">How to Start Content Creating: from Ideas to Execution</a></li>
+          <li><a href="certif.html?file=certif5.pdf" class="cert-link">Be Smart, Stay Safe: Protecting Yourself in the Digital Age</a></li>
+        </ul>
+      </div>
+      <div class="certifications-slide">
+        <ul>
+          <li><a href="certif.html?file=certif6.pdf" class="cert-link">Introduction to Data Science: Roles and Basic MySQL Skills</a></li>
+          <li><a href="certif.html?file=certif7.pdf" class="cert-link">Formulating Competitive Marketing Strategies in the Digital Age</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="slide-arrow next-slide-arrow">›</div>
+  </div>
+</section>
+
+<style>
+  /* Additional CSS that won't conflict with your existing styles */
+  .certifications-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 1px;
+    position: relative;
+  }
+  
+  .certifications-container {
+    flex-grow: 1;
+    position: relative;
+    overflow: hidden;
+    min-height: 350px; /* Adjust based on your content */
+  }
+  
+  .certifications-slide {
+    position: absolute;
+    width: 100%;
+    transition: transform 0.3s ease;
+    transform: translateX(100%);
+  }
+  
+  .certifications-slide.active-slide {
+    transform: translateX(0);
+  }
+  
+  .slide-arrow {
+    font-size: 2.5rem;
+    color: #1976d2;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+  
+  body.dark .slide-arrow {
+    color: #90caf9;
+  }
+  
+  .formal-section:hover .slide-arrow {
+    opacity: 0.7;
+  }
+  
+  .formal-section:hover .slide-arrow:hover {
+    opacity: 1;
+  }
+  
+  .prev-slide-arrow {
+    padding-right:10px;
+  }
+  
+  .next-slide-arrow {
+    padding-left:10px;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const container = document.querySelector('.certifications-container');
+    const slides = document.querySelectorAll('.certifications-slide');
+    const prevArrow = document.querySelector('.prev-slide-arrow');
+    const nextArrow = document.querySelector('.next-slide-arrow');
+    let currentSlide = 0;
+    
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('active-slide', i === index);
+      });
+      
+      // Hide prev arrow on first slide, next arrow on last slide
+      prevArrow.style.visibility = index === 0 ? 'hidden' : 'visible';
+      nextArrow.style.visibility = index === slides.length - 1 ? 'hidden' : 'visible';
+    }
+    
+    nextArrow.addEventListener('click', function() {
+      currentSlide = (currentSlide + 1) % slides.length;
+      showSlide(currentSlide);
+    });
+    
+    prevArrow.addEventListener('click', function() {
+      currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+      showSlide(currentSlide);
+    });
+    
+    // Initialize
+    showSlide(0);
+  });
+</script>
  </div>
   <section id="contact" class="formal-section contact-section" data-aos="fade-up">
     <h2>Contact</h2>

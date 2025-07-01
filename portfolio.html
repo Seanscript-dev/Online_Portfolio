@@ -309,6 +309,7 @@ body.dark nav a:hover, body.dark nav a:focus {
       width: 60px;
       height: 3px;
       background: linear-gradient(90deg, #1976d2 60%, #42a5f5 100%);
+
       border-radius: 2px;
       margin-bottom: 1.2rem;
       margin-top: -0.5rem;
@@ -332,7 +333,7 @@ body.dark nav a:hover, body.dark nav a:focus {
       background: #e8f0fe;
       border-left: 4px solid #1976d2;
       border-radius: 8px;
-      box-shadow: 0 1px 6px #1976d210;
+ 
       padding: 1rem 1.5rem;
       margin-bottom: 1.1rem;
       color: #174ea6;
@@ -485,7 +486,7 @@ body.dark .footer-links button:hover {
   margin: 2rem auto;
   background-color: #f8fafc;
   border-radius: 16px;
-  border: 1px solid #bbdefb;
+  border:  1px solid #bbdefbc8;
   box-shadow: 0 6px 14px rgba(0,0,0,0.06);
   padding: 2rem 1.5rem;
   }
@@ -498,11 +499,11 @@ body.dark .contact-section {
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.85);
 }
 .projects-section {
-  background-color: #f5faff;
+  background-color: #f8fafc;
   padding: 2rem 1.5rem;
   border-radius: 16px;
-  border: 1px solid #bbdefb;
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
+  border:   1px solid ybbdefb;
+  box-shadow: 0 6px 14px rgba(255, 195, 195, 0.06);
 }
 
 .projects-section:hover {
@@ -995,7 +996,7 @@ body:not(.dark) {
         <h2>Education</h2>
         <div class="section-divider"></div>
         <div style="display: flex; flex-direction: column; gap: 1.5rem;">
-          <div class="edu-card" onclick="goToMergedEducation('college')" style="cursor:pointer; background: #f5faff; border-radius: 10px; padding: 1.2rem 1.5rem; box-shadow: 0 2px 8px #1976d210;">
+          <div class="edu-card" onclick="goToMergedEducation('college')" style="cursor:pointer; background: #f5faff; border-radius: 10px; padding: 1.2rem 1.5rem; box-shadow: 0 2px 8px #00000016;">
             <div style="font-size: 1.13rem; font-weight: bold; color: #1976d2; margin-bottom: 0.2rem;">
               Bachelor of Science in Computer Engineering
             </div>
@@ -1004,7 +1005,7 @@ body:not(.dark) {
               <span style="color:#333;font-weight:400;">| Expected 2027</span>
             </div>
           </div>
-          <div class="edu-card" style="background: #f5faff; border-radius: 10px; padding: 1.1rem 1.5rem; box-shadow: 0 1px 6px #1976d210;">
+          <div class="edu-card" style="background: #f5faff; border-radius: 10px; padding: 1.1rem 1.5rem; box-shadow: 0 1px 6px #00000018;">
             <div style="font-size: 1.08rem; font-weight: bold; color: #1976d2; margin-bottom: 0.15rem;">
               Secondary Education (High School & Senior High School)
             </div>
@@ -1020,7 +1021,7 @@ body:not(.dark) {
               <span style="font-size:0.98rem; color:#388e3c; font-weight:500;">Valedictorian</span>
             </div>
           </div>
-          <div class="edu-card" onclick="goToMergedEducation('elem')" style="cursor:pointer; background: #f5faff; border-radius: 10px; padding: 1.1rem 1.5rem; box-shadow: 0 1px 6px #1976d210;">
+          <div class="edu-card" onclick="goToMergedEducation('elem')" style="cursor:pointer; background: #f5faff; border-radius: 10px; padding: 1.1rem 1.5rem; box-shadow: 0 1px 6px #00000016;">
             <div style="font-size: 1.08rem; font-weight: bold; color: #1976d2; margin-bottom: 0.15rem;">
               Primary Education (Elementary)
             </div>
@@ -1043,22 +1044,169 @@ body:not(.dark) {
 
       </section>
 
-   <section id="projects" class="formal-section projects-section" data-aos="fade-up">
+    <section id="projects" class="formal-section projects-section" data-aos="fade-up">
   <h2>Projects</h2>
   <div class="section-divider"></div>
-  <div class="project">
-    <h3><a href="https://seanscriptmath.netlify.app/" class="aproject" target = "blank"  >Seanscript Education Math Game</a></h3>
-    <p>MathQuest is a fun, timed math challenge game with multiple question types and difficulty levels.</p>
-  </div>
-  <div class="project">
-    <h3>Portfolio Website</h3>
-    <p>Created using HTML, CSS, and JavaScript. Fully responsive and hosted on GitHub Pages.</p>
-  </div>
-  <div class="project">
-    <h3><a href="https://seanscriptyonex.netlify.app/" class="aproject" target = "blank" >Yonex Imitation Website</a></h3>
-    <p>This project is a professional e-commerce platform designed for Yonex, a global leader in badminton and tennis equipment.</p>
+  <div class="projects-carousel-wrapper">
+    <div class="projects-prev-arrow">‹</div>
+    <div class="projects-carousel-container">
+      <!-- Slide 1 (First 3 projects) -->
+      <div class="projects-slide active-slide">
+        <div class="project">
+          <h3><a href="https://seanscriptmath.netlify.app/" class="aproject" target="blank">Seanscript Education Math Game</a></h3>
+          <p>MathQuest is a fun, timed math challenge game with multiple question types and difficulty levels.</p>
+        </div>
+        <div class="project">
+          <h3>Portfolio Website</h3>
+          <p>Created using HTML, CSS, and JavaScript. Fully responsive and hosted on GitHub Pages.</p>
+        </div>
+        <div class="project">
+          <h3><a href="https://seanscriptyonex.netlify.app/" class="aproject" target="blank">Yonex Imitation Website</a></h3>
+          <p>This project is a professional e-commerce platform designed for Yonex.</p>
+        </div>
+      </div>
+      
+      <!-- Slide 2 (Next 3 projects) -->
+      <div class="projects-slide">
+        <div class="project">
+          <h3><a href="#" class="aproject" target="blank">Task Management App</a></h3>
+          <p>A productivity application with drag-and-drop interface and deadline reminders.</p>
+        </div>
+        <div class="project">
+          <h3><a href="#" class="aproject" target="blank">Weather Dashboard</a></h3>
+          <p>Real-time weather forecasting application with interactive maps and charts.</p>
+        </div>
+        <div class="project">
+          <h3><a href="#" class="aproject" target="blank">Recipe Finder</a></h3>
+          <p>Culinary platform with ingredient-based search and dietary filters.</p>
+        </div>
+      </div>
+    </div>
+    <div class="projects-next-arrow">›</div>
   </div>
 </section>
+
+<style>
+  /* Projects Carousel - Unique Class Names */
+  .projects-carousel-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    position: relative;
+  }
+  
+  .projects-carousel-container {
+    flex-grow: 1;
+    position: relative;
+    overflow: hidden;
+    min-height: 420px;
+  }
+  
+  .projects-slide {
+    position: absolute;
+    width: 100%;
+    transition: transform 0.3s ease;
+    transform: translateX(100%);
+  }
+  
+  .projects-slide.active-slide {
+    transform: translateX(0);
+  }
+  
+  /* Arrow Styles - Projects Specific */
+  .projects-prev-arrow,
+  .projects-next-arrow {
+    font-size: 2.5rem;
+    color: #1976d2;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    padding: 0 1px;
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+  
+  body.dark .projects-prev-arrow,
+  body.dark .projects-next-arrow {
+    color: #90caf9;
+  }
+  
+  .projects-section:hover .projects-prev-arrow,
+  .projects-section:hover .projects-next-arrow {
+    opacity: 0.7;
+  }
+  
+  .projects-section:hover .projects-prev-arrow:hover,
+  .projects-section:hover .projects-next-arrow:hover {
+    opacity: 1;
+  }
+</style>
+
+<script>
+  // Projects-specific carousel initialization
+  document.addEventListener('DOMContentLoaded', function() {
+    const projectsContainer = document.querySelector('.projects-carousel-container');
+    if (projectsContainer) {
+      const slides = document.querySelectorAll('.projects-slide');
+      const prevArrow = document.querySelector('.projects-prev-arrow');
+      const nextArrow = document.querySelector('.projects-next-arrow');
+      
+      let currentSlide = 0;
+      
+      function showSlide(index) {
+        slides.forEach((slide, i) => {
+          slide.classList.toggle('active-slide', i === index);
+        });
+        
+        // Arrow visibility
+        if (slides.length > 1) {
+          prevArrow.style.visibility = index === 0 ? 'hidden' : 'visible';
+          nextArrow.style.visibility = index === slides.length - 1 ? 'hidden' : 'visible';
+        } else {
+          prevArrow.style.display = 'none';
+          nextArrow.style.display = 'none';
+        }
+      }
+      
+      if (nextArrow) {
+        nextArrow.addEventListener('click', function() {
+          currentSlide = (currentSlide + 1) % slides.length;
+          showSlide(currentSlide);
+        });
+      }
+      
+      if (prevArrow) {
+        prevArrow.addEventListener('click', function() {
+          currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+          showSlide(currentSlide);
+        });
+      }
+      
+      // Initialize
+      showSlide(0);
+      
+      // Touch support
+      let touchStartX = 0;
+      projectsContainer.addEventListener('touchstart', (e) => {
+        touchStartX = e.touches[0].clientX;
+      }, {passive: true});
+      
+      projectsContainer.addEventListener('touchend', (e) => {
+        const touchEndX = e.changedTouches[0].clientX;
+        const diff = touchStartX - touchEndX;
+        
+        if (diff > 50 && currentSlide < slides.length - 1) {
+          currentSlide++;
+          showSlide(currentSlide);
+        } else if (diff < -50 && currentSlide > 0) {
+          currentSlide--;
+          showSlide(currentSlide);
+        }
+      }, {passive: true});
+    }
+  });
+</script>
 
 
     <section id="skills" class="formal-section" data-aos="fade-up">

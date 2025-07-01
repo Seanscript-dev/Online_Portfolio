@@ -55,80 +55,97 @@
     }
 
     /* ===== Redesigned Header (light mode) ===== */
-    header {
-      background: #fff;
-      padding: 2.2rem 1.5rem 1.6rem 1.5rem;
-      text-align: center;
-      border-radius: 0 0 2.5rem 2.5rem;
-      box-shadow: 0 6px 32px 0 #1976d21a, 0 1.5px 8px #1976d210;
-      position: relative;
-      margin-bottom: 0.5rem;
-      border-bottom: 2px solid #e3f2fd;
-    }
-
-    .header-content {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 1.5rem;
-      flex-wrap: wrap;
-    }
-
-    .profile-photo {
-      width: 130px;
-      height: 130px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 3px solid #1976d2;
-      box-shadow: 0 2px 12px #1976d222;
-    }
-
-    .header-text {
-      max-width: 500px;
-      text-align: left;
-    }
-
-    header h1 {
-      font-size: 2.7rem;
-      color: #1976d2;
-      font-weight: 800;
-      letter-spacing: 0.01em;
-      text-shadow: 0 2px 8px #1976d210;
-    }
-    body.dark header h1 {
-      color: #90caf9; /* Light blue for dark mode */
-    }
-
-    header p {
-      margin-top: 0.7rem;
-      font-size: 1.22rem;
-      color: #1976d2;
-      font-weight: 500;
-      letter-spacing: 0.01em;
-      text-shadow: 0 1px 4px #1976d210;
-    }
-    body.dark header p {
-  color: #6288a4;  /* Bright light blue for dark mode */
+  header {
+  background: #fff;
+  padding: 2rem 1.5rem 1.5rem 1.5rem; /* Increased top and bottom padding */
+  text-align: center;
+  border-radius: 0 0 2.5rem 2.5rem;
+  box-shadow: 0 6px 32px 0 #1976d21a, 0 1.5px 8px #1976d210;
+  position: relative;
+  margin-bottom: 0.5rem; /* Slightly increased */
+  border-bottom: 2px solid #e3f2fd;
 }
 
-    /* ===== Redesigned Navigation (light mode) ===== */
-    nav {
-      background: linear-gradient(90deg, #4779be 80%, #447bd2 100%);
-      padding: 0.7rem 1.2rem;
-      text-align: center;
-      border-radius: 2rem;
-      margin: -2.2rem auto 2rem auto;
-      max-width: 570px;
-      box-shadow: 0 4px 18px 0 rgba(25, 118, 210, 0.10), 0 1.5px 8px rgba(25, 118, 210, 0.06);
-      position: relative;
-      z-index: 2;
-      border: 1.5px solid #b0c4de;
-      display: flex;
-      justify-content: center;
-      gap: 0.2rem;
-      /* More formal, subtle blending */
-      backdrop-filter: blur(2px);
-    }
+.header-content {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+  margin-top: -0.5rem;
+}
+
+.profile-photo {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #1976d2;
+  box-shadow: 0 2px 12px #1976d222;
+  margin-top: -0.8rem;
+  position: relative;
+}
+
+/* Mobile adjustments */
+@media (max-width: 480px) {
+  header {
+    padding: 1.8rem 1rem 1.2rem 1rem; /* Balanced mobile padding */
+  }
+  
+  nav {
+    margin: -1.8rem auto 2rem auto; /* Consistent spacing */
+  }
+}
+
+.header-text {
+  max-width: 500px;
+  text-align: left;
+}
+
+header h1 {
+  font-size: 2.7rem;
+  color: #1976d2;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  text-shadow: 0 2px 8px #1976d210;
+  margin-bottom: 0.5rem; /* Added for better spacing */
+}
+
+body.dark header h1 {
+  color: #90caf9;
+}
+
+header p {
+  margin-top: -0.5rem;
+  font-size: 1.22rem;
+  color: #1976d2;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  text-shadow: 0 1px 4px #1976d210;
+}
+
+body.dark header p {
+  color: #6288a4;
+}
+
+/* ===== Redesigned Navigation ===== */
+nav {
+  background: linear-gradient(90deg, #4779be 80%, #447bd2 100%);
+  padding: 0.8rem 1.2rem; /* Increased vertical padding */
+  text-align: center;
+  border-radius: 2rem;
+  margin: -2rem auto 2rem auto; /* Matches header padding */
+  max-width: 570px;
+  box-shadow: 0 4px 18px 0 rgba(25, 118, 210, 0.10), 0 1.5px 8px rgba(25, 118, 210, 0.06);
+  position: relative;
+  z-index: 2;
+  border: 1.5px solid #b0c4de;
+  display: flex;
+  justify-content: center;
+  gap: 0.2rem;
+  backdrop-filter: blur(2px);
+}
+
     nav a {
       color: #f5faff;
       text-decoration: none;
@@ -922,7 +939,49 @@ body:not(.dark) {
       from { opacity: 0; }
       to   { opacity: 1; }
     }
+     #scrollToTopBtn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            display: none;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        #scrollToTopBtn:hover {
+            opacity: 1;
+            background: rgba(0, 0, 0, 0.9);
+            transform: translateY(-3px);
+        }
+        
+        #scrollToTopBtn i {
+            font-size: 1em;
+        }
+        /* Dark mode styles */
+body.dark #scrollToTopBtn {
+    background: rgba(255, 255, 255, 0.2); /* Semi-transparent white */
+    color: #e0e0e0; /* Light text */
+    backdrop-filter: blur(5px); /* Frosted glass effect */
+}
+
+body.dark #scrollToTopBtn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    color: white;
+}
   </style>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
   <script>
     window.addEventListener('DOMContentLoaded', () => {
@@ -933,9 +992,34 @@ body:not(.dark) {
     });
   </script>
 </head>
+<button id="scrollToTopBtn" title="Go to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+    
+    <script>
+        // Scroll to top button functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+            
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    scrollToTopBtn.style.display = 'flex';
+                } else {
+                    scrollToTopBtn.style.display = 'none';
+                }
+            });
+            
+            scrollToTopBtn.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
 
 <div class="corner-logo" aria-label="Site logo">
-  <img src="dp2.svg" alt="Logo" />
+  <img src="pics/dp2.svg" alt="Logo" />
   <div class="corner-text">
     <span class="corner-name">Seanscript</span>
     <span class="corner-sub">DEVELOPMENT</span>
@@ -944,7 +1028,7 @@ body:not(.dark) {
 
   <header>
     <div class="header-content">
-      <img src="dp3.jpg" alt="Sean Script Profile Photo" class="profile-photo" />
+      <img src="pics/dp3.jpg" alt="Sean Script Profile Photo" class="profile-photo" />
       <div class="header-text">
         <div class="title-row">
           <h1>Sean Script</h1>
@@ -1021,7 +1105,7 @@ body:not(.dark) {
               <span style="font-size:0.98rem; color:#388e3c; font-weight:500;">Valedictorian</span>
             </div>
           </div>
-          <div class="edu-card" onclick="goToMergedEducation('elem')" style="cursor:pointer; background: #f5faff; border-radius: 10px; padding: 1.1rem 1.5rem; box-shadow: 0 1px 6px #00000016;">
+          <div class="edu-card" onclick="goToMergedEducation('elem')" style="cursor:pointer; background: #f5faff; border-radius: 10px; padding: 1.1rem 1.5rem; box-shadow: 0 1px 6px #08183316;">
             <div style="font-size: 1.08rem; font-weight: bold; color: #1976d2; margin-bottom: 0.15rem;">
               Primary Education (Elementary)
             </div>
@@ -1272,17 +1356,17 @@ body:not(.dark) {
     <div class="certifications-container">
       <div class="certifications-slide active-slide">
         <ul>
-          <li><a href="certif.html?file=certif1.pdf" class="cert-link">Digital Transformation 101: A Webinar Series on Technology Adoption of MSMEs</a></li>
-          <li><a href="certif.html?file=certif2.jpeg" class="cert-link">Resilience and Response: Cybersecurity & Digital Forensics for Cyber and Critical Technologies</a></li>
-          <li><a href="certif.html?file=certif3.png" class="cert-link">Digital Security and Data Privacy: How to Safeguard Our Data in Today's World</a></li>
-          <li><a href="certif.html?file=certif4.png" class="cert-link">How to Start Content Creating: from Ideas to Execution</a></li>
-          <li><a href="certif.html?file=certif5.pdf" class="cert-link">Be Smart, Stay Safe: Protecting Yourself in the Digital Age</a></li>
+          <li><a href="certif.html?file=pics/certif1.pdf" class="cert-link">Digital Transformation 101: A Webinar Series on Technology Adoption of MSMEs</a></li>
+          <li><a href="certif.html?file=pics/certif2.jpeg" class="cert-link">Resilience and Response: Cybersecurity & Digital Forensics for Cyber and Critical Technologies</a></li>
+          <li><a href="certif.html?file=pics/certif3.png" class="cert-link">Digital Security and Data Privacy: How to Safeguard Our Data in Today's World</a></li>
+          <li><a href="certif.html?file=pics/certif4.png" class="cert-link">How to Start Content Creating: from Ideas to Execution</a></li>
+          <li><a href="certif.html?file=pics/certif5.pdf" class="cert-link">Be Smart, Stay Safe: Protecting Yourself in the Digital Age</a></li>
         </ul>
       </div>
       <div class="certifications-slide">
         <ul>
-          <li><a href="certif.html?file=certif6.pdf" class="cert-link">Introduction to Data Science: Roles and Basic MySQL Skills</a></li>
-          <li><a href="certif.html?file=certif7.pdf" class="cert-link">Formulating Competitive Marketing Strategies in the Digital Age</a></li>
+          <li><a href="certif.html?file=pics/certif6.pdf" class="cert-link">Introduction to Data Science: Roles and Basic MySQL Skills</a></li>
+          <li><a href="certif.html?file=pics/certif7.pdf" class="cert-link">Formulating Competitive Marketing Strategies in the Digital Age</a></li>
         </ul>
       </div>
     </div>
@@ -1402,7 +1486,7 @@ body:not(.dark) {
 
 <footer id=footmo class="main-footer">
   <div class="footer-brand">
-    <img src="dp2.svg" alt="Logo">
+    <img src="pics/dp2.svg" alt="Logo">
     <div class="footer-text">
       <span class="footer-title">Seanscript</span>
       <span class="footer-subtitle">DEVELOPMENT</span>

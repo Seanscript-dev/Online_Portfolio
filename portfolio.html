@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sean Script | Computer Engineer</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -14,7 +15,6 @@
     }
 
     html, body {
-      /* Add for fade-in effect */
       opacity: 0;
       transition: opacity 0.7s cubic-bezier(.4,0,.2,1);
     }
@@ -39,7 +39,7 @@
       background-color: #1e1e1e;
       color: #e0e0e0;
       border-color: #333;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.8); /* Black shadow */
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.8);
     }
 
     body.dark nav a {
@@ -54,97 +54,84 @@
       color: #90caf9;
     }
 
-    /* ===== Redesigned Header (light mode) ===== */
-  header {
-  background: #fff;
-  padding: 2rem 1.5rem 1.5rem 1.5rem; /* Increased top and bottom padding */
-  text-align: center;
-  border-radius: 0 0 2.5rem 2.5rem;
-  box-shadow: 0 6px 32px 0 #1976d21a, 0 1.5px 8px #1976d210;
-  position: relative;
-  margin-bottom: 0.5rem; /* Slightly increased */
-  border-bottom: 2px solid #e3f2fd;
-}
+    header {
+      background: #fff;
+      padding: 2rem 1.5rem 1.5rem 1.5rem;
+      text-align: center;
+      border-radius: 0 0 2.5rem 2.5rem;
+      box-shadow: 0 6px 32px 0 #1976d21a, 0 1.5px 8px #1976d210;
+      position: relative;
+      margin-bottom: 0.5rem;
+      border-bottom: 2px solid #e3f2fd;
+    }
 
-.header-content {
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  gap: 1.2rem;
-  flex-wrap: wrap;
-  margin-top: -0.5rem;
-}
+    .header-content {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+      margin-top: -0.5rem;
+    }
 
-.profile-photo {
-  width: 130px;
-  height: 130px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 3px solid #1976d2;
-  box-shadow: 0 2px 12px #1976d222;
-  margin-top: -0.8rem;
-  position: relative;
-}
+    .profile-photo {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #1976d2;
+      box-shadow: 0 2px 12px #1976d222;
+      margin-top: -0.8rem;
+      position: relative;
+    }
 
-/* Mobile adjustments */
-@media (max-width: 480px) {
-  header {
-    padding: 1.8rem 1rem 1.2rem 1rem; /* Balanced mobile padding */
-  }
-  
-  nav {
-    margin: -1.8rem auto 2rem auto; /* Consistent spacing */
-  }
-}
+    .header-text {
+      max-width: 500px;
+      text-align: left;
+    }
 
-.header-text {
-  max-width: 500px;
-  text-align: left;
-}
+    header h1 {
+      font-size: 2.7rem;
+      color: #1976d2;
+      font-weight: 800;
+      letter-spacing: 0.01em;
+      text-shadow: 0 2px 8px #1976d210;
+      margin-bottom: 0.5rem;
+    }
 
-header h1 {
-  font-size: 2.7rem;
-  color: #1976d2;
-  font-weight: 800;
-  letter-spacing: 0.01em;
-  text-shadow: 0 2px 8px #1976d210;
-  margin-bottom: 0.5rem; /* Added for better spacing */
-}
+    body.dark header h1 {
+      color: #90caf9;
+    }
 
-body.dark header h1 {
-  color: #90caf9;
-}
+    header p {
+      margin-top: -0.5rem;
+      font-size: 1.22rem;
+      color: #1976d2;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      text-shadow: 0 1px 4px #1976d210;
+    }
 
-header p {
-  margin-top: -0.5rem;
-  font-size: 1.22rem;
-  color: #1976d2;
-  font-weight: 500;
-  letter-spacing: 0.01em;
-  text-shadow: 0 1px 4px #1976d210;
-}
+    body.dark header p {
+      color: #6288a4;
+    }
 
-body.dark header p {
-  color: #6288a4;
-}
-
-/* ===== Redesigned Navigation ===== */
-nav {
-  background: linear-gradient(90deg, #4779be 80%, #447bd2 100%);
-  padding: 0.8rem 1.2rem; /* Increased vertical padding */
-  text-align: center;
-  border-radius: 2rem;
-  margin: -2rem auto 2rem auto; /* Matches header padding */
-  max-width: 570px;
-  box-shadow: 0 4px 18px 0 rgba(25, 118, 210, 0.10), 0 1.5px 8px rgba(25, 118, 210, 0.06);
-  position: relative;
-  z-index: 2;
-  border: 1.5px solid #b0c4de;
-  display: flex;
-  justify-content: center;
-  gap: 0.2rem;
-  backdrop-filter: blur(2px);
-}
+    nav {
+      background: linear-gradient(90deg, #4779be 80%, #447bd2 100%);
+      padding: 0.8rem 1.2rem;
+      text-align: center;
+      border-radius: 2rem;
+      margin: -2rem auto 2rem auto;
+      max-width: 570px;
+      box-shadow: 0 4px 18px 0 rgba(25, 118, 210, 0.10), 0 1.5px 8px rgba(25, 118, 210, 0.06);
+      position: relative;
+      z-index: 2;
+      border: 1.5px solid #b0c4de;
+      display: flex;
+      justify-content: center;
+      gap: 0.2rem;
+      backdrop-filter: blur(2px);
+    }
 
     nav a {
       color: #f5faff;
@@ -171,31 +158,28 @@ nav {
       text-decoration: none;
     }
 
-    /* ===== Improved Navigation (dark mode) ===== */
-body.dark nav {
-  background: #1e1e1e;
-  border-radius: 2rem;
-  border: 1px solid #333;
-  box-shadow: none;
-  /* keep other nav styles (padding, margin, flex, etc.) */
-  backdrop-filter: none;
-}
+    body.dark nav {
+      background: #1e1e1e;
+      border-radius: 2rem;
+      border: 1px solid #333;
+      box-shadow: none;
+      backdrop-filter: none;
+    }
 
-body.dark nav a {
-  color: #e3f2fd;
-  background: transparent;
-  font-weight: 600;
-  /* keep other nav a styles */
-  box-shadow: none;
-}
+    body.dark nav a {
+      color: #e3f2fd;
+      background: transparent;
+      font-weight: 600;
+      box-shadow: none;
+    }
 
-body.dark nav a:hover, body.dark nav a:focus {
-  background: #22345a;
-  color: #90caf9;
-  box-shadow: 0 2px 12px rgba(25, 118, 210, 0.18);
-  transform: translateY(-2px) scale(1.07);
-  text-decoration: none;
-}
+    body.dark nav a:hover, body.dark nav a:focus {
+      background: #22345a;
+      color: #90caf9;
+      box-shadow: 0 2px 12px rgba(25, 118, 210, 0.18);
+      transform: translateY(-2px) scale(1.07);
+      text-decoration: none;
+    }
 
     .grid-container {
       display: grid;
@@ -257,11 +241,9 @@ body.dark nav a:hover, body.dark nav a:focus {
     }
 
     a.cert-link:hover {
-  color: #6ca9ff;
-  text-decoration: none;
-  
-}
-
+      color: #6ca9ff;
+      text-decoration: none;
+    }
 
     .social-icons {
       display: flex;
@@ -289,7 +271,6 @@ body.dark nav a:hover, body.dark nav a:focus {
       margin-top: 2rem;
     }
 
-    /* Formal section card style */
     .formal-section {
       background: #f8fafc;
       border: 1.5px solid #dbeafe;
@@ -305,7 +286,6 @@ body.dark nav a:hover, body.dark nav a:focus {
       box-shadow: 0 8px 32px rgba(25, 118, 210, 0.13);
       background: #f1f5fa;
       transform: translateY(-2px) scale(1.01);
-      /* "jump and stay" effect: keep the transform while hovered */
     }
     body.dark .formal-section:hover {
       background: #202023;
@@ -326,7 +306,6 @@ body.dark nav a:hover, body.dark nav a:focus {
       width: 60px;
       height: 3px;
       background: linear-gradient(90deg, #1976d2 60%, #42a5f5 100%);
-
       border-radius: 2px;
       margin-bottom: 1.2rem;
       margin-top: -0.5rem;
@@ -350,7 +329,6 @@ body.dark nav a:hover, body.dark nav a:focus {
       background: #e8f0fe;
       border-left: 4px solid #1976d2;
       border-radius: 8px;
- 
       padding: 1rem 1.5rem;
       margin-bottom: 1.1rem;
       color: #174ea6;
@@ -367,9 +345,7 @@ body.dark nav a:hover, body.dark nav a:focus {
       color: #1a365d;
       font-size: 1.01rem;
     }
-    /* Dark mode for formal section: only change text and divider color */
     body.dark .formal-section {
-      /* background, border, box-shadow: do not override */
       color: #e0e0e0;
     }
     body.dark .formal-section h2 {
@@ -385,7 +361,6 @@ body.dark nav a:hover, body.dark nav a:focus {
       color: #e3f2fd;
     }
     body.dark .formal-section .project {
-      /* background, border-left: do not override */
       color: #90caf9;
     }
     body.dark .formal-section .project h3 {
@@ -395,313 +370,260 @@ body.dark nav a:hover, body.dark nav a:focus {
       color: #e3f2fd;
     }
     body.dark .formal-section:hover {
-    background: #29292c99;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.862);
-    /* Slightly blue-tinted shadow for dark mode */
-    transform: translateY(-2px) scale(1.01);
-  }
-.main-footer {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 0.6rem;
-  padding: 0.3rem 0.8rem; /* ✅ smaller top/bottom */
-  font-size: 0.78rem;      /* ✅ smaller text */
-  line-height: 1.2;
-  background: inherit;
-  color: inherit;
-  border-top: 1px solid rgba(100, 100, 100, 0.08);
-}
+      background: #29292c99;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.862);
+      transform: translateY(-2px) scale(1.01);
+    }
+    .main-footer {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      padding: 0.3rem 0.8rem;
+      font-size: 0.78rem;
+      line-height: 1.2;
+      background: inherit;
+      color: inherit;
+      border-top: 1px solid rgba(100, 100, 100, 0.08);
+    }
 
-.footer-brand {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  white-space: nowrap;
-}
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      white-space: nowrap;
+    }
 
-.footer-brand img {
-  height: 36px; /* ✅ smaller logo */
-  flex-shrink: 0;
-}
+    .footer-brand img {
+      height: 36px;
+      flex-shrink: 0;
+    }
 
-.footer-text {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.05;
-}
+    .footer-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.05;
+    }
 
-.footer-title {
-  font-weight: 600;
-  font-size: 1.05rem;
-}
+    .footer-title {
+      font-weight: 600;
+      font-size: 1.05rem;
+    }
 
-.footer-subtitle {
-  font-weight: 700;
-  font-size: 0.55rem;
-  letter-spacing: 0.04em;
-}
+    .footer-subtitle {
+      font-weight: 700;
+      font-size: 0.55rem;
+      letter-spacing: 0.04em;
+    }
 
-.footer-tagline {
-  font-style: italic;
-  margin-left: 0.8rem;
-  flex-shrink: 0;
-  white-space: nowrap;
-  opacity: 0.85;
-}
+    .footer-tagline {
+      font-style: italic;
+      margin-left: 0.8rem;
+      flex-shrink: 0;
+      white-space: nowrap;
+      opacity: 0.85;
+    }
 
-.footer-links button {
-  background: none;
-  border: none;
-  color: #2b4692; /* Default blue for light mode */
-  font-size: 0.9rem;
-  font-weight: 500;
-  cursor: pointer;
-  margin: 0 8px;
-  padding: 4px 8px;
-  transition: color 0.3s, text-decoration 0.3s;
-}
+    .footer-links button {
+      background: none;
+      border: none;
+      color: #2b4692;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      margin: 0 8px;
+      padding: 4px 8px;
+      transition: color 0.3s, text-decoration 0.3s;
+    }
 
-.footer-links button:hover {
-  text-decoration: none;
-  color: #88c8fd; 
-}
+    .footer-links button:hover {
+      text-decoration: none;
+      color: #88c8fd; 
+    }
 
-/* Dark mode support */
-body.dark .footer-links button {
-  color: #cfd5dc; /* Lighter blue for dark mode */
-}
+    body.dark .footer-links button {
+      color: #cfd5dc;
+    }
 
-body.dark .footer-links button:hover {
-  color: #88c8fd; /* Even lighter on hover */
-}
+    body.dark .footer-links button:hover {
+      color: #88c8fd;
+    }
 
-    @media (max-width: 480px) {
-      .header-content {
-        flex-direction: column;
-        text-align: center;
-      }
+    .contact-section {
+      max-width: 700px;
+      margin: 2rem auto;
+      background-color: #f8fafc;
+      border-radius: 16px;
+      border:  1px solid #bbdefbc8;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.06);
+      padding: 2rem 1.5rem;
+    }
 
-      .header-text {
-        max-width: 100%;
-      }
-      nav {
-        flex-direction: column;
-        gap: 0.2rem;
-        max-width: 98vw;
-        padding: 0.7rem 0.3rem;
-      }
-      nav a {
-        margin: 0 0.2rem;
-        font-size: 1rem;
-        padding: 0.4em 0.9em;
+    body.dark .contact-section {
+      background-color: #1e1e1e;
+      border-color: #333;
+      color: #e0e0e0;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.85);
+    }
+    .projects-section {
+      background-color: #f8fafc;
+      padding: 2rem 1.5rem;
+      border-radius: 16px;
+      border:   1px solid #bbdefb;
+      box-shadow: 0 6px 14px rgba(255, 195, 195, 0.06);
+    }
+
+    .projects-section:hover {
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      transform: translateY(-4px);
+    }
+
+    body.dark .projects-section {
+      background-color: #1e1e1e;
+      border-color: #333;
+      color: #e0e0e0;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.85);
+    }
+
+    body.dark .projects-section .project {
+      background: #2a2a2a;
+      border-left-color: #64b5f6;
+    }
+
+    body.dark .projects-section .project:hover {
+      background: #333;
+    }
+    .intro-text {
+      font-weight: 10000;
+      color: #08306b;
+      font-size: 1.22rem;
+      letter-spacing: 0.01em;
+      line-height: 1.6;
+      max-width: 700px;
+      margin: 2rem auto;
+      text-align: justify;
+      background: #f5faff;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 2rem 2.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 8px 20px rgba(70, 131, 176, 0.267);
+      transition: color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+      opacity: 0;
+      transform: translateY(10px);
+      animation: fadeSlideUp 0.6s forwards ease-out;
+      animation-delay: 0.3s;
+    }
+
+    @keyframes fadeSlideUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
       }
     }
-    .contact-section {
-  max-width: 700px;
-  margin: 2rem auto;
-  background-color: #f8fafc;
-  border-radius: 16px;
-  border:  1px solid #bbdefbc8;
-  box-shadow: 0 6px 14px rgba(0,0,0,0.06);
-  padding: 2rem 1.5rem;
-  }
 
+    body.dark .intro-text {
+      background: rgba(45, 45, 45, 0.6);
+      border: 1px solid  #070809;
+      color: #f8f8f8;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.432);
+    }
 
-body.dark .contact-section {
-  background-color: #1e1e1e;
-  border-color: #333;
-  color: #e0e0e0;
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.85);
-}
-.projects-section {
-  background-color: #f8fafc;
-  padding: 2rem 1.5rem;
-  border-radius: 16px;
-  border:   1px solid ybbdefb;
-  box-shadow: 0 6px 14px rgba(255, 195, 195, 0.06);
-}
+    body.dark a {
+      color: #ffffff;
+    }
 
-.projects-section:hover {
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-  transform: translateY(-4px);
-}
+    body.dark a.cert-link {
+      color: #edf1f4;
+    }
 
-.project {
-  background: #e3f2fd;
-  padding: 1rem 1.5rem;
-  margin-bottom: 1rem;
-  border-left: 4px solid #2196f3;
-  border-radius: 8px;
-}
+    body.dark a:hover {
+      text-decoration: none;
+      color: #88c8fd;
+    }
+    .title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
 
-.project:hover {
-  background: #d0e9fd;
-}
+    .dark-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.95rem;
+      cursor: pointer;
+    }
 
-/* 🔥 DARK MODE FIX */
-body.dark .projects-section {
-  background-color: #1e1e1e;
-  border-color: #333;
-  color: #e0e0e0;
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.85); /* black shadow */
-}
+    .dark-toggle input[type="checkbox"] {
+      transform: scale(1.2);
+      cursor: pointer;
+    }
+    .corner-logo {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'Segoe UI', sans-serif;
+      z-index: 1000;
+      color: inherit;
+    }
 
-body.dark .projects-section .project {
-  background: #2a2a2a;
-  border-left-color: #64b5f6;
-}
+    .corner-logo img {
+      height: 50px;
+      width: auto;
+      flex-shrink: 0;
+    }
 
- 
+    .corner-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
 
+    .corner-name {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: inherit;
+    }
 
-body.dark .projects-section .project:hover {
-  background: #333;
-}
-.intro-text {
-  font-weight: 10000;        /* Up from 500 */
-  color: #08306b;          /* Deeper than #0d47a1 */
-  font-size: 1.22rem;      /* Slight size increase for presence */
-  letter-spacing: 0.01em;
-  line-height: 1.6;
-  max-width: 700px;
-  margin: 2rem auto;
-  text-align: justify;
-  
-  
-  background: #f5faff;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  
-  border-radius: 20px;
-  padding: 2rem 2.5rem;
-  
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 8px 20px rgba(70, 131, 176, 0.267);
-  
-  transition: color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
-  
-  /* Smooth fade-in animation */
-  opacity: 0;
-  transform: translateY(10px);
-  animation: fadeSlideUp 0.6s forwards ease-out;
-  animation-delay: 0.3s;
-}
+    .corner-sub {
+      font-size: 0.68rem;
+      font-weight: 600;
+      text-align:center;
+      letter-spacing: 0.05em;
+      color: inherit;
+    }
 
-@keyframes fadeSlideUp {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+    .dark-toggle-frame {
+      display: inline-flex;
+      align-items: center;
+      background: #e3f2fd;
+      border-radius: 18px;
+      padding: 0.3em 1em;
+      border: 1px solid #bbdefb;
+      box-shadow: 0 2px 8px rgba(33,150,243,0.06);
+      margin-left: 1em;
+      transition: background 0.3s, border 0.3s;
+    }
+    body.dark .dark-toggle-frame {
+      background: #23272b;
+      border: 1px solid #333;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    }
+    body:not(.dark) a.cert-link[href*="location.html"] {
+      color:  #1a365d !important;
+    }
+    body:not(.dark) a.cert-link[href*="location.html"]:hover {
+      color: #6ca9ff !important;
+      text-decoration: none;
+    }
 
-/* Dark mode */
-body.dark .intro-text {
-  background: rgba(45, 45, 45, 0.6);
-  border: 1px solid  #070809;
-  color: #f8f8f8;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.432);
-}
-
-/* Override all normal links in dark mode */
-body.dark a {
-  color: #ffffff;  /* Light blue, easy to read on dark */
-}
-
-/* Override cert-link color in dark mode */
-body.dark a.cert-link {
-  color: #edf1f4;
-}
-
-/* Optional: link hover color in dark mode */
-body.dark a:hover {
-  text-decoration: none;
-  color: #88c8fd; 
-  /* even lighter on hover */
-}
-.title-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-.dark-toggle {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  font-size: 0.95rem;
-  cursor: pointer;
-}
-
-.dark-toggle input[type="checkbox"] {
-  transform: scale(1.2);
-  cursor: pointer;
-}
-.corner-logo {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-family: 'Segoe UI', sans-serif;
-  z-index: 1000;
-  color: inherit;
-}
-
-.corner-logo img {
-  height: 50px;
-  width: auto;
-  flex-shrink: 0;
-}
-
-.corner-text {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.1;
-}
-
-.corner-name {
-  font-size: 1.4rem;
-  font-weight: 600;
-  color: inherit;
-}
-
-.corner-sub {
-  font-size: 0.68rem;
-  font-weight: 600;
-  text-align:center;
-  letter-spacing: 0.05em;
-  color: inherit;
-}
-
-.dark-toggle-frame {
-  display: inline-flex;
-  align-items: center;
-  background: #e3f2fd;
-  border-radius: 18px;
-  padding: 0.3em 1em;
-  border: 1px solid #bbdefb;
-  box-shadow: 0 2px 8px rgba(33,150,243,0.06);
-  margin-left: 1em;
-  transition: background 0.3s, border 0.3s;
-}
-body.dark .dark-toggle-frame {
-  background: #23272b;
-  border: 1px solid #333;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
-}
-body:not(.dark) a.cert-link[href*="location.html"] {
-  color:  #1a365d !important;
-}
-body:not(.dark) a.cert-link[href*="location.html"]:hover {
-  color: #6ca9ff !important;
-  text-decoration: none;
-}
-
-/* Education section card hover effect */
     #education .edu-card {
       transition: box-shadow 0.22s, transform 0.22s, background 0.22s, color 0.22s;
       cursor: pointer;
@@ -711,7 +633,6 @@ body:not(.dark) a.cert-link[href*="location.html"]:hover {
       background: #e0f2ff;
       transform: translateY(-4px) scale(1.012);
     }
-    /* Remove underline and add hover effect for school/university links (light mode only) */
     body:not(.dark) #education .edu-card a.cert-link,
     body:not(.dark) #education .edu-card .psu-school {
       text-decoration: none !important;
@@ -722,10 +643,9 @@ body:not(.dark) a.cert-link[href*="location.html"]:hover {
     body:not(.dark) #education .edu-card a.cert-link:hover,
     body:not(.dark) #education .edu-card .psu-school:hover {
       color: #1592eb !important;
-      font-weight: bold !important;
+      font-weight: 500 !important;
       text-decoration: none !important;
     }
-    /* In dark mode, set university/school links to dark blue and keep weight */
     body.dark #education .edu-card a.cert-link,
     body.dark #education .edu-card .psu-school {
       color:#e3f2fd !important;
@@ -736,17 +656,17 @@ body:not(.dark) a.cert-link[href*="location.html"]:hover {
     body.dark #education .edu-card a.cert-link:hover,
     body.dark #education .edu-card .psu-school:hover {
       color: #1592eb !important;
-      font-weight: bold !important;
+      font-weight: 500 !important;
       text-decoration: none !important;
     }
     body.dark #education .edu-card {
-      background: #2a2a2a !important; /* Match project card dark mode */
+      background: #2a2a2a !important;
       color: #e0e0e0;
       box-shadow: 0 1px 6px #253bae22;
       border: 1px solid #333;
     }
     body.dark #education .edu-card:hover {
-      background: #333 !important; /* Match .project:hover in dark mode */
+      background: #333 !important;
       box-shadow: 0 6px 24px #38bdf833, 0 1.5px 8px #253bae22;
       color: #b3e5fc;
     }
@@ -755,182 +675,158 @@ body:not(.dark) a.cert-link[href*="location.html"]:hover {
       color: #f8e7e7 !important;
     }
     body.dark #education .edu-card div[style*="font-weight: bold"] {
-  color: #64b5f6 !important; /* Light blue for degree/title */
-  font-weight: bold !important;
-  font-size: 1.13rem !important; /* Match light mode size */
-}
-
-body.dark #education .edu-card span[style*="font-weight: 500"] {
-  color: #1976d2 !important; /* Dark blue for school names */
-  font-weight: normal !important;
-  font-size: 1.02rem !important; /* Match light mode size */
-}
-
-body.dark #education .edu-card span[style*="font-weight: 500"][style*="Pampanga State University"] {
-  color: #0d47a1 !important; /* Dark blue for Pampanga State University only */
-}
-
-body.dark #education .edu-card span[style*="color:#388e3c"] {
-  color: #388e3c !important; /* Darker green for honors */
-  font-weight: normal !important;
-  font-size: 0.98rem !important;
-}
-
-body.dark #education .edu-card span[style*="color:#333"] {
-  color: #9b9a9a !important; /* White for years */
-  font-weight: normal !important;
-  font-size: 1rem !important; /* Match light mode size */
-}
-
-body.dark #education .edu-card span[style*="color:#555"] {
-  color: #878686 !important; /* White for extra info */
-  font-weight: normal !important;
-  font-size: 0.97rem !important; /* Match light mode size */
-}
-
-body.dark #education .edu-card div[style*="font-size: 1.02rem"][style*="Pampanga State University"] {
-  color: #0d47a1 !important;
-}
-body.dark #education .edu-card .psu-school {
-  color: #1976d2 !important; /* Match Mary The Queen College of Pampanga blue in dark mode */
-}
-.psa-fab {
-  position: absolute;
-  right: 1.5rem;
-  bottom: 1.5rem;
-  display: flex;
-  align-items: center;
-  gap: 0.7em;
-  background: linear-gradient(90deg, #1976d2 60%, #1b76d0 100%);
-  color: #fff;
-  padding: 0.65em 1.5em;
-  border-radius: 2em;
-  font-weight: 600;
-  font-size: 1.05rem;
-  text-decoration: none;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  transition: 
-    background 0.25s cubic-bezier(.4,0,.2,1),
-    box-shadow 0.22s cubic-bezier(.4,0,.2,1),
-    transform 0.18s cubic-bezier(.4,0,.2,1);
-  animation: psa-fab-fadein 0.7s 0.2s backwards cubic-bezier(.4,0,.2,1);
-  z-index: 10;
-}
-.psa-fab i {
-  font-size: 1.25em;
-  transition: transform 0.22s cubic-bezier(.4,0,.2,1);
-}
-.psa-fab:hover {
-  background: linear-gradient(90deg, #0d47a1 60%, #1976d2 100%);
-  
-  transform: translateY(-3px) scale(1.06) rotate(-2deg);
-  text-decoration: none;
-}
-.psa-fab:hover i {
-  transform: scale(1.18) rotate(-8deg);
-}
-@keyframes psa-fab-fadein {
-  from {
-    opacity: 0;
-    transform: translateY(18px) scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-/* Dark mode for PSA button */
-body.dark .psa-fab {
-  background: linear-gradient(90deg, #145a9f 60%, #3078b3 100%);
-  color: #fff;
-  
-}
-body.dark .psa-fab:hover {
-  background: linear-gradient(90deg, #0c4395 60%, #1668ba 100%);
-  
-}
-.skill-anim {
-  transition: box-shadow 0.35s cubic-bezier(.4,0,.2,1),
-              background 0.35s cubic-bezier(.4,0,.2,1),
-              color 0.22s cubic-bezier(.4,0,.2,1),
-              transform 0.22s cubic-bezier(.4,1.4,.2,1);
-  border-radius: 6px;
-  position: relative;
-  z-index: 1;
-}
-.aproject {
-  color: var(--link-color-light);
-  text-decoration: none;
-  font-weight: 600;
-}
-
-/* Dark mode support for link */
-body.dark .aproject {
-  color: #0e7fdc; /* soft blue for dark mode */
-}
-
-/* Hover effect (applies in both light and dark mode) */
-.aproject:hover {
-  color: rgb(90, 181, 211); /* light blue */
-}body:not(.dark-mode) .aproject:hover {
-  color: rgb(89, 198, 253); /* Light blue for light mode hover */
-}
-  
-
-.skill-anim.clicked {
-  animation: skillClickAnim 0.55s cubic-bezier(.4,1.4,.2,1);
-}
-@keyframes skillClickAnim {
-  0% {
-    box-shadow: 0 0 0 0 #38bdf8aa;
-    background: #e3f2fd;
-    color: #1976d2;
-    transform: scale(1);
-  }
-  40% {
-    box-shadow: 0 0 0 10px #38bdf822;
-    background: #b3e5fc;
-    color: #0d47a1;
-    transform: scale(1.08);
-  }
-  100% {
-    box-shadow: 0 0 0 0 #38bdf800;
-    background: transparent;
-    color: inherit;
-    transform: scale(1);
-  }
-}
-
-/* Only jump on hover in light mode */
-body:not(.dark) .formal-section:hover,
-body:not(.dark) .projects-section:hover {
-  box-shadow: 0 8px 32px rgba(25, 118, 210, 0.13);
-  background: #fafbfff5;
-  transform: translateY(-2px) scale(1.01);
-}
-body:not(.dark) {
-  font-weight: 550;/* or 1.1rem for a bigger step */
-}
-
-/* Remove or neutralize the global .formal-section:hover and .projects-section:hover */
-    /* General light mode font weight */
-    body:not(.dark) {
-      font-weight: 550;
+      color: #64b5f6 !important;
+      font-weight: bold !important;
+      font-size: 1.13rem !important;
     }
 
-    /* Hover effect only in light mode */
+    body.dark #education .edu-card span[style*="font-weight: 500"] {
+      color: #1976d2 !important;
+      font-weight: normal !important;
+      font-size: 1.02rem !important;
+    }
+
+    body.dark #education .edu-card span[style*="font-weight: 500"][style*="Pampanga State University"] {
+      color: #0d47a1 !important;
+    }
+
+    body.dark #education .edu-card span[style*="color:#388e3c"] {
+      color: #388e3c !important;
+      font-weight: normal !important;
+      font-size: 0.98rem !important;
+    }
+
+    body.dark #education .edu-card span[style*="color:#333"] {
+      color: #9b9a9a !important;
+      font-weight: normal !important;
+      font-size: 1rem !important;
+    }
+
+    body.dark #education .edu-card span[style*="color:#555"] {
+      color: #878686 !important;
+      font-weight: normal !important;
+      font-size: 0.97rem !important;
+    }
+
+    body.dark #education .edu-card div[style*="font-size: 1.02rem"][style*="Pampanga State University"] {
+      color: #0d47a1 !important;
+    }
+    body.dark #education .edu-card .psu-school {
+      color: #1976d2 !important;
+    }
+    .psa-fab {
+      position: absolute;
+      right: 1.5rem;
+      bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.7em;
+      background: linear-gradient(90deg, #1976d2 60%, #1b76d0 100%);
+      color: #fff;
+      padding: 0.65em 1.5em;
+      border-radius: 2em;
+      font-weight: 600;
+      font-size: 1.05rem;
+      text-decoration: none;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      transition: 
+        background 0.25s cubic-bezier(.4,0,.2,1),
+        box-shadow 0.22s cubic-bezier(.4,0,.2,1),
+        transform 0.18s cubic-bezier(.4,0,.2,1);
+      animation: psa-fab-fadein 0.7s 0.2s backwards cubic-bezier(.4,0,.2,1);
+      z-index: 10;
+    }
+    .psa-fab i {
+      font-size: 1.25em;
+      transition: transform 0.22s cubic-bezier(.4,0,.2,1);
+    }
+    .psa-fab:hover {
+      background: linear-gradient(90deg, #0d47a1 60%, #1976d2 100%);
+      transform: translateY(-3px) scale(1.06) rotate(-2deg);
+      text-decoration: none;
+    }
+    .psa-fab:hover i {
+      transform: scale(1.18) rotate(-8deg);
+    }
+    @keyframes psa-fab-fadein {
+      from {
+        opacity: 0;
+        transform: translateY(18px) scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+    body.dark .psa-fab {
+      background: linear-gradient(90deg, #145a9f 60%, #3078b3 100%);
+      color: #fff;
+    }
+    body.dark .psa-fab:hover {
+      background: linear-gradient(90deg, #0c4395 60%, #1668ba 100%);
+    }
+    .skill-anim {
+      transition: box-shadow 0.35s cubic-bezier(.4,0,.2,1),
+                  background 0.35s cubic-bezier(.4,0,.2,1),
+                  color 0.22s cubic-bezier(.4,0,.2,1),
+                  transform 0.22s cubic-bezier(.4,1.4,.2,1);
+      border-radius: 6px;
+      position: relative;
+      z-index: 1;
+    }
+    .aproject {
+      color: var(--link-color-light);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    body.dark .aproject {
+      color: #0e7fdc;
+    }
+
+    .aproject:hover {
+      color: rgb(90, 181, 211);
+    }
+    body:not(.dark-mode) .aproject:hover {
+      color: rgb(89, 198, 253);
+    }
+
+    .skill-anim.clicked {
+      animation: skillClickAnim 0.55s cubic-bezier(.4,1.4,.2,1);
+    }
+    @keyframes skillClickAnim {
+      0% {
+        box-shadow: 0 0 0 0 #38bdf8aa;
+        background: #e3f2fd;
+        color: #1976d2;
+        transform: scale(1);
+      }
+      40% {
+        box-shadow: 0 0 0 10px #38bdf822;
+        background: #b3e5fc;
+        color: #0d47a1;
+        transform: scale(1.08);
+      }
+      100% {
+        box-shadow: 0 0 0 0 #38bdf800;
+        background: transparent;
+        color: inherit;
+        transform: scale(1);
+      }
+    }
+
     body:not(.dark) .formal-section:hover,
     body:not(.dark) .projects-section:hover {
       box-shadow: 0 8px 32px rgba(25, 118, 210, 0.13);
       background: #fafbfff5;
       transform: translateY(-2px) scale(1.01);
     }
+    body:not(.dark) {
+      font-weight: 550;
+    }
 
-  
-
-    /* Fade-in effect when ?fadein=1 is present */
     body.fadein {
       animation: fadeIn 1s ease-in;
     }
@@ -939,48 +835,164 @@ body:not(.dark) {
       from { opacity: 0; }
       to   { opacity: 1; }
     }
-     #scrollToTopBtn {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: rgba(0, 0, 0, 0.7);
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-size: 20px;
-            display: none;
-            opacity: 0.8;
-            transition: all 0.3s ease;
-            z-index: 9999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        #scrollToTopBtn:hover {
-            opacity: 1;
-            background: rgba(0, 0, 0, 0.9);
-            transform: translateY(-3px);
-        }
-        
-        #scrollToTopBtn i {
-            font-size: 1em;
-        }
-        /* Dark mode styles */
-body.dark #scrollToTopBtn {
-    background: rgba(255, 255, 255, 0.2); /* Semi-transparent white */
-    color: #e0e0e0; /* Light text */
-    backdrop-filter: blur(5px); /* Frosted glass effect */
-}
+    #scrollToTopBtn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 20px;
+      display: none;
+      opacity: 0.8;
+      transition: all 0.3s ease;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    #scrollToTopBtn:hover {
+      opacity: 1;
+      background: rgba(0, 0, 0, 0.9);
+      transform: translateY(-3px);
+    }
+    
+    #scrollToTopBtn i {
+      font-size: 1em;
+    }
+    
+    body.dark #scrollToTopBtn {
+      background: rgba(255, 255, 255, 0.2);
+      color: #e0e0e0;
+      backdrop-filter: blur(5px);
+    }
 
-body.dark #scrollToTopBtn:hover {
-    background: rgba(255, 255, 255, 0.3);
-    color: white;
-}
-  </style>
+    body.dark #scrollToTopBtn:hover {
+      background: rgba(255, 255, 255, 0.3);
+      color: white;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 1024px) {
+      .grid-container {
+        grid-template-columns: 1fr;
+        max-width: 800px;
+      }
+      
+      .header-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      
+      .header-text {
+        text-align: center;
+        margin-top: 1rem;
+      }
+      
+      nav {
+        flex-wrap: wrap;
+        padding: 0.6rem;
+      }
+      
+      nav a {
+        margin: 0.2rem;
+        font-size: 1rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 2.2rem;
+      }
+      
+      header p {
+        font-size: 1.1rem;
+      }
+      
+      .intro-text {
+        padding: 1.5rem;
+        margin: 1.5rem auto;
+      }
+      
+      section {
+        padding: 1.5rem;
+      }
+      
+      .formal-section {
+        padding: 1.8rem 1.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header {
+        padding: 1.5rem 1rem;
+        border-radius: 0 0 1.5rem 1.5rem;
+      }
+      
+      header h1 {
+        font-size: 1.8rem;
+      }
+      
+      header p {
+        font-size: 1rem;
+      }
+      
+      .profile-photo {
+        width: 100px;
+        height: 100px;
+      }
+      
+      nav {
+        border-radius: 1rem;
+        padding: 0.5rem;
+        margin: -1.5rem auto 1.5rem auto;
+      }
+      
+      nav a {
+        font-size: 0.9rem;
+        padding: 0.3em 0.8em;
+      }
+      
+      .intro-text {
+        padding: 1.2rem;
+        margin: 1.2rem auto;
+        font-size: 1rem;
+      }
+      
+      section {
+        padding: 1.2rem;
+      }
+      
+      .formal-section {
+        padding: 1.5rem 1.2rem;
+      }
+      
+      .corner-logo img {
+        height: 40px;
+      }
+      
+      .corner-name {
+        font-size: 1.1rem;
+      }
+      
+      .corner-sub {
+        font-size: 0.6rem;
+      }
+      
+      .psa-fab {
+        font-size: 0.9rem;
+        padding: 0.5em 1em;
+        right: 1rem;
+        bottom: 1rem;
+      }
+    }
+    </style>
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
   <script>
@@ -1128,7 +1140,7 @@ body.dark #scrollToTopBtn:hover {
 
       </section>
 
-    <section id="projects" class="formal-section projects-section" data-aos="fade-up">
+  <section id="projects" class="formal-section projects-section" data-aos="fade-up">
   <h2>Projects</h2>
   <div class="section-divider"></div>
   <div class="projects-carousel-wrapper">
@@ -1165,8 +1177,30 @@ body.dark #scrollToTopBtn:hover {
           <p>Culinary platform with ingredient-based search and dietary filters.</p>
         </div>
       </div>
+
+      <!-- Slide 3 (Additional 3 projects) -->
+      <div class="projects-slide">
+        <div class="project">
+          <h3><a href="#" class="aproject" target="blank">Fitness Tracker</a></h3>
+          <p>Workout logging app with progress tracking and exercise database.</p>
+        </div>
+        <div class="project">
+          <h3><a href="#" class="aproject" target="blank">Budget Planner</a></h3>
+          <p>Financial management tool with expense categorization and reports.</p>
+        </div>
+        <div class="project">
+          <h3><a href="#" class="aproject" target="blank">Book Recommendation</a></h3>
+          <p>Personalized reading suggestions based on user preferences.</p>
+        </div>
+      </div>
     </div>
     <div class="projects-next-arrow">›</div>
+  </div>
+  <!-- Dot indicators -->
+  <div class="projects-dots">
+    <span class="project-dot active-dot" data-index="0"></span>
+    <span class="project-dot" data-index="1"></span>
+    <span class="project-dot" data-index="2"></span>
   </div>
 </section>
 
@@ -1225,6 +1259,45 @@ body.dark #scrollToTopBtn:hover {
   .projects-section:hover .projects-next-arrow:hover {
     opacity: 1;
   }
+
+  /* Dot indicators styling */
+  .projects-dots {
+    display: flex;
+    justify-content: center;
+    margin-top: 25px;
+    gap: 12px;
+  }
+  
+  .project-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #bdbdbd;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .project-dot:hover {
+    background-color: #9e9e9e;
+    transform: scale(1.2);
+  }
+  
+  .project-dot.active-dot {
+    background-color: #1976d2;
+    transform: scale(1.2);
+  }
+  
+  body.dark .project-dot {
+    background-color: #616161;
+  }
+  
+  body.dark .project-dot:hover {
+    background-color: #757575;
+  }
+  
+  body.dark .project-dot.active-dot {
+    background-color: #90caf9;
+  }
 </style>
 
 <script>
@@ -1235,12 +1308,18 @@ body.dark #scrollToTopBtn:hover {
       const slides = document.querySelectorAll('.projects-slide');
       const prevArrow = document.querySelector('.projects-prev-arrow');
       const nextArrow = document.querySelector('.projects-next-arrow');
+      const dots = document.querySelectorAll('.project-dot');
       
       let currentSlide = 0;
       
       function showSlide(index) {
         slides.forEach((slide, i) => {
           slide.classList.toggle('active-slide', i === index);
+        });
+        
+        // Update dots
+        dots.forEach((dot, i) => {
+          dot.classList.toggle('active-dot', i === index);
         });
         
         // Arrow visibility
@@ -1267,6 +1346,14 @@ body.dark #scrollToTopBtn:hover {
         });
       }
       
+      // Dot navigation
+      dots.forEach(dot => {
+        dot.addEventListener('click', () => {
+          currentSlide = parseInt(dot.getAttribute('data-index'));
+          showSlide(currentSlide);
+        });
+      });
+      
       // Initialize
       showSlide(0);
       
@@ -1292,7 +1379,6 @@ body.dark #scrollToTopBtn:hover {
   });
 </script>
 
-
     <section id="skills" class="formal-section" data-aos="fade-up">
       <h2>Skills</h2>
       <div class="section-divider"></div>
@@ -1305,7 +1391,8 @@ body.dark #scrollToTopBtn:hover {
             <a href="language.html" class="cert-link skill-anim" >C++</a>,
             <a href="language.html#html" class="cert-link skill-anim" >HTML</a>,
             <a href="language.html#css" class="cert-link skill-anim" >CSS</a>,
-            <a href="language.html" class="cert-link skill-anim" >JavaScript</a>
+            <a href="language.html" class="cert-link skill-anim" >JavaScript,</a>
+             <a href="language.html#php" class="cert-link skill-anim" >PHP</a>
           </td>
         </tr>
         <tr>
@@ -1348,7 +1435,11 @@ body.dark #scrollToTopBtn:hover {
       </table>
     </section>
 
-    <section id="Certifications" class="formal-section" data-aos="fade-up">
+
+
+
+
+<section id="Certifications" class="formal-section" data-aos="fade-up">
   <h2>Certifications</h2>
   <div class="section-divider"></div>
   <div class="certifications-wrapper">
@@ -1367,10 +1458,63 @@ body.dark #scrollToTopBtn:hover {
         <ul>
           <li><a href="certif.html?file=certif6.pdf" class="cert-link">Introduction to Data Science: Roles and Basic MySQL Skills</a></li>
           <li><a href="certif.html?file=certif7.pdf" class="cert-link">Formulating Competitive Marketing Strategies in the Digital Age</a></li>
+          <li><a href="certif.html?file=certif8.pdf" class="cert-link">Work-Life Balance in the Digital Age: Setting Boundaries for Well-Being</a></li>
+          <li><a href="certif.html?file=certif9.pdf" class="cert-link">Advanced Data Analysis Techniques</a></li>
+          <li><a href="certif.html?file=certif10.pdf" class="cert-link">Cloud Computing Fundamentals</a></li>
+        </ul>
+      </div>
+      <div class="certifications-slide">
+        <ul>
+          <li><a href="certif.html?file=certif11.pdf" class="cert-link">Artificial Intelligence for Beginners</a></li>
+          <li><a href="certif.html?file=certif12.pdf" class="cert-link">Blockchain Technology Explained</a></li>
+          <li><a href="certif.html?file=certif13.pdf" class="cert-link">Digital Marketing Certification</a></li>
+          <li><a href="certif.html?file=certif14.pdf" class="cert-link">UI/UX Design Principles</a></li>
+          <li><a href="certif.html?file=certif15.pdf" class="cert-link">Project Management Professional</a></li>
+        </ul>
+      </div>
+      <div class="certifications-slide">
+        <ul>
+          <li><a href="certif.html?file=certif16.pdf" class="cert-link">Agile Development Methodologies</a></li>
+          <li><a href="certif.html?file=certif17.pdf" class="cert-link">DevOps Essentials</a></li>
+          <li><a href="certif.html?file=certif18.pdf" class="cert-link">Network Security Fundamentals</a></li>
+          <li><a href="certif.html?file=certif19.pdf" class="cert-link">Ethical Hacking Basics</a></li>
+          <li><a href="certif.html?file=certif20.pdf" class="cert-link">Python Programming Mastery</a></li>
+        </ul>
+      </div>
+      <div class="certifications-slide">
+        <ul>
+          <li><a href="certif.html?file=certif21.pdf" class="cert-link">JavaScript Advanced Concepts</a></li>
+          <li><a href="certif.html?file=certif22.pdf" class="cert-link">React Framework Certification</a></li>
+          <li><a href="certif.html?file=certif23.pdf" class="cert-link">Node.js Server Development</a></li>
+          <li><a href="certif.html?file=certif24.pdf" class="cert-link">Database Design and Optimization</a></li>
+        </ul>
+      </div>
+      <div class="certifications-slide">
+        <ul>
+          <li><a href="certif.html?file=certif25.pdf" class="cert-link">Mobile App Development</a></li>
+          <li><a href="certif.html?file=certif26.pdf" class="cert-link">Game Development Fundamentals</a></li>
+          <li><a href="certif.html?file=certif27.pdf" class="cert-link">AR/VR Development Basics</a></li>
+        </ul>
+      </div>
+      <div class="certifications-slide">
+        <ul>
+          <li><a href="certif.html?file=certif28.pdf" class="cert-link">Machine Learning Introduction</a></li>
+          <li><a href="certif.html?file=certif29.pdf" class="cert-link">Natural Language Processing</a></li>
+          <li><a href="certif.html?file=certif30.pdf" class="cert-link">Computer Vision Fundamentals</a></li>
         </ul>
       </div>
     </div>
     <div class="slide-arrow next-slide-arrow">›</div>
+  </div>
+  <!-- Dots navigation placed below the content -->
+  <div class="certifications-dots">
+    <span class="cert-dot active-dot"></span>
+    <span class="cert-dot"></span>
+    <span class="cert-dot"></span>
+    <span class="cert-dot"></span>
+    <span class="cert-dot"></span>
+    <span class="cert-dot"></span>
+    <span class="cert-dot"></span>
   </div>
 </section>
 
@@ -1432,6 +1576,36 @@ body.dark #scrollToTopBtn:hover {
   .next-slide-arrow {
     padding-left:10px;
   }
+  
+  /* Styles for the dots navigation */
+  .certifications-dots {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  
+  .cert-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #ccc;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .cert-dot.active-dot {
+    background-color: #1976d2;
+  }
+  
+  body.dark .cert-dot {
+    background-color: #555;
+  }
+  
+  body.dark .cert-dot.active-dot {
+    background-color: #90caf9;
+  }
 </style>
 
 <script>
@@ -1440,11 +1614,17 @@ body.dark #scrollToTopBtn:hover {
     const slides = document.querySelectorAll('.certifications-slide');
     const prevArrow = document.querySelector('.prev-slide-arrow');
     const nextArrow = document.querySelector('.next-slide-arrow');
+    const dots = document.querySelectorAll('.cert-dot');
     let currentSlide = 0;
     
     function showSlide(index) {
       slides.forEach((slide, i) => {
         slide.classList.toggle('active-slide', i === index);
+      });
+      
+      // Update dots
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('active-dot', i === index);
       });
       
       // Hide prev arrow on first slide, next arrow on last slide
@@ -1462,10 +1642,19 @@ body.dark #scrollToTopBtn:hover {
       showSlide(currentSlide);
     });
     
+    // Add click event listeners to dots
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', () => {
+        currentSlide = index;
+        showSlide(currentSlide);
+      });
+    });
+    
     // Initialize
     showSlide(0);
   });
 </script>
+
  </div>
   <section id="contact" class="formal-section contact-section" data-aos="fade-up">
     <h2>Contact</h2>

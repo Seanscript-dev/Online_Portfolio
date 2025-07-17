@@ -2,10 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Additional Expertise</title>
   <style>
-    /* ...copy the CSS from tool.html and adjust as needed... */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * { 
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box; 
+    }
+    
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: #f5faff;
@@ -13,15 +18,20 @@
       padding: 2rem;
       transition: background 0.3s, color 0.3s;
       animation: fadeSlideUp 1.2s cubic-bezier(.4,0,.2,1);
+      min-height: 100vh;
     }
+    
     body.dark {
       background: #0f172a;
       color: #e2e8f0;
     }
+    
     a:focus {
       outline: 2px solid #38bdf8;
       outline-offset: 4px;
     }
+    
+    /* Header and Back Button */
     .back-container {
       display: flex;
       justify-content: flex-start;
@@ -33,6 +43,7 @@
       border-radius: 0;
       opacity: 1;
     }
+    
     .back-line {
       display: inline-block;
       width: 3px;
@@ -43,6 +54,7 @@
       vertical-align: middle;
       box-shadow: 0 0 8px #38bdf855;
     }
+    
     .back-button {
       display: inline-block;
       color: #1976d2;
@@ -65,7 +77,11 @@
       min-height: 2rem;
       border-bottom: 2px solid transparent;
     }
-    body.dark .back-button { color: #e2e8f0; }
+    
+    body.dark .back-button { 
+      color: #e2e8f0; 
+    }
+    
     .back-button:hover,
     .back-button:focus {
       color: #38bdf8;
@@ -75,6 +91,7 @@
       box-shadow: 0 2px 12px #38bdf822;
       text-shadow: 0 2px 8px #38bdf855;
     }
+    
     h1 {
       text-align: center;
       font-size: 2.75rem;
@@ -82,10 +99,13 @@
       margin-bottom: 2rem;
       text-shadow: 0 0 10px rgba(56, 189, 248, 0.13);
     }
+    
     body.dark h1 {
       color: #38bdf8;
       text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
     }
+    
+    /* Main Content Grid */
     .frameworks-container {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -93,6 +113,7 @@
       max-width: 1200px;
       margin: 0 auto;
     }
+    
     .framework-card {
       background-color: #fff;
       border-radius: 12px;
@@ -103,21 +124,25 @@
       opacity: 1;
       color: #0f172a;
     }
+    
     body.dark .framework-card {
       background-color: #1e293b;
       color: #e2e8f0;
       border: none;
       box-shadow: 0 0 6px rgba(56, 189, 248, 0.1);
     }
+    
     .framework-card:hover {
       animation: bounce-tool-stay 0.28s cubic-bezier(.28,1.5,.6,1) forwards;
       box-shadow: 0 0 30px rgba(56, 189, 248, 0.3);
     }
+    
     @keyframes bounce-tool-stay {
       0%   { transform: translateY(0);}
       60%  { transform: translateY(-10px);}
       100% { transform: translateY(-10px);}
     }
+    
     .framework-image {
       width: 100%;
       height: 180px;
@@ -128,43 +153,57 @@
       border: 2px solid #38bdf8;
       padding: 0.5rem;
     }
-    /* Make Circuit Wizard image fill its container */
-    .framework-card.circuit-wizard-card .framework-image {
-      object-fit: cover;
-      height: 180px;
-      width: 100%;
-      background: #fff;
-    }
-    /* Make AutoCAD image fill its container */
+    
+    /* Special image treatments */
+    .framework-card.circuit-wizard-card .framework-image,
     .framework-card.autocad-card .framework-image {
       object-fit: cover;
-      height: 180px;
-      width: 100%;
       background: #fff;
     }
+    
     .framework-card h2 {
       font-size: 1.5rem;
       color: #1976d2;
       margin-bottom: 0.5rem;
     }
-    body.dark .framework-card h2 { color: #38bdf8; }
+    
+    body.dark .framework-card h2 { 
+      color: #38bdf8; 
+    }
+    
     .framework-card p {
       font-size: 1rem;
       margin-bottom: 1rem;
       color: #333;
+      line-height: 1.5;
     }
-    body.dark .framework-card p { color: #cbd5e1; }
+    
+    body.dark .framework-card p { 
+      color: #cbd5e1; 
+    }
+    
     .framework-card a {
       color: #1976d2;
       text-decoration: none;
       font-weight: bold;
       transition: color 0.3s ease;
     }
-    body.dark .framework-card a { color: #ffffff; }
+    
+    body.dark .framework-card a { 
+      color: #ffffff; 
+    }
+    
     .framework-card a:hover,
-    .framework-card a:focus { color: #38bdf8; }
+    .framework-card a:focus { 
+      color: #38bdf8; 
+    }
+    
     body.dark .framework-card a:hover,
-    body.dark .framework-card a:focus { color: #155fa0; }
+    body.dark .framework-card a:focus { 
+      color: #155fa0; 
+    }
+    
+    /* Dark Mode Toggle */
     .dark-toggle-frame {
       position: absolute;
       top: 18px;
@@ -182,26 +221,107 @@
       cursor: pointer;
       transition: background 0.3s, border 0.3s;
     }
+    
     body.dark .dark-toggle-frame {
       background: #23272b;
       border: 1px solid #253bae;
       box-shadow: 0 2px 8px rgba(0,0,0,0.12);
       color: #90caf9;
     }
+    
     .dark-toggle-frame input[type="checkbox"] {
       transform: scale(1.2);
       cursor: pointer;
       margin-right: 0.4em;
     }
-    @media (max-width: 600px) {
-      h1 { font-size: 2rem; }
+    
+    /* Mobile Responsiveness */
+    @media (max-width: 768px) {
+      body {
+        padding: 1.5rem;
+      }
+      
+      h1 {
+        font-size: 2.25rem;
+        margin-bottom: 1.5rem;
+      }
+      
+      .dark-toggle-frame {
+        top: 12px;
+        right: 12px;
+        font-size: 0.9rem;
+        padding: 0.2em 0.8em;
+      }
+      
+      .frameworks-container {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+      
+      .framework-card {
+        padding: 1.25rem;
+      }
+      
+      .framework-image {
+        height: 160px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      body {
+        padding: 1rem;
+      }
+      
+      h1 {
+        font-size: 2rem;
+        margin-bottom: 1.25rem;
+      }
+      
+      .back-line {
+        height: 24px;
+        margin-right: 12px;
+      }
+      
+      .back-button {
+        font-size: 0.95rem;
+      }
+      
       .dark-toggle-frame {
         top: 8px;
         right: 8px;
-        font-size: 0.9rem;
+        font-size: 0.85rem;
         padding: 0.2em 0.6em;
       }
+      
+      .framework-card {
+        padding: 1rem;
+      }
+      
+      .framework-image {
+        height: 140px;
+        margin-bottom: 0.75rem;
+      }
+      
+      .framework-card h2 {
+        font-size: 1.3rem;
+      }
+      
+      .framework-card p {
+        font-size: 0.95rem;
+      }
     }
+    
+    @media (max-width: 360px) {
+      h1 {
+        font-size: 1.8rem;
+      }
+      
+      .framework-image {
+        height: 120px;
+      }
+    }
+    
+    /* Animations */
     @keyframes fadeSlideUp {
       0% { opacity: 0; transform: translateY(24px);}
       100% { opacity: 1; transform: translateY(0);}
@@ -215,11 +335,14 @@
       <span>Dark Mode</span>
     </label>
   </span>
+  
   <div class="back-container">
     <span class="back-line"></span>
     <a href="portfolio.html" class="back-button" id="backToPortfolio">Back to Home</a>
   </div>
+  
   <h1>Additional Expertise</h1>
+  
   <div class="frameworks-container">
     <div class="framework-card autocad-card">
       <img src="autocad.jpg" alt="AutoCAD logo" class="framework-image" loading="lazy">
@@ -227,12 +350,14 @@
       <p>AutoCAD is a commercial computer-aided design (CAD) and drafting software application. Used for creating precise 2D and 3D drawings in engineering, architecture, and construction.</p>
       <a href="https://www.autodesk.com/products/autocad/overview" target="_blank" rel="noopener noreferrer">Learn about AutoCAD →</a>
     </div>
+    
     <div class="framework-card">
       <img src="Cisco.png" alt="Cisco logo" class="framework-image" loading="lazy">
       <h2>Cisco</h2>
       <p>Cisco provides networking hardware, software, and telecommunications equipment. Cisco Packet Tracer is widely used for network simulation and certification training.</p>
       <a href="https://www.netacad.com/courses/packet-tracer" target="_blank" rel="noopener noreferrer">Explore Cisco Packet Tracer →</a>
     </div>
+    
     <div class="framework-card circuit-wizard-card">
       <img src="circuit.png" alt="Circuit Wizard logo" class="framework-image" loading="lazy">
       <h2>Circuit Wizard</h2>
@@ -240,6 +365,7 @@
       <a href="https://www.new-wave-concepts.com/products/circuitwizard.html" target="_blank" rel="noopener noreferrer">Discover Circuit Wizard →</a>
     </div>
   </div>
+  
   <script>
     // Persist dark mode across navigation
     const toggle = document.getElementById("darkToggle");
@@ -247,12 +373,14 @@
       document.body.classList.add("dark");
       if (toggle) toggle.checked = true;
     }
+    
     if (toggle) {
       toggle.addEventListener("change", () => {
         document.body.classList.toggle("dark", toggle.checked);
         localStorage.setItem("darkMode", toggle.checked);
       });
     }
+    
     // Back button: go to portfolio and center Skills section
     document.getElementById('backToPortfolio').addEventListener('click', function(e) {
       e.preventDefault();

@@ -835,48 +835,86 @@
       from { opacity: 0; }
       to   { opacity: 1; }
     }
+  #scrollToTopBtn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  display: none;
+  opacity: 0.8;
+  transition: all 0.3s ease;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+#scrollToTopBtn:hover {
+  opacity: 1;
+  background: rgba(0, 0, 0, 0.9);
+  transform: translateY(-3px);
+}
+
+#scrollToTopBtn i {
+  font-size: 1em;
+}
+
+body.dark #scrollToTopBtn {
+  background: rgba(255, 255, 255, 0.2);
+  color: #e0e0e0;
+  backdrop-filter: blur(5px);
+}
+
+body.dark #scrollToTopBtn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  color: white;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  #scrollToTopBtn {
+    width: 44px;
+    height: 44px;
+    font-size: 18px;
+    bottom: 20px;
+    right: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  #scrollToTopBtn {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+    bottom: 15px;
+    right: 15px; /* Original right position */
+    left: auto; /* Reset left position */
+  }
+  
+  /* Move to left side on mobile */
+  @media (max-width: 400px) {
     #scrollToTopBtn {
-      position: fixed;
-      bottom: 30px;
-      right: 30px;
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      background: rgba(0, 0, 0, 0.7);
-      color: white;
-      border: none;
-      cursor: pointer;
-      font-size: 20px;
-      display: none;
-      opacity: 0.8;
-      transition: all 0.3s ease;
-      z-index: 9999;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      right: auto;
+      left: 15px;
     }
-    
-    #scrollToTopBtn:hover {
-      opacity: 1;
-      background: rgba(0, 0, 0, 0.9);
-      transform: translateY(-3px);
-    }
-    
-    #scrollToTopBtn i {
-      font-size: 1em;
-    }
-    
-    body.dark #scrollToTopBtn {
-      background: rgba(255, 255, 255, 0.2);
-      color: #e0e0e0;
-      backdrop-filter: blur(5px);
-    }
+  }
+}
 
-    body.dark #scrollToTopBtn:hover {
-      background: rgba(255, 255, 255, 0.3);
-      color: white;
-    }
-
+/* Landscape orientation adjustments */
+@media (orientation: landscape) and (max-height: 500px) {
+  #scrollToTopBtn {
+    bottom: 10px;
+    right: 10px;
+  }
+}
     /* Responsive adjustments */
     @media (max-width: 1024px) {
       .grid-container {
@@ -926,6 +964,214 @@
       
       .formal-section {
         padding: 1.8rem 1.5rem;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .grid-container {
+        display: block;
+        max-width: 100vw;
+        padding: 0 8px;
+        margin: 0 auto;
+        gap: 0;
+      }
+      .formal-section,
+      .projects-section,
+      .contact-section {
+        border-radius: 14px;
+        padding: 1.2rem 0.7rem;
+        margin-bottom: 1.2rem;
+        box-shadow: 0 4px 12px rgba(25,118,210,0.08);
+        font-size: 0.97rem;
+      }
+      section h2 {
+        font-size: 1.15rem;
+        margin-bottom: 0.7rem;
+        padding-bottom: 0.3rem;
+      }
+      .section-divider {
+        margin-bottom: 0.7rem;
+        margin-top: -0.3rem;
+        height: 2px;
+        width: 40px;
+      }
+      .project {
+        padding: 0.8rem 0.7rem;
+        margin-bottom: 0.7rem;
+        font-size: 0.97rem;
+        border-radius: 8px;
+      }
+      .project h3 {
+        font-size: 1.05rem;
+        margin-bottom: 0.2rem;
+      }
+      .intro-text {
+        padding: 1rem 0.7rem;
+        margin: 1rem auto;
+        font-size: 0.97rem;
+        border-radius: 14px;
+        box-shadow: 0 2px 8px rgba(70,131,176,0.13);
+      }
+      .header-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 0.7rem;
+      }
+      .header-text {
+        text-align: center;
+        margin-top: 0.7rem;
+        max-width: 100vw;
+        padding: 0 0.5rem;
+      }
+      header {
+        padding: 1.2rem 0.7rem;
+        border-radius: 0 0 1.2rem 1.2rem;
+        margin-bottom: 0.3rem;
+      }
+      header h1 {
+        font-size: 1.35rem;
+        margin-bottom: 0.3rem;
+      }
+      header p {
+        font-size: 0.97rem;
+        margin-top: -0.3rem;
+      }
+      .profile-photo {
+        width: 80px;
+        height: 80px;
+        margin-top: -0.5rem;
+      }
+      nav {
+        border-radius: 1rem;
+        padding: 0.5rem;
+        margin: -1rem auto 1rem auto;
+        max-width: 98vw;
+        font-size: 0.97rem;
+        flex-wrap: wrap;
+        gap: 0.1rem;
+      }
+      nav a {
+        font-size: 0.9rem;
+        padding: 0.3em 0.7em;
+        margin: 0.1rem;
+      }
+      .corner-logo {
+        top: 6px;
+        left: 6px;
+        gap: 4px;
+      }
+      .corner-logo img {
+        height: 32px;
+      }
+      .corner-name {
+        font-size: 1rem;
+      }
+      .corner-sub {
+        font-size: 0.5rem;
+      }
+      .psa-fab {
+        font-size: 0.85rem;
+        padding: 0.4em 0.8em;
+        right: 0.7rem;
+        bottom: 0.7rem;
+      }
+      .main-footer {
+        flex-direction: column;
+        gap: 0.3rem;
+        padding: 0.7rem 0.5rem;
+        font-size: 0.75rem;
+        line-height: 1.2;
+        border-top: 1px solid rgba(100,100,100,0.08);
+      }
+      .footer-brand {
+        gap: 0.2rem;
+      }
+      .footer-brand img {
+        height: 28px;
+      }
+      .footer-title {
+        font-size: 0.95rem;
+      }
+      .footer-subtitle {
+        font-size: 0.5rem;
+      }
+      .footer-tagline {
+        margin-left: 0;
+        font-size: 0.85em;
+        text-align: center;
+        margin-top: 0.3em;
+      }
+      .footer-links {
+        margin-top: 0.3em;
+        text-align: center;
+      }
+      .footer-links button {
+        font-size: 0.85rem;
+        margin: 0 4px;
+        padding: 3px 6px;
+      }
+      .social-icons {
+        flex-wrap: wrap;
+        gap: 0.7rem;
+        margin-top: 0.7rem;
+        font-size: 1.2rem;
+      }
+      .social-icons a {
+        font-size: 1.2rem;
+      }
+      .contact-section ul {
+        font-size: 0.97rem;
+        margin-bottom: 1rem;
+      }
+      /* Carousel containers and slides */
+      .certifications-container,
+      .projects-carousel-container {
+        min-height: auto !important;
+        height: auto !important;
+        padding: 0;
+      }
+      .certifications-slide,
+      .projects-slide {
+        display: none !important;
+        position: static !important;
+        transform: none !important;
+        width: 100% !important;
+        transition: none !important;
+        box-shadow: none !important;
+        background: none !important;
+      }
+      .certifications-slide.active-slide,
+      .projects-slide.active-slide {
+        display: block !important;
+      }
+      .certifications-slide ul > li:nth-child(n+6) {
+        display: none !important;
+      }
+      .projects-slide > .project:nth-child(n+4) {
+        display: none !important;
+      }
+      .projects-carousel-wrapper,
+      .certifications-wrapper {
+        gap: 0.3rem;
+        min-width: 0;
+      }
+      .slide-arrow,
+      .projects-prev-arrow,
+      .projects-next-arrow {
+        font-size: 2rem;
+        padding: 0 2px;
+        height: auto;
+      }
+      .certifications-dots,
+      .projects-dots {
+        gap: 7px;
+       
+      }
+      .cert-dot,
+      .project-dot {
+        width: 10px;
+        height: 10px;
       }
     }
 
@@ -990,8 +1236,24 @@
         padding: 0.5em 1em;
         right: 1rem;
         bottom: 1rem;
+        margin-top: 10px;
+      
       }
     }
+    @media (max-width: 600px) {
+  #personal-info {
+    padding-bottom: 3.5rem !important;
+    position: relative;
+  }
+  .psa-fab {
+    right: 1rem;
+    bottom: 1rem;
+    position: absolute;
+    margin-top: 0;
+    /* Ensure it stays above content */
+    z-index: 2;
+  }
+}
     </style>
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
@@ -1031,7 +1293,7 @@
     </script>
 
 <div class="corner-logo" aria-label="Site logo">
-  <img src="dp2.svg" alt="Logo" />
+  <img src="pics/dp2.svg" alt="Logo" />
   <div class="corner-text">
     <span class="corner-name">Seanscript</span>
     <span class="corner-sub">DEVELOPMENT</span>
@@ -1040,7 +1302,7 @@
 
   <header>
     <div class="header-content">
-      <img src="dp3.jpg" alt="Sean Script Profile Photo" class="profile-photo" />
+      <img src="pics/dp3.jpg" alt="Sean Script Profile Photo" class="profile-photo" />
       <div class="header-text">
         <div class="title-row">
           <h1>Sean Script</h1>
@@ -1264,7 +1526,8 @@
   .projects-dots {
     display: flex;
     justify-content: center;
-    margin-top: 25px;
+    margin-top: 7.5px;
+    margin-bottom: 15px;
     gap: 12px;
   }
   
@@ -1447,60 +1710,60 @@
     <div class="certifications-container">
       <div class="certifications-slide active-slide">
         <ul>
-          <li><a href="certif.html?file=certif1.pdf" class="cert-link">Digital Transformation 101: A Webinar Series on Technology Adoption of MSMEs</a></li>
-          <li><a href="certif.html?file=certif2.jpeg" class="cert-link">Resilience and Response: Cybersecurity & Digital Forensics for Cyber and Critical Technologies</a></li>
-          <li><a href="certif.html?file=certif3.png" class="cert-link">Digital Security and Data Privacy: How to Safeguard Our Data in Today's World</a></li>
-          <li><a href="certif.html?file=certif4.png" class="cert-link">How to Start Content Creating: from Ideas to Execution</a></li>
-          <li><a href="certif.html?file=certif5.pdf" class="cert-link">Be Smart, Stay Safe: Protecting Yourself in the Digital Age</a></li>
+          <li><a href="certif.html?file=pics/certif1.pdf" class="cert-link">Digital Transformation 101: A Webinar Series on Technology Adoption of MSMEs</a></li>
+          <li><a href="certif.html?file=pics/certif2.jpeg" class="cert-link">Resilience and Response: Cybersecurity & Digital Forensics for Cyber and Critical Technologies</a></li>
+          <li><a href="certif.html?file=pics/certif3.png" class="cert-link">Digital Security and Data Privacy: How to Safeguard Our Data in Today's World</a></li>
+          <li><a href="certif.html?file=pics/certif4.png" class="cert-link">How to Start Content Creating: from Ideas to Execution</a></li>
+          <li><a href="certif.html?file=pics/certif5.pdf" class="cert-link">Be Smart, Stay Safe: Protecting Yourself in the Digital Age</a></li>
         </ul>
       </div>
       <div class="certifications-slide">
         <ul>
-          <li><a href="certif.html?file=certif6.pdf" class="cert-link">Introduction to Data Science: Roles and Basic MySQL Skills</a></li>
-          <li><a href="certif.html?file=certif7.pdf" class="cert-link">Formulating Competitive Marketing Strategies in the Digital Age</a></li>
-          <li><a href="certif.html?file=certif8.pdf" class="cert-link">Work-Life Balance in the Digital Age: Setting Boundaries for Well-Being</a></li>
-          <li><a href="certif.html?file=certif9.pdf" class="cert-link">Advanced Data Analysis Techniques</a></li>
-          <li><a href="certif.html?file=certif10.pdf" class="cert-link">Cloud Computing Fundamentals</a></li>
+          <li><a href="certif.html?file=pics/certif6.pdf" class="cert-link">Introduction to Data Science: Roles and Basic MySQL Skills</a></li>
+          <li><a href="certif.html?file=pics/certif7.pdf" class="cert-link">Formulating Competitive Marketing Strategies in the Digital Age</a></li>
+          <li><a href="certif.html?file=pics/certif8.pdf" class="cert-link">Work-Life Balance in the Digital Age: Setting Boundaries for Well-Being</a></li>
+          <li><a href="certif.html?file=pics/certif9.pdf" class="cert-link">Next-Gen Computer Engineers: Empoweringg Future Innovators Through the Digital Economy and ICT Development Plan</a></li>
+          <li><a href="certif.html?file=pics/certif10.pdf" class="cert-link">Cloud Computing Fundamentals</a></li>
         </ul>
       </div>
       <div class="certifications-slide">
         <ul>
-          <li><a href="certif.html?file=certif11.pdf" class="cert-link">Artificial Intelligence for Beginners</a></li>
-          <li><a href="certif.html?file=certif12.pdf" class="cert-link">Blockchain Technology Explained</a></li>
-          <li><a href="certif.html?file=certif13.pdf" class="cert-link">Digital Marketing Certification</a></li>
-          <li><a href="certif.html?file=certif14.pdf" class="cert-link">UI/UX Design Principles</a></li>
-          <li><a href="certif.html?file=certif15.pdf" class="cert-link">Project Management Professional</a></li>
+          <li><a href="certif.html?file=pics/certif11.pdf" class="cert-link">Artificial Intelligence for Beginners</a></li>
+          <li><a href="certif.html?file=pics/certif12.pdf" class="cert-link">Blockchain Technology Explained</a></li>
+          <li><a href="certif.html?file=pics/certif13.pdf" class="cert-link">Digital Marketing Certification</a></li>
+          <li><a href="certif.html?file=pics/certif14.pdf" class="cert-link">UI/UX Design Principles</a></li>
+          <li><a href="certif.html?file=pics/certif15.pdf" class="cert-link">Project Management Professional</a></li>
         </ul>
       </div>
       <div class="certifications-slide">
         <ul>
-          <li><a href="certif.html?file=certif16.pdf" class="cert-link">Agile Development Methodologies</a></li>
-          <li><a href="certif.html?file=certif17.pdf" class="cert-link">DevOps Essentials</a></li>
-          <li><a href="certif.html?file=certif18.pdf" class="cert-link">Network Security Fundamentals</a></li>
-          <li><a href="certif.html?file=certif19.pdf" class="cert-link">Ethical Hacking Basics</a></li>
-          <li><a href="certif.html?file=certif20.pdf" class="cert-link">Python Programming Mastery</a></li>
+          <li><a href="certif.html?file=pics/certif16.pdf" class="cert-link">Agile Development Methodologies</a></li>
+          <li><a href="certif.html?file=pics/certif17.pdf" class="cert-link">DevOps Essentials</a></li>
+          <li><a href="certif.html?file=pics/certif18.pdf" class="cert-link">Network Security Fundamentals</a></li>
+          <li><a href="certif.html?file=pics/certif19.pdf" class="cert-link">Ethical Hacking Basics</a></li>
+          <li><a href="certif.html?file=pics/certif20.pdf" class="cert-link">Python Programming Mastery</a></li>
         </ul>
       </div>
       <div class="certifications-slide">
         <ul>
-          <li><a href="certif.html?file=certif21.pdf" class="cert-link">JavaScript Advanced Concepts</a></li>
-          <li><a href="certif.html?file=certif22.pdf" class="cert-link">React Framework Certification</a></li>
-          <li><a href="certif.html?file=certif23.pdf" class="cert-link">Node.js Server Development</a></li>
-          <li><a href="certif.html?file=certif24.pdf" class="cert-link">Database Design and Optimization</a></li>
+          <li><a href="certif.html?file=pics/certif21.pdf" class="cert-link">JavaScript Advanced Concepts</a></li>
+          <li><a href="certif.html?file=pics/certif22.pdf" class="cert-link">React Framework Certification</a></li>
+          <li><a href="certif.html?file=pics/certif23.pdf" class="cert-link">Node.js Server Development</a></li>
+          <li><a href="certif.html?file=pics/certif24.pdf" class="cert-link">Database Design and Optimization</a></li>
         </ul>
       </div>
       <div class="certifications-slide">
         <ul>
-          <li><a href="certif.html?file=certif25.pdf" class="cert-link">Mobile App Development</a></li>
-          <li><a href="certif.html?file=certif26.pdf" class="cert-link">Game Development Fundamentals</a></li>
-          <li><a href="certif.html?file=certif27.pdf" class="cert-link">AR/VR Development Basics</a></li>
+          <li><a href="certif.html?file=pics/certif25.pdf" class="cert-link">Mobile App Development</a></li>
+          <li><a href="certif.html?file=pics/certif26.pdf" class="cert-link">Game Development Fundamentals</a></li>
+          <li><a href="certif.html?file=pics/certif27.pdf" class="cert-link">AR/VR Development Basics</a></li>
         </ul>
       </div>
       <div class="certifications-slide">
         <ul>
-          <li><a href="certif.html?file=certif28.pdf" class="cert-link">Machine Learning Introduction</a></li>
-          <li><a href="certif.html?file=certif29.pdf" class="cert-link">Natural Language Processing</a></li>
-          <li><a href="certif.html?file=certif30.pdf" class="cert-link">Computer Vision Fundamentals</a></li>
+          <li><a href="certif.html?file=pics/certif28.pdf" class="cert-link">Machine Learning Introduction</a></li>
+          <li><a href="certif.html?file=pics/certif29.pdf" class="cert-link">Natural Language Processing</a></li>
+          <li><a href="certif.html?file=pics/certif30.pdf" class="cert-link">Computer Vision Fundamentals</a></li>
         </ul>
       </div>
     </div>
@@ -1607,52 +1870,135 @@
     background-color: #90caf9;
   }
 </style>
+    <style>
+    /* Responsive fix for certification and projects sections */
+    @media (max-width: 600px) {
+      .certification-section, .projects-section {
+        overflow-x: auto;
+        max-width: 100vw;
+        box-sizing: border-box;
+        padding: 0 8px;
+      }
+      .certification-section img, .projects-section img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+      }
+      .certification-section table, .projects-section table {
+        width: 100%;
+        overflow-x: auto;
+        display: block;
+      }
+      /* Ensure containers fit content on mobile */
+      .certifications-container,
+      .projects-carousel-container {
+        min-height: auto !important;
+        height: auto !important;
+      }
+      /* Only show active slide, hide others */
+      .certifications-slide,
+      .projects-slide {
+        display: none !important;
+        position: static !important;
+        transform: none !important;
+        width: 100% !important;
+        transition: none !important;
+      }
+      .certifications-slide.active-slide,
+      .projects-slide.active-slide {
+        display: block !important;
+      }
+      /* Limit certificates per slide to 5, projects per slide to 3 (already structured in HTML) */
+      .certifications-slide ul > li:nth-child(n+6) {
+        display: none !important;
+      }
+      .projects-slide > .project:nth-child(n+4) {
+        display: none !important;
+      }
+    }
+    </style>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const container = document.querySelector('.certifications-container');
-    const slides = document.querySelectorAll('.certifications-slide');
-    const prevArrow = document.querySelector('.prev-slide-arrow');
-    const nextArrow = document.querySelector('.next-slide-arrow');
-    const dots = document.querySelectorAll('.cert-dot');
-    let currentSlide = 0;
+  // In your certifications section script (replace the existing script)
+document.addEventListener('DOMContentLoaded', function() {
+  const container = document.querySelector('.certifications-container');
+  const slides = document.querySelectorAll('.certifications-slide');
+  const prevArrow = document.querySelector('.prev-slide-arrow');
+  const nextArrow = document.querySelector('.next-slide-arrow');
+  const dots = document.querySelectorAll('.cert-dot');
+  let currentSlide = 0;
+  
+  // Check if there's a stored slide index and restore it
+  const storedSlide = sessionStorage.getItem('certSlideIndex');
+  if (storedSlide) {
+    currentSlide = parseInt(storedSlide);
+  }
+  
+  function showSlide(index) {
+    // Ensure index is within bounds
+    index = Math.max(0, Math.min(index, slides.length - 1));
     
-    function showSlide(index) {
-      slides.forEach((slide, i) => {
-        slide.classList.toggle('active-slide', i === index);
-      });
-      
-      // Update dots
-      dots.forEach((dot, i) => {
-        dot.classList.toggle('active-dot', i === index);
-      });
-      
-      // Hide prev arrow on first slide, next arrow on last slide
-      prevArrow.style.visibility = index === 0 ? 'hidden' : 'visible';
-      nextArrow.style.visibility = index === slides.length - 1 ? 'hidden' : 'visible';
-    }
-    
-    nextArrow.addEventListener('click', function() {
-      currentSlide = (currentSlide + 1) % slides.length;
-      showSlide(currentSlide);
+    slides.forEach((slide, i) => {
+      slide.classList.toggle('active-slide', i === index);
     });
     
-    prevArrow.addEventListener('click', function() {
-      currentSlide = (currentSlide - 1 + slides.length) % slides.length;
-      showSlide(currentSlide);
+    // Update dots
+    dots.forEach((dot, i) => {
+      dot.classList.toggle('active-dot', i === index);
     });
     
-    // Add click event listeners to dots
-    dots.forEach((dot, index) => {
-      dot.addEventListener('click', () => {
-        currentSlide = index;
-        showSlide(currentSlide);
-      });
-    });
+    // Hide prev arrow on first slide, next arrow on last slide
+    prevArrow.style.visibility = index === 0 ? 'hidden' : 'visible';
+    nextArrow.style.visibility = index === slides.length - 1 ? 'hidden' : 'visible';
     
-    // Initialize
-    showSlide(0);
+    // Update current slide
+    currentSlide = index;
+  }
+  
+  nextArrow.addEventListener('click', function() {
+    currentSlide = (currentSlide + 1) % slides.length;
+    showSlide(currentSlide);
   });
+  
+  prevArrow.addEventListener('click', function() {
+    currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+    showSlide(currentSlide);
+  });
+  
+  // Add click event listeners to dots
+  dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+      currentSlide = index;
+      showSlide(currentSlide);
+    });
+  });
+  
+  // Add click event listeners to certificate links to store current slide
+  document.querySelectorAll('.cert-link').forEach(link => {
+    link.addEventListener('click', () => {
+      sessionStorage.setItem('certSlideIndex', currentSlide);
+    });
+  });
+  
+  // Initialize
+  showSlide(currentSlide);
+});
+// At the bottom of your portfolio page script
+document.addEventListener('DOMContentLoaded', function() {
+  // Check if we're returning from a certificate view
+  if (sessionStorage.getItem('returningFromCert') === 'true') {
+    // Remove the flag
+    sessionStorage.removeItem('returningFromCert');
+    
+    // Scroll to certifications section
+    const certSection = document.getElementById('Certifications');
+    if (certSection) {
+      setTimeout(() => {
+        certSection.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    }
+  }
+});
 </script>
 
  </div>
@@ -1675,7 +2021,7 @@
 
 <footer id=footmo class="main-footer">
   <div class="footer-brand">
-    <img src="dp2.svg" alt="Logo">
+    <img src="pics/dp2.svg" alt="Logo">
     <div class="footer-text">
       <span class="footer-title">Seanscript</span>
       <span class="footer-subtitle">DEVELOPMENT</span>

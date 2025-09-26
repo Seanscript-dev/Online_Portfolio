@@ -2,128 +2,48 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sean Script - Education Timeline</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
+    :root {
+      --primary: #1976d2;
+      --primary-light: #38bdf8;
+      --primary-dark: #0d47a1;
+      --bg-light: #e3f2fd;
+      --bg-light-secondary: #bbdefb;
+      --text-light: #0d47a1;
+      --card-light: #ffffff;
+      --text-dark: #e2e8f0;
+      --bg-dark: #0f172a;
+      --bg-dark-secondary: #1e293b;
+      --card-dark: #23272b;
+      --accent-dark: #253bae;
+    }
+    
     html, body {
       height: 100%;
       margin: 0;
       padding: 0;
       overflow: hidden;
     }
+    
     body {
-      background: linear-gradient(135deg, #e3f2fd 60%, #bbdefb 100%);
-      color: #0d47a1;
+      background: linear-gradient(135deg, var(--bg-light) 60%, var(--bg-light-secondary) 100%);
+      color: var(--text-light);
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       width: 100vw;
       height: 100vh;
       overflow: hidden;
-      transition: background 0.3s, color 0.3s;
+      transition: background 0.5s ease, color 0.4s ease;
     }
+    
     body.dark {
-      background: linear-gradient(135deg, #0f172a 60%, #1e293b 100%);
-      color: #e2e8f0;
+      background: linear-gradient(135deg, var(--bg-dark) 60%, var(--bg-dark-secondary) 100%);
+      color: var(--text-dark);
     }
-    .back-btn-fixed {
-      position: fixed;
-      top: 30px;
-      left: 36px;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      gap: 0.5em;
-      background: #e3f2fd;
-      color: #1976d2;
-      border: 1.5px solid #38bdf8;
-      border-radius: 32px;
-      font-size: 1.08rem;
-      font-weight: 600;
-      padding: 0.48em 1.5em 0.48em 1.1em;
-      text-decoration: none;
-      box-shadow: 0 4px 18px #38bdf822, 0 1.5px 8px #1976d210;
-      transition: 
-        background 0.18s, 
-        color 0.16s, 
-        box-shadow 0.16s, 
-        border-color 0.18s, 
-        transform 0.22s cubic-bezier(.4,1.4,.2,1),
-        text-shadow 0.22s cubic-bezier(.4,0,.2,1);
-      outline: none;
-      cursor: pointer;
-      opacity: 0.98;
-      letter-spacing: 0.01em;
-      min-width: 0;
-      min-height: 0;
-      user-select: none;
-      will-change: transform;
-    }
-    .back-btn-fixed i {
-      display: none;
-    }
-    .back-btn-fixed:hover, .back-btn-fixed:focus {
-      background: #bbdefb;
-      color: #1592eb;
-      border-color: #1592eb;
-      box-shadow: 0 8px 32px #38bdf844, 0 2px 12px #1976d210;
-      transform: translateY(-2px) scale(1.045);
-      text-decoration: none;
-      text-shadow: 0 2px 8px #38bdf855;
-    }
-    body.dark .back-btn-fixed {
-      background: #23272b;
-      color: #38bdf8;
-      border-color: #38bdf8;
-      box-shadow: none;
-    }
-    body.dark .back-btn-fixed:hover, body.dark .back-btn-fixed:focus {
-      background: #253bae;
-      color: #90caf9;
-      border-color: #38bdf8;
-      box-shadow: none;
-    }
-    .dark-toggle-frame {
-      position: fixed;
-      top: 30px;
-      right: 36px;
-      z-index: 101;
-      background: #e3f2fd;
-      border-radius: 18px;
-      padding: 0.3em 1em;
-      border: 1px solid #bbdefb;
-      box-shadow: 0 2px 8px rgba(33,150,243,0.06);
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      font-size: 0.98rem;
-      cursor: pointer;
-      transition: background 0.3s, border 0.3s;
-    }
-    body.dark .dark-toggle-frame {
-      background: #23272b;
-      border: 1px solid #253bae;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
-      color: #90caf9;
-    }
-    .dark-toggle-frame input[type="checkbox"] {
-      transform: scale(1.2);
-      cursor: pointer;
-      margin-right: 0.4em;
-    }
-    @media (max-width: 600px) {
-      .back-btn-fixed {
-        top: 10px;
-        left: 8px;
-        font-size: 0.98rem;
-        padding: 0.38em 1em 0.38em 0.8em;
-      }
-      .dark-toggle-frame {
-        top: 8px;
-        right: 8px;
-        font-size: 0.9rem;
-        padding: 0.2em 0.6em;
-      }
-    }
-    /* --- New horizontal snap scroll design --- */
+
+    /* Container spacing */
     .horiz-scroll {
       display: flex;
       flex-direction: row;
@@ -134,190 +54,734 @@
       scroll-behavior: smooth;
       scroll-snap-type: x mandatory;
       scrollbar-width: thin;
-      scrollbar-color: #38bdf8 #e3f2fd;
+      scrollbar-color: var(--primary-light) var(--bg-light);
       background: transparent;
+      padding: 0 5vw;
+      box-sizing: border-box;
     }
+    
     body.dark .horiz-scroll {
-      background: transparent;
-      scrollbar-color: #38bdf8 #23272b;
+      scrollbar-color: var(--primary-light) var(--bg-dark);
     }
+    
     .horiz-scroll::-webkit-scrollbar {
-      height: 10px;
-      background: #e3f2fd;
+      height: 8px;
+      background: var(--bg-light);
+      width: calc(100% - 10vw);
+      margin: 0 5vw;
     }
+    
     .horiz-scroll::-webkit-scrollbar-thumb {
-      background: #38bdf8;
+      background: var(--primary-light);
       border-radius: 6px;
     }
+    
+    /* Back Button */
+    .back-btn-fixed {
+      position: fixed;
+      top: 20px;
+      left: 16px;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+      background: var(--bg-light);
+      color: var(--primary);
+      border: 1.5px solid var(--primary-light);
+      border-radius: 32px;
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 0.4em 1.2em 0.4em 1em;
+      text-decoration: none;
+      box-shadow: 0 4px 18px rgba(56, 189, 248, 0.13), 0 1.5px 8px rgba(25, 118, 210, 0.06);
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      outline: none;
+      cursor: pointer;
+      opacity: 0.98;
+      letter-spacing: 0.01em;
+      min-width: 0;
+      min-height: 0;
+      user-select: none;
+      will-change: transform;
+    }
+    
+    .back-btn-fixed:hover, .back-btn-fixed:focus {
+      background: var(--bg-light-secondary);
+      color: var(--primary-dark);
+      border-color: var(--primary-dark);
+      box-shadow: 0 8px 32px rgba(56, 189, 248, 0.27), 0 2px 12px rgba(25, 118, 210, 0.06);
+      transform: translateY(-2px) scale(1.045);
+      text-shadow: 0 2px 8px rgba(56, 189, 248, 0.33);
+    }
+    
+    body.dark .back-btn-fixed {
+      background: var(--card-dark);
+      color: var(--primary-light);
+      border-color: var(--primary-light);
+      box-shadow: none;
+    }
+    
+    body.dark .back-btn-fixed:hover, body.dark .back-btn-fixed:focus {
+      background: var(--accent-dark);
+      color: #90caf9;
+      border-color: var(--primary-light);
+    }
+    nav-arrow {
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+    
+    /* Dark Mode Toggle */
+    .dark-toggle-frame {
+      position: fixed;
+      top: 20px;
+      right: 16px;
+      z-index: 101;
+      background: var(--bg-light);
+      border-radius: 18px;
+      padding: 0.3em 0.8em;
+      border: 1px solid var(--bg-light-secondary);
+      box-shadow: 0 2px 8px rgba(33, 150, 243, 0.06);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    body.dark .dark-toggle-frame {
+      background: var(--card-dark);
+      border: 1px solid var(--accent-dark);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+      color: #90caf9;
+    }
+    
+    .dark-toggle-frame input[type="checkbox"] {
+      transform: scale(1.1);
+      cursor: pointer;
+      margin-right: 0.3em;
+      accent-color: var(--primary);
+    }
+    
+    body.dark .dark-toggle-frame input[type="checkbox"] {
+      accent-color: var(--primary-light);
+    }
+    
+    /* Education Sections */
     .edu-section {
-      flex: 0 0 100vw;
-      height: 100vh;
+      flex: 0 0 calc(100vw - 10vw);
+      height: calc(100vh - 40px);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      box-sizing: border-box;
-      padding: 0;
       position: relative;
-      background: transparent;
       scroll-snap-align: center;
-      transition: box-shadow 0.3s;
+      transition: all 0.4s ease;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(5px);
+      overflow: hidden;
+      padding: 20px 0;
+      box-sizing: border-box;
     }
+    
+    /* Remove background images for sections */
+    #elem, #hs, #shs, #college {
+      background: none !important;
+    }
+    
     body.dark .edu-section {
-      background: transparent;
-      /* Remove highlight shadow in dark mode */
-      box-shadow: none !important;
+      background: rgba(0, 0, 0, 0.1);
     }
+    
+    .edu-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: inherit;
+      filter: blur(8px);
+      z-index: -1;
+      opacity: 0.7;
+    }
+    
     .edu-section:focus-within, .edu-section:target {
-      box-shadow: 0 0 0 6px #38bdf855;
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.33);
       z-index: 2;
     }
-    /* Optional: highlight current section with a subtle shadow */
+    
     .edu-section.active {
-      box-shadow: 0 0 0 8px #38bdf822;
+      box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.13);
       z-index: 2;
     }
+    
+    /* Graduation Header - More Compact */
     .grad-header {
       display: flex;
       align-items: center;
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-      justify-content: center;
-    }
-    .grad-header i {
-      font-size: 2.5rem;
-      color: #1976d2;
-    }
-    body.dark .grad-header i {
-      color: #38bdf8;
-    }
-    .grad-card {
-      background: #fff;
-      border-radius: 18px;
-      box-shadow: 0 8px 32px #1976d233;
-      padding: 2rem 2.5rem;
-      text-align: center;
-      max-width: 900px;
-      margin: 0 auto;
-      min-width: 350px;
-    }
-    body.dark .grad-card {
-      background: #23272b;
-      color: #e2e8f0;
-      /* Remove shadow in dark mode */
-      box-shadow: none;
-    }
-    .grad-card h2 {
-      color: #1976d2;
+      gap: 0.8rem;
       margin-bottom: 1rem;
+      justify-content: center;
+      text-align: center;
+      padding: 0 20px;
+      flex-wrap: wrap;
     }
+    
+    .grad-header i {
+      font-size: 1.8rem;
+      color: var(--primary);
+      transition: transform 0.3s ease, color 0.3s ease;
+    }
+    
+    body.dark .grad-header i {
+      color: var(--primary-light);
+    }
+    
+    .grad-header h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 0;
+      background: linear-gradient(to right, var(--primary), var(--primary-dark));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      transition: all 0.4s ease;
+      line-height: 1.2;
+    }
+    
+    body.dark .grad-header h1 {
+      background: linear-gradient(to right, var(--primary-light), #90caf9);
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+    
+    /* Graduation Card - More Compact */
+    .grad-card {
+      background: var(--card-light);
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(25, 118, 210, 0.2);
+      padding: 1.5rem;
+      text-align: center;
+      width: 90%;
+      max-width: 800px;
+      margin: 0 auto;
+      transition: all 0.4s ease;
+      transform-style: preserve-3d;
+      position: relative;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+    
+    .grad-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.05) 0%, rgba(25, 118, 210, 0.03) 100%);
+      z-index: 0;
+    }
+    
+    body.dark .grad-card {
+      background: var(--card-dark);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    }
+    
+    .grad-card h2 {
+      color: var(--primary);
+      margin-bottom: 1rem;
+      font-size: 1.4rem;
+      position: relative;
+      z-index: 1;
+      transition: all 0.3s ease;
+      line-height: 1.3;
+    }
+    
     body.dark .grad-card h2 {
-      color: #38bdf8;
+      color: var(--primary-light);
     }
+    
+    /* More compact text spacing */
     .grad-card p {
-      font-size: 1.1rem;
-      margin-bottom: 2rem;
+      font-size: 1rem;
+      margin-bottom: 1rem;
       color: #333;
+      position: relative;
+      z-index: 1;
+      line-height: 1.4;
     }
+    
     body.dark .grad-card p {
       color: #cbd5e1;
     }
+    
+    /* Image with zoom capability */
     .grad-img {
       width: 100%;
-      max-width: 400px;
+      max-width: 350px;
       border-radius: 12px;
-      box-shadow: 0 4px 16px #1976d244;
-      margin: 0 1.5rem 1.5rem 1.5rem;
+      box-shadow: 0 4px 16px rgba(25, 118, 210, 0.27);
+      margin: 0 auto 1rem;
       display: inline-block;
       vertical-align: top;
+      transition: all 0.4s ease;
+      transform: translateZ(20px);
+      position: relative;
+      z-index: 1;
+      cursor: zoom-in;
+      object-fit: contain;
     }
+    
+    body.dark .grad-img {
+      box-shadow: none !important;
+    }
+    
+    .grad-img.zoomed {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1000;
+      max-width: 90vw;
+      max-height: 90vh;
+      cursor: zoom-out;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+      width: auto;
+      height: auto;
+    }
+   
+    .grad-img:hover:not(.zoomed) {
+      transform: translateZ(20px) scale(1.02);
+      box-shadow: 0 8px 24px rgba(25, 118, 210, 0.35);
+    }
+    
+    body.dark .grad-img:hover:not(.zoomed) {
+      transform: translateZ(20px) scale(1.02);
+      box-shadow: none !important;
+    }
+    
     .grad-img-large {
-      max-width: 600px;
+      max-width: 500px;
     }
-    .placeholder {
-      font-size: 1.2rem;
-      color: #888;
-      margin-top: 2rem;
+    
+    /* Horizontal layout for larger screens */
+    .horizontal-layout {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      text-align: left;
     }
-    body.dark .placeholder {
-      color: #90caf9;
+    
+    .horizontal-layout .text-content {
+      flex: 1;
+      min-width: 0;
     }
+    
+    .horizontal-layout .image-content {
+      flex: 1;
+      min-width: 0;
+    }
+    
+    /* Achievement Badge */
+    .achievement-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      padding: 0.35em 0.7em;
+      border-radius: 24px;
+      font-weight: 600;
+      margin: 0.25em 0.2em;
+      font-size: 0.85rem;
+      box-shadow: 0 2px 8px rgba(25, 118, 210, 0.3);
+      transition: all 0.3s ease;
+    }
+    
+    body.dark .achievement-badge {
+      background: linear-gradient(135deg, rgba(50, 136, 226, 0.83), rgb(26, 102, 133));
+    }
+    
+    /* Navigation Arrows */
     .nav-arrow {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      background: #1976d2cc;
+      background: rgba(25, 118, 210, 0.8);
       color: #fff;
       border: none;
       border-radius: 50%;
-      width: 48px;
-      height: 48px;
-      font-size: 2rem;
+      width: 42px;
+      height: 42px;
+      font-size: 1.5rem;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       z-index: 10;
-      transition: background 0.2s, transform 0.18s;
-      box-shadow: 0 2px 8px #1976d233;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 12px rgba(25, 118, 210, 0.2);
       outline: none;
-      opacity: 0.85;
+      opacity: 0.9;
       pointer-events: auto;
       visibility: visible;
     }
+    
     body.dark .nav-arrow {
-      background: #253baecc;
+      background: rgba(37, 59, 174, 0.8);
       color: #90caf9;
-      /* Remove shadow in dark mode */
       box-shadow: none;
     }
+    
     .nav-arrow:hover {
-      background: #0d47a1;
-      transform: translateY(-50%) scale(1.08);
+      background: var(--primary-dark);
+      transform: translateY(-50%) scale(1.1);
+      box-shadow: 0 6px 16px rgba(25, 118, 210, 0.3);
     }
+    
     body.dark .nav-arrow:hover {
-      background: #1592eb;
+      background: var(--primary-light);
       color: #fff;
-      box-shadow: none;
     }
+    
     .nav-arrow.left {
-      left: 18px;
+      left: 10px;
     }
+    
     .nav-arrow.right {
-      right: 18px;
+      right: 10px;
     }
-    /* Hide left arrow on first, right arrow on last */
-    .edu-section:first-child .nav-arrow.left {
-      display: none;
-    }
+    
+    .edu-section:first-child .nav-arrow.left,
     .edu-section:last-child .nav-arrow.right {
       display: none;
     }
-    /* Hide arrows with opacity and pointer-events when the 'hide-arrows' class is applied */
+    
     .nav-arrow.hide-arrows {
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.18s cubic-bezier(.4,0,.2,1);
+      transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    /* Keep arrows hidden while dragging scrollbar */
+    
     .horiz-scroll.dragging .nav-arrow {
       opacity: 0;
       pointer-events: none;
     }
-    /* Responsive */
-    @media (max-width: 600px) {
+    
+    /* Placeholder */
+    .placeholder {
+      font-size: 1rem;
+      color: #888;
+      margin-top: 1.2rem;
+      position: relative;
+      z-index: 1;
+    }
+    
+    body.dark .placeholder {
+      color: #90caf9;
+    }
+    
+    /* Overlay for zoomed image */
+    .zoom-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 999;
+      display: none;
+    }
+    
+    /* Modal overlay for full image */
+    .img-modal-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.85);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: zoom-out;
+      transition: opacity 0.2s;
+    }
+    
+    .img-modal-overlay img {
+      max-width: 96vw;
+      max-height: 96vh;
+      border-radius: 16px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+      background: #fff;
+      object-fit: contain;
+      display: block;
+    }
+    
+    /* Hide overlay by default */
+    .img-modal-overlay[hidden] {
+      display: none !important;
+    }
+    
+    /* Responsive Design */
+    @media (min-width: 1200px) {
       .grad-card {
-        padding: 1rem 0.5rem;
-        min-width: 0;
-        max-width: 98vw;
+        max-width: 1000px;
+        padding: 1.8rem 2.5rem;
       }
+      
+      .horizontal-layout {
+        gap: 2rem;
+      }
+      
+      .grad-header h1 {
+        font-size: 1.8rem;
+      }
+      
+      .grad-card h2 {
+        font-size: 1.6rem;
+      }
+      
+      .grad-card p {
+        font-size: 1.05rem;
+      }
+      
+      .back-btn-fixed {
+        top: 30px;
+        left: calc(5vw + 16px);
+        font-size: 1.08rem;
+        padding: 0.48em 1.5em 0.48em 1.1em;
+      }
+      
+      .dark-toggle-frame {
+        top: 30px;
+        right: calc(5vw + 16px);
+        font-size: 0.98rem;
+        padding: 0.3em 1em;
+      }
+      
+      .nav-arrow {
+        width: 50px;
+        height: 50px;
+        font-size: 1.8rem;
+      }
+      
+      .nav-arrow.left {
+        left: calc(5vw + 5px);
+      }
+      
+      .nav-arrow.right {
+        right: calc(5vw + 5px);
+      }
+    }
+    
+    @media (max-width: 992px) {
+      .grad-header h1 {
+        font-size: 1.4rem;
+      }
+      
+      .grad-card h2 {
+        font-size: 1.3rem;
+      }
+      
+      .achievement-badge {
+        font-size: 0.8rem;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .horiz-scroll {
+        padding: 0 3vw;
+      }
+      
+      .grad-header {
+        gap: 0.6rem;
+      }
+      
+      .grad-header i {
+        font-size: 1.6rem;
+      }
+      
+      .grad-header h1 {
+        font-size: 1.3rem;
+      }
+      
+      .grad-card {
+        padding: 1.2rem;
+        width: 95%;
+      }
+      
+      .grad-card h2 {
+        font-size: 1.2rem;
+        margin-bottom: 0.8rem;
+      }
+      
+      .grad-card p {
+        font-size: 0.95rem;
+        margin-bottom: 0.8rem;
+      }
+      
       .grad-img, .grad-img-large {
-        max-width: 95vw;
+        max-width: 320px;
       }
+      
       .nav-arrow {
         width: 38px;
         height: 38px;
-        font-size: 1.5rem;
+        font-size: 1.3rem;
+      }
+      
+      .horizontal-layout {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      
+      .back-btn-fixed {
+        font-size: 0.95rem;
+        padding: 0.35em 1em 0.35em 0.8em;
+      }
+      
+      .dark-toggle-frame {
+        font-size: 0.85rem;
+        padding: 0.25em 0.7em;
+      }
+      
+      .dark-toggle-frame input[type="checkbox"] {
+        transform: scale(1);
+      }
+    }
+    
+    @media (max-width: 576px) {
+      .grad-header {
+        flex-direction: column;
+        gap: 0.4rem;
+      }
+      
+      .grad-header h1 {
+        font-size: 1.2rem;
+      }
+      
+      .grad-card {
+        padding: 1rem;
+        width: 98%;
+      }
+      
+      .grad-card h2 {
+        font-size: 1.1rem;
+      }
+      
+      .grad-img, .grad-img-large {
+        max-width: 280px;
+      }
+      
+      .achievement-badge {
+        font-size: 0.75rem;
+        padding: 0.3em 0.6em;
+      }
+      
+      .placeholder {
+        font-size: 0.9rem;
+      }
+      
+      .nav-arrow {
+        width: 34px;
+        height: 34px;
+        font-size: 1.1rem;
+      }
+      
+      .back-btn-fixed {
+        font-size: 0.9rem;
+        padding: 0.3em 0.9em 0.3em 0.7em;
+      }
+      
+      .dark-toggle-frame {
+        font-size: 0.8rem;
+        padding: 0.2em 0.6em;
+      }
+    }
+    
+    @media (max-width: 400px) {
+      .grad-header h1 {
+        font-size: 1.1rem;
+      }
+      
+      .grad-card h2 {
+        font-size: 1rem;
+      }
+      
+      .grad-img, .grad-img-large {
+        max-width: 95%;
+      }
+      
+      .achievement-badge {
+        font-size: 0.7rem;
+      }
+      
+      .back-btn-fixed {
+        font-size: 0.85rem;
+        padding: 0.25em 0.8em 0.25em 0.6em;
+      }
+    }
+    
+    /* Animation for section entrance */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .grad-card, .grad-header {
+      animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) both;
+    }
+    
+    /* Delay animations for each section */
+    #elem .grad-header { animation-delay: 0.1s; }
+    #elem .grad-card { animation-delay: 0.2s; }
+    
+    #hs .grad-header { animation-delay: 0.1s; }
+    #hs .grad-card { animation-delay: 0.2s; }
+    
+    #shs .grad-header { animation-delay: 0.1s; }
+    #shs .grad-card { animation-delay: 0.2s; }
+    
+    #college .grad-header { animation-delay: 0.1s; }
+    #college .grad-card { animation-delay: 0.2s; }
+    
+    /* Remove outer uneven lines (box-shadows/borders) from main containers */
+    .horiz-scroll,
+    .edu-section,
+    .grad-card {
+      box-shadow: none !important;
+      border: none !important;
+    }
+    
+    .edu-section:focus-within,
+    .edu-section:target,
+    .edu-section.active {
+      box-shadow: none !important;
+    }
+    
+    /* Touch device optimizations */
+    @media (hover: none) {
+      .nav-arrow {
+        background: rgba(25, 118, 210, 0.6);
+      }
+      
+      body.dark .nav-arrow {
+        background: rgba(37, 59, 174, 0.6);
+      }
+      
+      .grad-img:hover:not(.zoomed) {
+        transform: none;
+        box-shadow: 0 4px 16px rgba(25, 118, 210, 0.27);
+      }
+      
+      body.dark .grad-img:hover:not(.zoomed) {
+        box-shadow: none;
       }
     }
   </style>
@@ -332,58 +796,92 @@
       <span>Dark Mode</span>
     </label>
   </span>
+  
+  <!-- Modal overlay for full image -->
+  <div class="img-modal-overlay" id="imgModal" hidden>
+    <img id="imgModalPic" src="" alt="Full Image" />
+  </div>
+  <div class="zoom-overlay" id="zoomOverlay"></div>
   <div class="horiz-scroll" id="timeline">
     <!-- Elementary -->
     <section class="edu-section" id="elem">
-      <button class="nav-arrow left" onclick="scrollToSection(0)"><i class="fa fa-arrow-left"></i></button>
+      <button class="nav-arrow left" onclick="scrollToSection(0)" aria-label="Previous section"><i class="fa fa-arrow-left"></i></button>
       <div class="grad-header">
         <i class="fa fa-graduation-cap"></i>
         <h1>Saint Augustine Academy of Pampanga</h1>
       </div>
-      <div class="grad-card" style="max-width:600px;">
-        <h2>Elementary Diploma & Graduation</h2>
-        <p>Graduated: 2017 — With High Honors (Top 10)</p>
-        <div style="display: flex; justify-content: center;">
-          <img src="elem.jpg" alt="SAAP Graduation Photo and Diploma" class="grad-img grad-img-large" style="margin: 0 auto;" />
+      <div class="grad-card">
+        <div class="horizontal-layout">
+          <div class="text-content">
+            <h2>Elementary Diploma & Graduation</h2>
+            <p>Graduated: 2017</p>
+            <div class="achievement-badge">With High Honors (Top 10)</div>
+            <div class="achievement-badge">Varsity (Table Tennis)</div>
+            <div class="achievement-badge">Pageant (Mr. SAAP 2017)</div>
+          </div>
+          <div class="image-content">
+            <img src="elem.jpg" alt="SAAP Graduation Photo and Diploma" class="grad-img grad-img-large" />
+          </div>
         </div>
       </div>
-      <button class="nav-arrow right" onclick="scrollToSection(1)"><i class="fa fa-arrow-right"></i></button>
+      <button class="nav-arrow right" onclick="scrollToSection(1)" aria-label="Next section"><i class="fa fa-arrow-right"></i></button>
     </section>
+    
     <!-- High School -->
     <section class="edu-section" id="hs">
-      <button class="nav-arrow left" onclick="scrollToSection(0)"><i class="fa fa-arrow-left"></i></button>
+      <button class="nav-arrow left" onclick="scrollToSection(0)" aria-label="Previous section"><i class="fa fa-arrow-left"></i></button>
       <div class="grad-header">
         <i class="fa fa-graduation-cap"></i>
         <h1>Diosdado Macapagal Memorial High School</h1>
       </div>
-      <div class="grad-card" style="max-width:600px;">
-        <h2>Junior High School Certificate</h2>
-        <p>Graduated: 2021 — Valedictorian</p>
-        <div style="display: flex; justify-content: center;">
-          <img src="hs.jpg" alt="Diosdado Macapagal Memorial High School Certificate" class="grad-img grad-img-large" style="margin: 0 auto;" />
+      <div class="grad-card">
+        <div class="horizontal-layout">
+          <div class="text-content">
+            <h2>Junior High School Certificate</h2>
+            <p>Graduated: 2021</p>
+            <div class="achievement-badge">Valedictorian</div>
+            <div class="achievement-badge">Vice President SAMAFIl</div>
+            <div class="achievement-badge">Division MTAP Qualifier</div>
+            <div class="achievement-badge">Math Quiz Bee Division Qualifier</div>
+            <div class="achievement-badge">Interpretatibong Pagbasa</div>
+            <div class="achievement-badge">Varsity (Table Tennis)</div>
+            <div class="achievement-badge">School Journalist (Radio Broadcasting)</div>
+          </div>
+          <div class="image-content">
+            <img src="hs.jpg" alt="Diosdado Macapagal Memorial High School Certificate" class="grad-img grad-img-large" />
+          </div>
         </div>
       </div>
-      <button class="nav-arrow right" onclick="scrollToSection(2)"><i class="fa fa-arrow-right"></i></button>
+      <button class="nav-arrow right" onclick="scrollToSection(2)" aria-label="Next section"><i class="fa fa-arrow-right"></i></button>
     </section>
+    
     <!-- Senior High School -->
     <section class="edu-section" id="shs">
-      <button class="nav-arrow left" onclick="scrollToSection(1)"><i class="fa fa-arrow-left"></i></button>
+      <button class="nav-arrow left" onclick="scrollToSection(1)" aria-label="Previous section"><i class="fa fa-arrow-left"></i></button>
       <div class="grad-header">
         <i class="fa fa-graduation-cap"></i>
         <h1>Mary The Queen College of Pampanga</h1>
       </div>
-      <div class="grad-card" style="max-width:520px; padding-right:2.5rem; padding-left:2.5rem; margin-right:auto; margin-left:auto;">
-        <h2>Senior High School Diploma</h2>
-        <p>Graduated: 2023 — With High Honors (STEM Strand)</p>
-        <div style="display: flex; justify-content: center;">
-          <img src="shs.jpg" alt="Mary The Queen College of Pampanga Diploma" class="grad-img grad-img-large" style="margin: 0 auto;" />
+      <div class="grad-card">
+        <div class="horizontal-layout">
+          <div class="text-content">
+            <h2>Senior High School Diploma</h2>
+            <p>Graduated: 2023</p>
+            <div class="achievement-badge">With High Honors (STEM Strand)</div>
+            <div class="achievement-badge">Supreme Student Council 2021-2023</div>
+            <div class="achievement-badge">Former STEM Head and Logistics</div>
+          </div>
+          <div class="image-content">
+            <img src="shs.jpg" alt="Mary The Queen College of Pampanga Diploma" class="grad-img grad-img-large" />
+          </div>
         </div>
       </div>
-      <button class="nav-arrow right" onclick="scrollToSection(3)"><i class="fa fa-arrow-right"></i></button>
+      <button class="nav-arrow right" onclick="scrollToSection(3)" aria-label="Next section"><i class="fa fa-arrow-right"></i></button>
     </section>
+    
     <!-- College -->
     <section class="edu-section" id="college">
-      <button class="nav-arrow left" onclick="scrollToSection(2)"><i class="fa fa-arrow-left"></i></button>
+      <button class="nav-arrow left" onclick="scrollToSection(2)" aria-label="Previous section"><i class="fa fa-arrow-left"></i></button>
       <div class="grad-header">
         <i class="fa fa-graduation-cap"></i>
         <h1>Pampanga State University</h1>
@@ -391,12 +889,19 @@
       <div class="grad-card">
         <h2>Bachelor of Science in Computer Engineering</h2>
         <p>Expected Graduation: 2027</p>
+        <div class="achievement-badge">Dean's Lister</div>
+        <div class="achievement-badge">President's Lister</div>
+        <div class="achievement-badge">PSU Table Tennis Varsity</div>
+        <div class="achievement-badge">Student Organization Member</div>
+        <div class="achievement-badge">Programming Contest Participant</div>
         <div class="placeholder">
-          Graduation diploma will be uploaded soon.
+          <i class="fas fa-hourglass-half" style="margin-right: 8px;"></i>
+          Graduation diploma will be uploaded soon
         </div>
       </div>
     </section>
   </div>
+  
   <script>
     // Scroll to section by index
     function scrollToSection(idx) {
@@ -406,7 +911,8 @@
         sections[idx].scrollIntoView({behavior: 'smooth', inline: 'start'});
       }
     }
-    // Optional: allow left/right arrow keys for navigation
+    
+    // Keyboard navigation
     document.addEventListener('keydown', function(e) {
       const container = document.getElementById('timeline');
       const sections = Array.from(container.children);
@@ -414,70 +920,140 @@
         const rect = sec.getBoundingClientRect();
         return rect.left >= -10 && rect.left <= 10;
       });
+      
       if (e.key === 'ArrowRight' && current < sections.length - 1) {
+        e.preventDefault();
         scrollToSection(current + 1);
       }
       if (e.key === 'ArrowLeft' && current > 0) {
+        e.preventDefault();
         scrollToSection(current - 1);
       }
+      if (e.key === 'Escape') {
+        closeZoom();
+      }
     });
+    
     // Prevent vertical scroll
     window.addEventListener('wheel', function(e) {
       if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
         e.preventDefault();
       }
     }, {passive: false});
-
-    // Highlight current section as active (for snap effect)
-    function updateActiveSection() {
+    
+    // Touch event handling for mobile
+    let touchStartX = 0;
+    let touchEndX = 0;
+    
+    document.addEventListener('touchstart', function(e) {
+      touchStartX = e.changedTouches[0].screenX;
+    }, {passive: true});
+    
+    document.addEventListener('touchend', function(e) {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    }, {passive: true});
+    
+    function handleSwipe() {
       const container = document.getElementById('timeline');
       const sections = Array.from(container.children);
-      let minDist = Infinity, activeIdx = 0;
-      sections.forEach((sec, idx) => {
+      let current = sections.findIndex(sec => {
         const rect = sec.getBoundingClientRect();
-        const dist = Math.abs(rect.left);
-        if (dist < minDist) {
-          minDist = dist;
-          activeIdx = idx;
-        }
-        sec.classList.remove('active');
+        return rect.left >= -10 && rect.left <= 10;
       });
-      sections[activeIdx].classList.add('active');
+      
+      if (touchEndX < touchStartX - 50 && current < sections.length - 1) {
+        // Swiped left - go to next section
+        scrollToSection(current + 1);
+      } else if (touchEndX > touchStartX + 50 && current > 0) {
+        // Swiped right - go to previous section
+        scrollToSection(current - 1);
+      }
     }
-    document.getElementById('timeline').addEventListener('scroll', () => {
-      updateActiveSection();
-    });
-    window.addEventListener('resize', updateActiveSection);
-    window.addEventListener('DOMContentLoaded', updateActiveSection);
-
-    // Hide arrows while user is scrolling horizontally, show after scroll stops
-    let arrowTimeout;
+    
+    // Highlight current section as active
+    // Update the updateActiveSection function
+function updateActiveSection() {
+  const container = document.getElementById('timeline');
+  const sections = Array.from(container.children);
+  let minDist = Infinity, activeIdx = 0;
+  
+  sections.forEach((sec, idx) => {
+    const rect = sec.getBoundingClientRect();
+    const dist = Math.abs(rect.left);
+    if (dist < minDist) {
+      minDist = dist;
+      activeIdx = idx;
+    }
+    sec.classList.remove('active');
+  });
+  
+  sections[activeIdx].classList.add('active');
+  
+  // Hide/show arrows based on active section
+  sections.forEach((section, index) => {
+    const leftArrow = section.querySelector('.nav-arrow.left');
+    const rightArrow = section.querySelector('.nav-arrow.right');
+    
+    // Hide left arrow on first section
+    if (index === 0 && leftArrow) {
+      leftArrow.style.visibility = 'hidden';
+    } else if (leftArrow) {
+      leftArrow.style.visibility = 'visible';
+    }
+    
+    // Hide right arrow on last section
+    if (index === sections.length - 1 && rightArrow) {
+      rightArrow.style.visibility = 'hidden';
+    } else if (rightArrow) {
+      rightArrow.style.visibility = 'visible';
+    }
+    
+    // For all sections except active, hide both arrows
+    if (index !== activeIdx) {
+      if (leftArrow) leftArrow.style.opacity = '0';
+      if (rightArrow) rightArrow.style.opacity = '0';
+    } else {
+      if (leftArrow && index !== 0) leftArrow.style.opacity = '0.9';
+      if (rightArrow && index !== sections.length - 1) rightArrow.style.opacity = '0.9';
+    }
+  });
+}
+    
+    // Event listeners for scroll and resize
     const timeline = document.getElementById('timeline');
+    timeline.addEventListener('scroll', updateActiveSection);
+    window.addEventListener('resize', updateActiveSection);
+    document.addEventListener('DOMContentLoaded', updateActiveSection);
+    
+    // Hide arrows while scrolling
+    let arrowTimeout;
     function hideArrows() {
       document.querySelectorAll('.nav-arrow').forEach(btn => btn.classList.add('hide-arrows'));
     }
+    
     function showArrows() {
-      // Only show if not dragging
       if (!timeline.classList.contains('dragging')) {
         document.querySelectorAll('.nav-arrow').forEach(btn => btn.classList.remove('hide-arrows'));
       }
     }
+    
     timeline.addEventListener('scroll', () => {
       hideArrows();
       clearTimeout(arrowTimeout);
-      arrowTimeout = setTimeout(showArrows, 200);
+      arrowTimeout = setTimeout(showArrows, 300);
     });
-
-    // --- Detect scrollbar dragging ---
+    
+    // Detect scrollbar dragging
     let isDragging = false;
     timeline.addEventListener('mousedown', function(e) {
-      // Only if mouse is over the scrollbar area (bottom 20px)
       if (e.offsetY > timeline.clientHeight - 20) {
         isDragging = true;
         timeline.classList.add('dragging');
         hideArrows();
       }
     });
+    
     window.addEventListener('mouseup', function() {
       if (isDragging) {
         isDragging = false;
@@ -486,22 +1062,53 @@
       }
     });
 
+    
     // Dark mode toggle
     const toggle = document.getElementById("darkToggle");
     if (localStorage.getItem("darkMode") === "true") {
       document.body.classList.add("dark");
       if (toggle) toggle.checked = true;
     }
+    
     if (toggle) {
       toggle.addEventListener("change", () => {
         document.body.classList.toggle("dark", toggle.checked);
         localStorage.setItem("darkMode", toggle.checked);
       });
     }
+    
+    // Back button functionality
     document.getElementById('backToPortfolio').addEventListener('click', function(e) {
       e.preventDefault();
       sessionStorage.setItem('restoreCertBack', '1');
       window.location.href = 'portfolio.html#education';
+    });
+    
+    // Add subtle hover effect to graduation cap icon
+    document.querySelectorAll('.fa-graduation-cap').forEach(icon => {
+      icon.addEventListener('mouseenter', () => {
+        icon.style.transform = 'translateY(-5px) rotate(15deg)';
+      });
+      icon.addEventListener('mouseleave', () => {
+        icon.style.transform = '';
+      });
+    });
+    
+    // Image modal functionality (show full image, bigger)
+    const imgModal = document.getElementById('imgModal');
+    const imgModalPic = document.getElementById('imgModalPic');
+    document.querySelectorAll('.grad-img').forEach(img => {
+      img.addEventListener('click', function(e) {
+        imgModalPic.src = this.src;
+        imgModalPic.alt = this.alt || "Full Image";
+        imgModal.removeAttribute('hidden');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+    imgModal.addEventListener('click', function() {
+      imgModal.setAttribute('hidden', '');
+      imgModalPic.src = '';
+      document.body.style.overflow = '';
     });
   </script>
 </body>

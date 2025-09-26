@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Modern Web Frameworks</title>
   <style>
     * {
@@ -17,6 +18,7 @@
       padding: 2rem;
       transition: background 0.3s, color 0.3s;
       animation: fadeSlideUp 1.2s cubic-bezier(.4,0,.2,1);
+      min-height: 100vh;
     }
 
     body.dark {
@@ -29,6 +31,7 @@
       outline-offset: 4px;
     }
 
+    /* Header and Back Button */
     .back-container {
       display: flex;
       justify-content: flex-start;
@@ -75,9 +78,8 @@
       border-bottom: 2px solid transparent;
     }
 
-    .back-button::before {
-      content: "";
-      /* Arrow removed */
+    body.dark .back-button {
+      color: #e2e8f0;
     }
 
     .back-button:hover,
@@ -96,12 +98,15 @@
       color: #1976d2;
       margin-bottom: 2rem;
       text-shadow: 0 0 10px rgba(56, 189, 248, 0.13);
+      line-height: 1.2;
     }
+
     body.dark h1 {
       color: #38bdf8;
       text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
     }
 
+    /* Main Content Grid */
     .frameworks-container {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -114,12 +119,13 @@
       background: #fff;
       border-radius: 12px;
       box-shadow: 0 1px 6px rgba(56, 189, 248, 0.08), 0 0 0 2px #2223;
-      border: 1.5px solid #2223; /* dark outline for light mode */
+      border: 1.5px solid #2223;
       padding: 2rem 1.2rem 1.2rem 1.2rem;
       transition: transform 0.18s, box-shadow 0.18s;
       margin-bottom: 0.5rem;
       color: #0f172a;
     }
+
     body.dark .framework-card {
       background: #192339;
       color: #e2e8f0;
@@ -130,6 +136,47 @@
     .framework-card:hover {
       transform: translateY(-5px);
       box-shadow: 0 0 30px rgba(56, 189, 248, 0.3);
+    }
+    #scrollToTopBtn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 20px;
+      display: none;
+      opacity: 0.8;
+      transition: all 0.3s ease;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+        
+    #scrollToTopBtn:hover {
+      opacity: 1;
+      background: rgba(0, 0, 0, 0.9);
+      transform: translateY(-3px);
+    }
+        
+    #scrollToTopBtn i {
+      font-size: 1em;
+    }
+        /* Dark mode styles */
+    body.dark #scrollToTopBtn {
+      background: rgba(255, 255, 255, 0.2); /* Semi-transparent white */
+      color: #e0e0e0; /* Light text */
+      backdrop-filter: blur(5px); /* Frosted glass effect */
+    }
+
+    body.dark #scrollToTopBtn:hover {
+      background: rgba(255, 255, 255, 0.3);
+      color: white;
     }
 
     .framework-image {
@@ -147,7 +194,9 @@
       font-size: 1.5rem;
       color: #1976d2;
       margin-bottom: 0.5rem;
+      line-height: 1.3;
     }
+
     body.dark .framework-card h2 {
       color: #38bdf8;
     }
@@ -156,7 +205,9 @@
       font-size: 1rem;
       margin-bottom: 1rem;
       color: #333;
+      line-height: 1.5;
     }
+
     body.dark .framework-card p {
       color: #cbd5e1;
     }
@@ -167,19 +218,22 @@
       font-weight: bold;
       transition: color 0.3s ease;
     }
+
     body.dark .framework-card a {
       color: #ffffff;
     }
+
     .framework-card a:hover,
     .framework-card a:focus {
       color: #38bdf8;
     }
+
     body.dark .framework-card a:hover,
     body.dark .framework-card a:focus {
       color: #155fa0;
     }
 
-    /* Dark mode toggle styles */
+    /* Dark Mode Toggle */
     .dark-toggle-frame {
       position: absolute;
       top: 18px;
@@ -197,35 +251,126 @@
       cursor: pointer;
       transition: background 0.3s, border 0.3s;
     }
+
     body.dark .dark-toggle-frame {
       background: #23272b;
       border: 1px solid #253bae;
       box-shadow: 0 2px 8px rgba(0,0,0,0.12);
       color: #90caf9;
     }
+
     .dark-toggle-frame input[type="checkbox"] {
       transform: scale(1.2);
       cursor: pointer;
       margin-right: 0.4em;
     }
-    @media (max-width: 600px) {
-      h1 {
-        font-size: 2rem;
+
+    /* Mobile Responsiveness */
+    @media (max-width: 768px) {
+      body {
+        padding: 1.5rem;
       }
+
+      h1 {
+        font-size: 2.25rem;
+        margin-bottom: 1.5rem;
+      }
+
       .dark-toggle-frame {
-        top: 8px;
-        right: 8px;
+        top: 12px;
+        right: 12px;
         font-size: 0.9rem;
-        padding: 0.2em 0.6em;
+        padding: 0.2em 0.8em;
+      }
+
+      .frameworks-container {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .framework-card {
+        padding: 1.5rem;
+      }
+
+      .framework-image {
+        height: 160px;
       }
     }
 
+    @media (max-width: 480px) {
+      body {
+        padding: 1rem;
+      }
+
+      h1 {
+        font-size: 2rem;
+        margin-bottom: 1.25rem;
+      }
+
+      .back-line {
+        height: 24px;
+        margin-right: 12px;
+      }
+
+      .back-button {
+        font-size: 0.95rem;
+      }
+
+      .dark-toggle-frame {
+        top: 8px;
+        right: 8px;
+        font-size: 0.85rem;
+        padding: 0.2em 0.6em;
+      }
+
+      .framework-card {
+        padding: 1.2rem;
+      }
+
+      .framework-image {
+        height: 140px;
+        margin-bottom: 0.75rem;
+      }
+
+      .framework-card h2 {
+        font-size: 1.3rem;
+      }
+
+      .framework-card p {
+        font-size: 0.95rem;
+      }
+    }
+
+    @media (max-width: 360px) {
+      h1 {
+        font-size: 1.8rem;
+      }
+
+      .framework-image {
+        height: 120px;
+      }
+    }
+
+    /* Animations */
     @keyframes fadeSlideUp {
       0% { opacity: 0; transform: translateY(24px);}
       100% { opacity: 1; transform: translateY(0);}
     }
   </style>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+   <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('fadein') === '1') {
+        document.body.classList.add('fadein');
+      }
+    });
+  </script>
 </head>
+<button id="scrollToTopBtn" title="Go to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+    
 <body>
   <span class="dark-toggle-frame">
     <label style="display:flex;align-items:center;gap:0.4em;">
@@ -234,59 +379,181 @@
     </label>
   </span>
 
-<div class="back-container">
-  <span class="back-line"></span>
-  <a href="portfolio.html" class="back-button" id="backToPortfolio">Back to Home</a>
-</div>
-
-<h1>Explore Modern Web Frameworks</h1>
-
-<div class="frameworks-container">
-
-  <div class="framework-card">
-    <img src="django.jpg" alt="Django web framework logo" class="framework-image" loading="lazy">
-    <h2>Django</h2>
-    <p>Django is a high-level Python web framework that promotes rapid development and clean, pragmatic design. It comes with built-in admin, authentication, and more.</p>
-    <a href="https://www.djangoproject.com/" target="_blank" rel="noopener noreferrer">Learn more →</a>
+  <div class="back-container">
+    <span class="back-line"></span>
+    <a href="portfolio.html" class="back-button" id="backToPortfolio">Back to Home</a>
   </div>
 
-  <div class="framework-card">
-    <img src="react.jpg" alt="React JavaScript library logo" class="framework-image" loading="lazy">
-    <h2>React</h2>
-    <p>React is a JavaScript library for building user interfaces. Its component-based architecture powers fast, dynamic apps used by companies like Meta, Netflix, and Airbnb.</p>
-    <a href="https://reactjs.org/" target="_blank" rel="noopener noreferrer">Learn more →</a>
+  <h1>Explore Modern Web Frameworks</h1>
+
+  <div class="frameworks-container">
+    <div class="framework-card">
+      <img src="pics/django.jpg" alt="Django web framework logo" class="framework-image" loading="lazy">
+      <h2>Django</h2>
+      <p>Django is a high-level Python web framework that promotes rapid development and clean, pragmatic design. It comes with built-in admin, authentication, and more.</p>
+      <a href="https://www.djangoproject.com/" target="_blank" rel="noopener noreferrer">Learn more →</a>
+    </div>
+
+    <div class="framework-card">
+      <img src="pics/react.jpg" alt="React JavaScript library logo" class="framework-image" loading="lazy">
+      <h2>React</h2>
+      <p>React is a JavaScript library for building user interfaces. Its component-based architecture powers fast, dynamic apps used by companies like Meta, Netflix, and Airbnb.</p>
+      <a href="https://reactjs.org/" target="_blank" rel="noopener noreferrer">Learn more →</a>
+    </div>
+
+    <div class="framework-card">
+      <img src="pics/tkinter.png" alt="Tkinter GUI library logo" class="framework-image" loading="lazy">
+      <h2>Tkinter</h2>
+      <p>Tkinter is Python's standard GUI library for creating desktop applications. It provides a fast and easy way to build simple graphical interfaces using native elements.</p>
+      <a href="https://docs.python.org/3/library/tkinter.html" target="_blank" rel="noopener noreferrer">Learn more →</a>
+    </div>
+    <div class="framework-card" id="mat">
+      <img src="pics/mat.png" style="object-fit: fill;" alt="Matplotlib logo" class="framework-image" loading="lazy">
+      <h2>Matplotlib</h2>
+      <p>Matplotlib is a comprehensive Python library for creating static, animated, and interactive visualizations in Python. Widely used for data science and engineering plots.</p>
+      <a href="https://matplotlib.org/" target="_blank" rel="noopener noreferrer">Learn more →</a>
+    </div>
+    <div class="framework-card" id="electron">
+      <img src="pics/elect.svg" alt="Electron logo" class="framework-image" loading="lazy">
+      <h2>Electron</h2>
+      <p>Electron is a framework for building cross-platform desktop applications using JavaScript, HTML, and CSS. It powers apps like VS Code, Slack, and Discord.</p>
+      <a href="https://www.electronjs.org/" target="_blank" rel="noopener noreferrer">Learn more →</a>
+    </div>
   </div>
 
-  <div class="framework-card">
-  <img src="tkinter.png" alt="Tkinter GUI library logo" class="framework-image" loading="lazy">
-  <h2>Tkinter</h2>
-  <p>Tkinter is Python’s standard GUI library for creating desktop applications. It provides a fast and easy way to build simple graphical interfaces using native elements.</p>
-  <a href="https://docs.python.org/3/library/tkinter.html" target="_blank" rel="noopener noreferrer">Learn more →</a>
-</div>
+  <script>
+    // Dark Mode Toggle + Persistence
+    const toggle = document.getElementById("darkToggle");
+    if (localStorage.getItem("darkMode") === "true") {
+      document.body.classList.add("dark");
+      if (toggle) toggle.checked = true;
+    }
+    if (toggle) {
+      toggle.addEventListener("change", () => {
+        document.body.classList.toggle("dark", toggle.checked);
+        localStorage.setItem("darkMode", toggle.checked);
+      });
+    }
 
-
-</div>
-
-<script>
-  // Persist dark mode across navigation
-  const toggle = document.getElementById("darkToggle");
-  if (localStorage.getItem("darkMode") === "true") {
-    document.body.classList.add("dark");
-    if (toggle) toggle.checked = true;
-  }
-  if (toggle) {
-    toggle.addEventListener("change", () => {
-      document.body.classList.toggle("dark", toggle.checked);
-      localStorage.setItem("darkMode", toggle.checked);
+    // Back Button to Portfolio
+    document.getElementById('backToPortfolio').addEventListener('click', function(e) {
+      e.preventDefault();
+      sessionStorage.setItem('restoreCertBack', '1');
+      window.location.href = 'portfolio.html#skills';
     });
-  }
-  // Instantly go back to portfolio and restore scroll (no animation)
-  document.getElementById('backToPortfolio').addEventListener('click', function(e) {
-    e.preventDefault();
-    sessionStorage.setItem('restoreCertBack', '1');
-    window.location.href = 'portfolio.html#skills';
-  });
-</script>
 
+    // Enhanced Smooth Scroll Function
+    function smoothScrollToElement(element, offset = 0, duration = 1200) {
+      const startY = window.scrollY;
+      const targetY = element.getBoundingClientRect().top + startY - offset;
+      const startTime = performance.now();
+
+      function scroll(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        // More pronounced easing function for better visibility
+        const ease = progress < 0.5 
+          ? 2 * progress * progress 
+          : 1 - Math.pow(-2 * progress + 2, 2) / 2;
+        window.scrollTo(0, startY + (targetY - startY) * ease);
+        if (progress < 1) requestAnimationFrame(scroll);
+      }
+
+      requestAnimationFrame(scroll);
+    }
+
+    // Function to handle initial scroll to anchor
+    function handleInitialScroll() {
+      const hash = window.location.hash;
+      if (hash && hash !== '#') {
+        // Remove the hash to prevent default jump
+        history.replaceState(null, null, ' ');
+        
+        // Scroll to top immediately
+        window.scrollTo(0, 0);
+        
+        const target = document.querySelector(hash);
+        if (target) {
+          // Wait for the next frame to ensure we're at top
+          requestAnimationFrame(() => {
+            // Restore the hash without scrolling
+            history.replaceState(null, null, hash);
+            
+            // Add slight delay to ensure top position is settled
+            setTimeout(() => {
+              smoothScrollToElement(target, 20);
+            }, 50);
+          });
+        }
+      }
+    }
+
+    // Handle anchor clicks
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const targetId = this.getAttribute('href').substring(1);
+        
+        if (targetId === '' || targetId === 'top') {
+          e.preventDefault();
+          smoothScrollToElement(document.body, 0);
+          history.pushState(null, '', '#');
+        } else {
+          const targetElement = document.getElementById(targetId);
+          if (targetElement) {
+            e.preventDefault();
+            // First scroll to top immediately
+            window.scrollTo(0, 0);
+            
+            // Then animate to target
+            requestAnimationFrame(() => {
+              history.pushState(null, '', `#${targetId}`);
+              setTimeout(() => {
+                smoothScrollToElement(targetElement, 20);
+              }, 50);
+            });
+          }
+        }
+      });
+    });
+
+    // Run initial scroll handling when DOM is ready
+    document.addEventListener('DOMContentLoaded', function() {
+      // First ensure we're at top
+      window.scrollTo(0, 0);
+      
+      // Then handle any anchor scrolling
+      setTimeout(handleInitialScroll, 100);
+      
+      // Scroll to top button functionality
+      const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+      
+      window.addEventListener('scroll', function() {
+        if (window.pageYOffset > 300) {
+          scrollToTopBtn.style.display = 'flex';
+        } else {
+          scrollToTopBtn.style.display = 'none';
+        }
+      });
+      
+      scrollToTopBtn.addEventListener('click', function() {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+    });
+
+    // Also handle when page is fully loaded
+    window.addEventListener('load', function() {
+      if (window.location.hash) {
+        setTimeout(handleInitialScroll, 100);
+      }
+    });
+
+    // Handle browser back/forward navigation
+    window.addEventListener('popstate', function() {
+      setTimeout(handleInitialScroll, 100);
+    });
+  </script>
 </body>
 </html>

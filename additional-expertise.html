@@ -131,7 +131,47 @@
       border: none;
       box-shadow: 0 0 6px rgba(56, 189, 248, 0.1);
     }
-    
+     #scrollToTopBtn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            display: none;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        #scrollToTopBtn:hover {
+            opacity: 1;
+            background: rgba(0, 0, 0, 0.9);
+            transform: translateY(-3px);
+        }
+        
+        #scrollToTopBtn i {
+            font-size: 1em;
+        }
+        /* Dark mode styles */
+body.dark #scrollToTopBtn {
+    background: rgba(255, 255, 255, 0.2); /* Semi-transparent white */
+    color: #e0e0e0; /* Light text */
+    backdrop-filter: blur(5px); /* Frosted glass effect */
+}
+
+body.dark #scrollToTopBtn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    color: white;
+}
     .framework-card:hover {
       animation: bounce-tool-stay 0.28s cubic-bezier(.28,1.5,.6,1) forwards;
       box-shadow: 0 0 30px rgba(56, 189, 248, 0.3);
@@ -327,7 +367,20 @@
       100% { opacity: 1; transform: translateY(0);}
     }
   </style>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('fadein') === '1') {
+        document.body.classList.add('fadein');
+      }
+    });
+  </script>
 </head>
+<button id="scrollToTopBtn" title="Go to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
 <body>
   <span class="dark-toggle-frame">
     <label style="display:flex;align-items:center;gap:0.4em;">
@@ -345,47 +398,179 @@
   
   <div class="frameworks-container">
     <div class="framework-card autocad-card">
-      <img src="autocad.jpg" alt="AutoCAD logo" class="framework-image" loading="lazy">
+      <img src="pics/autocad.jpg" alt="AutoCAD logo" class="framework-image" loading="lazy">
       <h2>AutoCAD</h2>
       <p>AutoCAD is a commercial computer-aided design (CAD) and drafting software application. Used for creating precise 2D and 3D drawings in engineering, architecture, and construction.</p>
       <a href="https://www.autodesk.com/products/autocad/overview" target="_blank" rel="noopener noreferrer">Learn about AutoCAD →</a>
     </div>
     
     <div class="framework-card">
-      <img src="Cisco.png" alt="Cisco logo" class="framework-image" loading="lazy">
+      <img src="pics/Cisco.png" alt="Cisco logo" class="framework-image" loading="lazy">
       <h2>Cisco</h2>
       <p>Cisco provides networking hardware, software, and telecommunications equipment. Cisco Packet Tracer is widely used for network simulation and certification training.</p>
       <a href="https://www.netacad.com/courses/packet-tracer" target="_blank" rel="noopener noreferrer">Explore Cisco Packet Tracer →</a>
     </div>
     
     <div class="framework-card circuit-wizard-card">
-      <img src="circuit.png" alt="Circuit Wizard logo" class="framework-image" loading="lazy">
+      <img src="pics/circuit.png" alt="Circuit Wizard logo" class="framework-image" loading="lazy">
       <h2>Circuit Wizard</h2>
       <p>Circuit Wizard is a software for designing, simulating, and testing electronic circuits. It integrates circuit design, PCB layout, and simulation in one package.</p>
       <a href="https://www.new-wave-concepts.com/products/circuitwizard.html" target="_blank" rel="noopener noreferrer">Discover Circuit Wizard →</a>
     </div>
+    
+    <!-- New Section: Arduino IDE, TinkerCad, And KiCad -->
+    <div class="framework-card">
+      <img src="pics/arduino.png" id="arduino" alt="Arduino IDE logo" class="framework-image" loading="lazy">
+      <h2>Arduino IDE</h2>
+      <p>The Arduino IDE is an open-source platform used for writing and uploading code to Arduino-compatible boards. It is widely used for prototyping and embedded systems development.</p>
+      <a href="https://www.arduino.cc/en/software" target="_blank" rel="noopener noreferrer">Learn about Arduino IDE →</a>
+    </div>
+    <div class="framework-card">
+      <img src="pics/tink.jpg" id="Tinker" style="object-fit: cover;" class="framework-image" loading="lazy">
+      <h2>TinkerCad</h2>
+      <p>TinkerCad is a free, online 3D modeling and circuit simulation tool. It is popular for learning electronics, prototyping circuits, and creating 3D designs for 3D printing.</p>
+      <a href="https://www.tinkercad.com/" target="_blank" rel="noopener noreferrer">Explore TinkerCad →</a>
+    </div>
+    <div class="framework-card">
+      <img src="pics/kicad2.png" id="ki" style="object-fit: fill;" alt="KiCad logo" class="framework-image" loading="lazy">
+      <h2>KiCad</h2>
+      <p>KiCad is an open-source software suite for electronic design automation (EDA). It enables schematic capture and PCB layout for professional and hobbyist circuit board design.</p>
+      <a href="https://www.kicad.org/" target="_blank" rel="noopener noreferrer">Discover KiCad →</a>
+    </div>
   </div>
   
   <script>
-    // Persist dark mode across navigation
+   // Dark Mode Toggle + Persistence
     const toggle = document.getElementById("darkToggle");
     if (localStorage.getItem("darkMode") === "true") {
       document.body.classList.add("dark");
       if (toggle) toggle.checked = true;
     }
-    
     if (toggle) {
       toggle.addEventListener("change", () => {
         document.body.classList.toggle("dark", toggle.checked);
         localStorage.setItem("darkMode", toggle.checked);
       });
     }
-    
-    // Back button: go to portfolio and center Skills section
+
+    // Back Button to Portfolio
     document.getElementById('backToPortfolio').addEventListener('click', function(e) {
       e.preventDefault();
       sessionStorage.setItem('restoreCertBack', '1');
       window.location.href = 'portfolio.html#skills';
+    });
+
+    // Enhanced Smooth Scroll Function
+    function smoothScrollToElement(element, offset = 0, duration = 1200) {
+      const startY = window.scrollY;
+      const targetY = element.getBoundingClientRect().top + startY - offset;
+      const startTime = performance.now();
+
+      function scroll(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        // More pronounced easing function for better visibility
+        const ease = progress < 0.5 
+          ? 2 * progress * progress 
+          : 1 - Math.pow(-2 * progress + 2, 2) / 2;
+        window.scrollTo(0, startY + (targetY - startY) * ease);
+        if (progress < 1) requestAnimationFrame(scroll);
+      }
+
+      requestAnimationFrame(scroll);
+    }
+
+    // Function to handle initial scroll to anchor
+    function handleInitialScroll() {
+      const hash = window.location.hash;
+      if (hash && hash !== '#') {
+        // Remove the hash to prevent default jump
+        history.replaceState(null, null, ' ');
+        
+        // Scroll to top immediately
+        window.scrollTo(0, 0);
+        
+        const target = document.querySelector(hash);
+        if (target) {
+          // Wait for the next frame to ensure we're at top
+          requestAnimationFrame(() => {
+            // Restore the hash without scrolling
+            history.replaceState(null, null, hash);
+            
+            // Add slight delay to ensure top position is settled
+            setTimeout(() => {
+              smoothScrollToElement(target, 20);
+            }, 50);
+          });
+        }
+      }
+    }
+
+    // Handle anchor clicks
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const targetId = this.getAttribute('href').substring(1);
+        
+        if (targetId === '' || targetId === 'top') {
+          e.preventDefault();
+          smoothScrollToElement(document.body, 0);
+          history.pushState(null, '', '#');
+        } else {
+          const targetElement = document.getElementById(targetId);
+          if (targetElement) {
+            e.preventDefault();
+            // First scroll to top immediately
+            window.scrollTo(0, 0);
+            
+            // Then animate to target
+            requestAnimationFrame(() => {
+              history.pushState(null, '', `#${targetId}`);
+              setTimeout(() => {
+                smoothScrollToElement(targetElement, 20);
+              }, 50);
+            });
+          }
+        }
+      });
+    });
+
+    // Run initial scroll handling when DOM is ready
+    document.addEventListener('DOMContentLoaded', function() {
+      // First ensure we're at top
+      window.scrollTo(0, 0);
+      
+      // Then handle any anchor scrolling
+      setTimeout(handleInitialScroll, 100);
+      
+      // Scroll to top button functionality
+      const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+      
+      window.addEventListener('scroll', function() {
+        if (window.pageYOffset > 300) {
+          scrollToTopBtn.style.display = 'flex';
+        } else {
+          scrollToTopBtn.style.display = 'none';
+        }
+      });
+      
+      scrollToTopBtn.addEventListener('click', function() {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+    });
+
+    // Also handle when page is fully loaded
+    window.addEventListener('load', function() {
+      if (window.location.hash) {
+        setTimeout(handleInitialScroll, 100);
+      }
+    });
+
+    // Handle browser back/forward navigation
+    window.addEventListener('popstate', function() {
+      setTimeout(handleInitialScroll, 100);
     });
   </script>
 </body>

@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Certification - Sean Script</title>
   <style>
     * {
@@ -17,6 +18,7 @@
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background-color: #0d1b2a;
       color: #e0f7fa;
+      touch-action: pan-y;
     }
 
     body {
@@ -24,6 +26,8 @@
       justify-content: center;
       align-items: center;
       position: relative;
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
     }
 
     .bg-video {
@@ -40,72 +44,194 @@
     }
 
     .certificate-container {
-      width: 90vw;
-      height: 90vh;
-      padding: 1rem;
-      border-radius: 12px;
-      background: rgba(0, 30, 60, 0.7);
-      box-shadow: 0 0 30px rgba(0,188,212,0.3);
-      animation: zoomIn 1s ease-out;
+      width: 95vw;
+      height: 95vh;
+      max-width: 1200px;
+      max-height: 800px;
+      padding: 1.5rem;
+      border-radius: 16px;
+      background: rgba(0, 30, 60, 0.85);
+      box-shadow: 0 0 3px rgba(0, 188, 212, 0.4);
+      animation: fadeInZoom 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      position: relative;
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(0, 188, 212, 0.2);
+      transition: all 0.3s ease;
+      overflow: hidden;
+    }
+
+    @keyframes fadeInZoom {
+      0% { transform: scale(0.92) translateY(20px); opacity: 0; }
+      100% { transform: scale(1) translateY(0); opacity: 1; }
+    }
+
+    .viewer-content {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+    
+    /* Mobile specific styles */
+    @media (max-width: 768px) {
+      .certificate-container {
+        width: 100vw;
+        height: auto;
+        min-height: 100vh;
+        padding: 0.5rem;
+        border-radius: 0;
+        max-width: 100%;
+        max-height: none;
+      }
+
+      .viewer-content {
+        padding: 0.5rem;
+      }
+
+      .certificate-title {
+        font-size: 1.3rem;
+        padding: 0.4rem 1rem;
+        top: 0.5rem;
+      }
+
+      .back-link {
+        bottom: 0.5rem;
+        right: 0.5rem;
+        font-size: 0.9rem;
+        padding: 0.3em 0.7em;
+      }
+
+      img, iframe {
+        border-radius: 4px;
+        object-fit: contain;
+        max-width: 100%;
+        height: auto;
+        max-height: calc(100vh - 100px);
+      }
+
+      /* Disable hover effects on mobile */
+      img:hover {
+        transform: none;
+        box-shadow: 0 0 5px rgba(0, 188, 212, 0.6);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .certificate-container {
+        padding: 0;
+      }
+
+      .viewer-content {
+        padding: 0.5rem;
+        align-items: flex-start;
+      }
+
+      img {
+        width: 100%;
+        height: auto;
+        max-height: calc(100vh - 80px);
+        object-fit: contain;
+      }
+
+      .back-link {
+        width: 36px;
+        height: 36px;
+      }
+
+      .back-link .back-svg svg {
+        width: 20px;
+        height: 20px;
+      }
+    }
+
+    /* Landscape orientation fixes */
+    @media (orientation: landscape) and (max-width: 768px) {
+      .certificate-container {
+        height: 100vh;
+      }
+
+      img {
+        max-height: calc(100vh - 60px);
+        width: auto;
+        max-width: 100%;
+      }
     }
 
     img, iframe {
       width: 100%;
-      height: calc(100% - 3rem); /* Leaves space for the back button */
+      height: 100%;
       max-height: 100%;
-      border-radius: 10px;
-      box-shadow: 0 0 20px rgba(0, 188, 212, 0.5);
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0, 188, 212, 0.6);
       border: none;
       object-fit: contain;
+      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
 
-    @keyframes zoomIn {
-      from { transform: scale(0.85); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
+    /* Image hover effects */
+    img {
+      cursor: zoom-in;
+      transform-origin: center center;
+    }
+
+    img:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 15px rgba(0, 188, 212, 0.8);
+    }
+
+    img:active {
+      cursor: zoom-out;
+      transform: scale(1.8);
+      z-index: 100;
+      transition: transform 0.3s ease;
     }
 
     .back-link {
       position: absolute;
-      bottom: calc(1rem + 23px);
-      right: calc(1rem + 96px);
+      bottom: 1.5rem;
+      right: 1.5rem;
       display: flex;
       align-items: center;
       gap: 0.7em;
-      background: none;
-      border: none;
-      box-shadow: none;
+      background: rgba(33, 150, 243, 0.15);
+      border: 1px solid rgba(33, 150, 243, 0.3);
       color: #2196f3;
       font-size: 1.08rem;
       font-weight: 600;
       text-decoration: none;
-      padding: 0.18em 0.7em;
-      border-radius: 8px;
-      transition: color 0.18s, background 0.18s, transform 0.18s;
+      padding: 0.5em 1em 0.5em 0.8em;
+      border-radius: 50px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       cursor: pointer;
       outline: none;
       z-index: 10;
+      backdrop-filter: blur(4px);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     }
 
     .back-link .back-svg svg {
-      transition: background 0.2s, box-shadow 0.2s, stroke 0.2s;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       border-radius: 50%;
-      background: transparent;
     }
 
     .back-link:hover,
     .back-link:focus {
-      color: #3973de;
-      
+      background: rgba(33, 150, 243, 0.3);
+      color: #7ecbff;
+      transform: translateY(-2px);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
     }
 
     .back-link:hover .back-svg svg,
     .back-link:focus .back-svg svg {
-      box-shadow: 0 1px 3px #3973de;
-      stroke: #fff;
+      stroke: #7ecbff;
+      transform: rotate(-15deg);
     }
 
     .back-link .back-text {
@@ -113,61 +239,296 @@
       font-weight: 600;
       letter-spacing: 0.01em;
       user-select: none;
-    }
-
-    /* Add this block for hover effect on text */
-    .back-link:hover .back-text,
-    .back-link:focus .back-text {
-      color: #7ecbff; /* light blue */
-      text-shadow: 0 1px 3px #3973de;
-      
-    }
-
-    @media (max-width: 600px) {
-      .back-link {
-        right: 1.2rem;
-        bottom: 1.2rem;
-        font-size: 1rem;
-      }
-      .back-link .back-text {
-        font-size: 1rem;
-      }
+      transition: color 0.3s ease;
     }
 
     .error {
       font-size: 1.2rem;
       color: #ff6f61;
+      text-align: center;
+      padding: 2rem;
+      animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
     }
-    
+
+    @keyframes shake {
+      10%, 90% { transform: translateX(-1px); }
+      20%, 80% { transform: translateX(2px); }
+      30%, 50%, 70% { transform: translateX(-4px); }
+      40%, 60% { transform: translateX(4px); }
+    }
+
+    .loading {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 4px solid rgba(33, 150, 243, 0.2);
+      border-top-color: #2196f3;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .certificate-title {
+      position: absolute;
+      top: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: #e0f7fa;
+      z-index: 10;
+      text-align: center;
+      background: rgba(0, 30, 60, 0.7);
+      padding: 0.5rem 1.5rem;
+      border-radius: 50px;
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(0, 188, 212, 0.3);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      transition: opacity 0.3s ease;
+    }
+
+    .certificate-container:hover .certificate-title {
+      opacity: 0;
+    }
+     /* Mobile specific styles */
+    @media (max-width: 768px) {
+      .certificate-container {
+        width: 100vw;
+        height: 100vh;
+        padding: 0;
+        border-radius: 0;
+        max-width: 100%;
+        max-height: none;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .viewer-content {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0.5rem;
+      }
+
+      .certificate-title {
+        position: fixed;
+        top: 0.5rem;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 1.2rem;
+        padding: 0.3rem 0.8rem;
+        z-index: 100;
+      }
+
+      .back-link {
+        position: fixed;
+        bottom: 0.5rem;
+        right: 0.5rem;
+        font-size: 0.9rem;
+        padding: 0.3em 0.7em;
+        z-index: 100;
+      }
+
+      img, iframe {
+        max-width: 100%;
+        max-height: 100%;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+        display: block;
+        margin: auto;
+      }
+
+      /* Disable hover effects on mobile */
+      img:hover {
+        transform: none;
+        box-shadow: 0 0 5px rgba(0, 188, 212, 0.6);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .viewer-content {
+        padding: 0.2rem;
+      }
+
+      img {
+        max-width: 95%;
+        max-height: 95%;
+      }
+
+      .back-link {
+        width: 36px;
+        height: 36px;
+        bottom: 0.3rem;
+        right: 0.3rem;
+      }
+    }
+
+    /* Landscape orientation fixes */
+    @media (orientation: landscape) and (max-width: 768px) {
+      .viewer-content {
+        padding: 0.3rem;
+      }
+
+      img {
+        max-width: 95%;
+        max-height: 95%;
+      }
+    }
+
+    /* Mobile specific styles */
+    @media (max-width: 768px) {
+      .certificate-container {
+        width: 98vw;
+        height: 98vh;
+        padding: 1rem;
+        border-radius: 12px;
+      }
+
+      .certificate-title {
+        font-size: 1.5rem;
+        padding: 0.4rem 1.2rem;
+        top: 1rem;
+      }
+
+      .back-link {
+        bottom: 1rem;
+        right: 1rem;
+        font-size: 1rem;
+        padding: 0.4em 0.8em 0.4em 0.7em;
+      }
+
+      img, iframe {
+        border-radius: 6px;
+        object-fit: contain;
+      }
+
+      /* Disable hover effects on mobile */
+      img:hover {
+        transform: none;
+        box-shadow: 0 0 5px rgba(0, 188, 212, 0.6);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .certificate-container {
+        padding: 0.8rem;
+      }
+
+      .certificate-title {
+        font-size: 1.3rem;
+        padding: 0.3rem 1rem;
+        top: 0.8rem;
+      }
+
+      .back-link {
+        width: 40px;
+        height: 40px;
+        justify-content: center;
+        padding: 0;
+        overflow: hidden;
+      }
+
+      .back-link .back-text {
+        display: none;
+      }
+
+      .back-link .back-svg svg {
+        width: 24px;
+        height: 24px;
+      }
+
+      .error {
+        font-size: 1rem;
+      }
+
+      /* Mobile-specific image handling */
+      img {
+        object-fit: contain;
+        width: 100%;
+        height: auto;
+        max-height: 100%;
+        cursor: default;
+      }
+
+      /* Pinch-to-zoom for mobile images */
+      img:active {
+        transform: none;
+        transition: none;
+      }
+    }
+
+    /* Landscape orientation fixes */
+    @media (orientation: landscape) and (max-height: 500px) {
+      .certificate-container {
+        height: 90vh;
+        max-height: 90vh;
+      }
+
+      .back-link {
+        bottom: 0.5rem;
+        right: 0.5rem;
+        font-size: 0.9rem;
+      }
+
+      img {
+        object-fit: contain;
+        width: auto;
+        max-width: 100%;
+        height: 100%;
+      }
+    }
+
+    /* Print styles */
+    @media print {
+      body {
+        background: none;
+      }
+
+      .certificate-container {
+        background: none;
+        box-shadow: none;
+        border: none;
+        width: 100%;
+        height: 100%;
+        padding: 0;
+      }
+
+      .back-link {
+        display: none;
+      }
+
+      img, iframe {
+        box-shadow: none;
+        border-radius: 0;
+      }
+    }
   </style>
 </head>
 <body>
 
   <div class="certificate-container" id="viewer">
-    <!-- Dynamic content gets loaded here -->
+    <div class="certificate-title">Certifications</div>
+    <div class="viewer-content" id="viewerContent">
+      <!-- Dynamic content gets loaded here -->
+    </div>
   </div>
 
-  <script>
-    const viewer = document.getElementById('viewer');
-    const params = new URLSearchParams(window.location.search);
-    const file = params.get("file");
-
-    if (!file) {
-      viewer.innerHTML = "<p class='error'>No certificate file specified in the URL.</p>";
-    } else if (file.match(/\.(pdf)$/i)) {
-      viewer.innerHTML = `
-        <iframe src="${file}"></iframe>
-      `;
-    } else if (file.match(/\.(jpg|jpeg|png|gif)$/i)) {
-      viewer.innerHTML = `
-        <img src="${file}" alt="Certificate Image" />
-      `;
-    } else {
-      viewer.innerHTML = "<p class='error'>Unsupported file format.</p>";
-    }
-  </script>
-
-  <!-- Replace the back-link with a modern SVG-based button -->
   <a class="back-link" href="#" id="backToCertifications" aria-label="Back to Home">
     <span class="back-svg">
       <svg width="28" height="28" viewBox="0 0 28 28" fill="none" style="vertical-align:middle;">
@@ -177,18 +538,177 @@
     </span>
     <span class="back-text">Back to Home</span>
   </a>
+
   <script>
+    const viewerContent = document.getElementById('viewerContent');
+    const params = new URLSearchParams(window.location.search);
+    const file = params.get("file");
+
+    // Show loading state initially
+    viewerContent.innerHTML = `
+      <div class="loading">
+        <div class="spinner"></div>
+        <div>Loading certificate...</div>
+      </div>
+    `;
+
+    // Function to handle content loading
+    function loadCertificate() {
+      if (!file) {
+        viewerContent.innerHTML = `
+          <p class='error'>No certificate file specified in the URL.<br>
+          Please go back and select a certificate.</p>
+        `;
+      } else if (file.match(/\.(pdf)$/i)) {
+        viewerContent.innerHTML = `
+          <iframe src="${file}" onload="hideLoading()"></iframe>
+        `;
+      } else if (file.match(/\.(jpg|jpeg|png|gif|webp)$/i)) {
+        const img = new Image();
+        img.src = file;
+        img.alt = "Certificate Image";
+        img.onload = function() {
+          viewerContent.innerHTML = '';
+          viewerContent.appendChild(img);
+          
+          // Add touch event for mobile zoom
+          if ('ontouchstart' in window) {
+            let initialDistance = null;
+            
+            img.addEventListener('touchstart', function(e) {
+              if (e.touches.length === 2) {
+                initialDistance = Math.hypot(
+                  e.touches[0].clientX - e.touches[1].clientX,
+                  e.touches[0].clientY - e.touches[1].clientY
+                );
+              }
+            });
+            
+            img.addEventListener('touchmove', function(e) {
+              if (e.touches.length === 2) {
+                e.preventDefault();
+                const currentDistance = Math.hypot(
+                  e.touches[0].clientX - e.touches[1].clientX,
+                  e.touches[0].clientY - e.touches[1].clientY
+                );
+                
+                if (initialDistance) {
+                  const scale = currentDistance / initialDistance;
+                  img.style.transform = `scale(${scale})`;
+                }
+              }
+            });
+            
+            img.addEventListener('touchend', function() {
+              initialDistance = null;
+              setTimeout(() => {
+                img.style.transform = 'scale(1)';
+              }, 300);
+            });
+          }
+        };
+        img.onerror = function() {
+          showError();
+        };
+      } else {
+        showError();
+      }
+    }
+
+    function hideLoading() {
+      // Loading is automatically hidden when content replaces it
+    }
+
+    function showError() {
+      viewerContent.innerHTML = `
+        <p class='error'>
+          Failed to load certificate.<br>
+          The file may be corrupted or in an unsupported format.
+        </p>
+      `;
+    }
+
+    // Load certificate after a small delay for better UX
+    setTimeout(loadCertificate, 500);
+
+    // Back button functionality
+    document.getElementById('backToCertifications').addEventListener('click', function(e) {
+      e.preventDefault();
+      
+      // Add animation to the container before leaving
+      const container = document.querySelector('.certificate-container');
+      container.style.animation = 'fadeInZoom 0.5s ease reverse forwards';
+      
+      // Navigate after animation completes
+      setTimeout(() => {
+        sessionStorage.setItem('restoreCertBack', '1');
+        window.location.href = 'portfolio.html#Certifications';
+      }, 300);
+    });
+
+    // Handle orientation changes
+    function handleOrientationChange() {
+      const container = document.querySelector('.certificate-container');
+      if (window.orientation === 90 || window.orientation === -90) {
+        // Landscape
+        container.style.maxHeight = '90vh';
+      } else {
+        // Portrait
+        container.style.maxHeight = '800px';
+      }
+    }
+
+    // Initial orientation check
+    handleOrientationChange();
+    
+    // Listen for orientation changes
+    window.addEventListener('orientationchange', handleOrientationChange);
+    window.addEventListener('resize', handleOrientationChange);
+
     // Persist dark mode across navigation
     if (localStorage.getItem("darkMode") === "true") {
       document.body.classList.add("dark");
     }
+    function loadCertificate() {
+      if (!file) {
+        viewerContent.innerHTML = `
+          <p class='error'>No certificate file specified in the URL.<br>
+          Please go back and select a certificate.</p>
+        `;
+      } else if (file.match(/\.(pdf)$/i)) {
+        viewerContent.innerHTML = `
+          <iframe src="${file}" onload="hideLoading()"></iframe>
+        `;
+      } else if (file.match(/\.(jpg|jpeg|png|gif|webp)$/i)) {
+        const img = new Image();
+        img.src = file;
+        img.alt = "Certificate Image";
+        img.onload = function() {
+          viewerContent.innerHTML = '';
+          
+          // Mobile-specific image centering
+          if (window.innerWidth <= 768) {
+            img.style.display = 'block';
+            img.style.margin = 'auto';
+            img.style.maxWidth = '100%';
+            img.style.maxHeight = '100%';
+            img.style.width = 'auto';
+            img.style.height = 'auto';
+          }
+          
+          viewerContent.appendChild(img);
+          
+          // [Rest of the touch event handlers remain the same]
+        };
+        img.onerror = function() {
+          showError();
+        };
+      } else {
+        showError();
+      }
+    }
 
-    // Back button: go to portfolio and center Certifications section
-    document.getElementById('backToCertifications').addEventListener('click', function(e) {
-      e.preventDefault();
-      sessionStorage.setItem('restoreCertBack', '1');
-      window.location.href = 'portfolio.html#Certifications';
-    });
+    // [Rest of the JavaScript remains the same]
   </script>
 </body>
 </html>

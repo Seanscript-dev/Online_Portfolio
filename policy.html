@@ -831,7 +831,7 @@ body.dark #scrollToTopBtn:hover {
                     <li><a href="#footer">Services</a></li>
                     <li><a href="portfolio.html">Portfolio</a></li>
                     <li><a href="https://github.com/Seanscript-dev" target="blank">Blog</a></li>
-                    <li><a href="tel:+639307281638">Contact</a></li>
+                    <li><a href="portfolio.html #contact">Contact</a></li>
                 </ul>
             </div>
             <div class="footer-section">
@@ -847,10 +847,10 @@ body.dark #scrollToTopBtn:hover {
             <div class="footer-section">
                 <h3>Legal</h3>
                 <ul class="footer-links">
-                    <li><a href="#" onclick="showTab('privacy')">Privacy Policy</a></li>
-                    <li><a href="#" onclick="showTab('terms')">Terms of Service</a></li>
-                    <li><a href="#" onclick="showTab('disclaimer')">Disclaimer</a></li>
-                    <li><a href="#" onclick="showTab('cookies')">Cookie Policy</a></li>
+                    <li><a href="#" onclick="showTab('privacy', event);">Privacy Policy</a></li>
+                    <li><a href="#" onclick="showTab('terms', event);">Terms of Service</a></li>
+                    <li><a href="#" onclick="showTab('disclaimer', event);">Disclaimer</a></li>
+                    <li><a href="#" onclick="showTab('cookies', event);">Cookie Policy</a></li>      
                 </ul>
             </div>
             <div class="footer-section">
@@ -873,7 +873,36 @@ body.dark #scrollToTopBtn:hover {
     <script>
        // Tab functionality
 function showTab(tabId, event) {
-    event.preventDefault();
+    if (event) event.preventDefault();
+
+    // Always scroll to top smoothly
+    window.scrollTo({top: 0, behavior: 'smooth'});
+
+    // Update active tab button
+    document.querySelectorAll('.tab-button').forEach(button => {
+        button.classList.remove('active');
+    });
+    // Find and activate the corresponding nav button
+    const navButton = document.querySelector(`.tab-button[onclick*="${tabId}"]`);
+    if (navButton) navButton.classList.add('active');
+
+    // Remove red underline from all document-header h1
+    document.querySelectorAll('.document-header h1').forEach(h1 => {
+        h1.style.borderBottom = '';
+        h1.style.boxShadow = '';
+    });
+
+    // If the tab is already active, just update the indicator and return
+    const tabToShow = document.getElementById(tabId);
+    if (tabToShow.classList.contains('active')) {
+        // Add red underline only to the active tab's h1
+        const activeHeader = tabToShow.querySelector('.document-header h1');
+        if (activeHeader) {
+            activeHeader.style.borderBottom = '3px solid #d9534f';
+            activeHeader.style.boxShadow = '0 2px 0 #d9534f33';
+        }
+        return;
+    }
 
     // Hide all tabs with fade out
     document.querySelectorAll('.document-container').forEach(tab => {
@@ -886,30 +915,10 @@ function showTab(tabId, event) {
     });
 
     // Show selected tab with fade in
-    const tabToShow = document.getElementById(tabId);
     tabToShow.style.display = 'block';
     void tabToShow.offsetWidth;
     tabToShow.classList.add('active');
 
-    // Update active tab button
-    document.querySelectorAll('.tab-button').forEach(button => {
-        button.classList.remove('active');
-    });
-
-    // Add active class to clicked button
-    if (event && event.currentTarget) {
-        event.currentTarget.classList.add('active');
-    } else {
-        // Fallback: set active by tabId if event is not passed (e.g. on popstate)
-        const activeButton = document.querySelector(`.tab-button[onclick*="${tabId}"]`);
-        if (activeButton) activeButton.classList.add('active');
-    }
-
-    // Remove active class from all document-header h1
-    document.querySelectorAll('.document-header h1').forEach(h1 => {
-        h1.style.borderBottom = '';
-        h1.style.boxShadow = '';
-    });
     // Add red underline only to the active tab's h1
     const activeHeader = tabToShow.querySelector('.document-header h1');
     if (activeHeader) {
@@ -1000,4 +1009,3 @@ window.addEventListener('popstate', initializeTabs);
     </script>
 </body>
 </html>
-

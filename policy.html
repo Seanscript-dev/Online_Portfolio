@@ -28,6 +28,12 @@
             box-sizing: border-box;
         }
 
+        html, body {
+            /* Make fade transition slower (1.2s) */
+            opacity: 0;
+            transition: opacity 1.2s cubic-bezier(.4,0,.2,1);
+        }
+
         body {
             font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
             background-color: var(--bg-color);
@@ -36,6 +42,15 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+        }
+
+        body.fadein {
+            opacity: 1;
+        }
+
+        body.fadeout {
+            opacity: 0 !important;
+            pointer-events: none;
         }
 
         /* Brand Header */
@@ -301,6 +316,47 @@
             font-size: 0.8em;
             color: rgba(255,255,255,0.6);
         }
+         #scrollToTopBtn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            display: none;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        #scrollToTopBtn:hover {
+            opacity: 1;
+            background: rgba(0, 0, 0, 0.9);
+            transform: translateY(-3px);
+        }
+        
+        #scrollToTopBtn i {
+            font-size: 1em;
+        }
+        /* Dark mode styles */
+body.dark #scrollToTopBtn {
+    background: rgba(255, 255, 255, 0.2); /* Semi-transparent white */
+    color: #e0e0e0; /* Light text */
+    backdrop-filter: blur(5px); /* Frosted glass effect */
+}
+
+body.dark #scrollToTopBtn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    color: white;
+}
 
         /* Responsive Design */
         @media (max-width: 768px) {
@@ -390,7 +446,42 @@
     display: block;
 }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('fadein') === '1') {
+        document.body.classList.add('fadein');
+      }
+    });
+  </script>
 </head>
+<button id="scrollToTopBtn" title="Go to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+    
+    <script>
+        // Scroll to top button functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+            
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    scrollToTopBtn.style.display = 'flex';
+                } else {
+                    scrollToTopBtn.style.display = 'none';
+                }
+            });
+            
+            scrollToTopBtn.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
 <body>
     <!-- Brand Banner -->
     <div class="brand-banner">
@@ -401,7 +492,7 @@
     <header class="agency-header">
         <div class="header-container">
             <div class="agency-branding">
-                <img src="dp2.svg" alt="Seanscript Logo" class="agency-logo">
+                <img src="pics/logos.svg" alt="Seanscript Logo" class="agency-logo">
                 <div class="agency-titles">
                     <div class="agency-name">SEANSCRIPT DEVELOPMENT</div>
                     <div class="agency-subtitle">Building Digital Solutions for the Future</div>
@@ -783,35 +874,48 @@
        // Tab functionality
 function showTab(tabId, event) {
     event.preventDefault();
-    
+
     // Hide all tabs with fade out
     document.querySelectorAll('.document-container').forEach(tab => {
         if (tab.classList.contains('active')) {
             tab.classList.remove('active');
-            // After transition completes, set display to none
             setTimeout(() => {
                 tab.style.display = 'none';
-            }, 300); // Match this with your CSS transition duration
+            }, 300);
         }
     });
-    
+
     // Show selected tab with fade in
     const tabToShow = document.getElementById(tabId);
     tabToShow.style.display = 'block';
-    // Force reflow to enable transition
     void tabToShow.offsetWidth;
     tabToShow.classList.add('active');
-    
+
     // Update active tab button
     document.querySelectorAll('.tab-button').forEach(button => {
         button.classList.remove('active');
     });
-    
+
     // Add active class to clicked button
-    event.currentTarget.classList.add('active');
-    
-    // Update URL without reloading
-    history.pushState(null, null, `?tab=${tabId}`);
+    if (event && event.currentTarget) {
+        event.currentTarget.classList.add('active');
+    } else {
+        // Fallback: set active by tabId if event is not passed (e.g. on popstate)
+        const activeButton = document.querySelector(`.tab-button[onclick*="${tabId}"]`);
+        if (activeButton) activeButton.classList.add('active');
+    }
+
+    // Remove active class from all document-header h1
+    document.querySelectorAll('.document-header h1').forEach(h1 => {
+        h1.style.borderBottom = '';
+        h1.style.boxShadow = '';
+    });
+    // Add red underline only to the active tab's h1
+    const activeHeader = tabToShow.querySelector('.document-header h1');
+    if (activeHeader) {
+        activeHeader.style.borderBottom = '3px solid #d9534f';
+        activeHeader.style.boxShadow = '0 2px 0 #d9534f33';
+    }
 }
 
 // Check URL parameters and show appropriate tab
@@ -828,21 +932,35 @@ function initializeTabs() {
         tab.style.display = 'none';
         tab.classList.remove('active');
     });
-    
+
     // Get the tab to show from URL or default to privacy
     const activeTab = getTabFromURL();
-    
+
     // Show the appropriate tab
     const tabToShow = document.getElementById(activeTab);
     tabToShow.style.display = 'block';
-    // Force reflow to enable transition
     void tabToShow.offsetWidth;
     tabToShow.classList.add('active');
-    
+
     // Set the corresponding button as active
+    document.querySelectorAll('.tab-button').forEach(button => {
+        button.classList.remove('active');
+    });
     const activeButton = document.querySelector(`.tab-button[onclick*="${activeTab}"]`);
     if (activeButton) {
         activeButton.classList.add('active');
+    }
+
+    // Remove active class from all document-header h1
+    document.querySelectorAll('.document-header h1').forEach(h1 => {
+        h1.style.borderBottom = '';
+        h1.style.boxShadow = '';
+    });
+    // Add red underline only to the active tab's h1
+    const activeHeader = tabToShow.querySelector('.document-header h1');
+    if (activeHeader) {
+        activeHeader.style.borderBottom = '3px solid #d9534f';
+        activeHeader.style.boxShadow = '0 2px 0 #d9534f33';
     }
 }
 
@@ -851,6 +969,34 @@ document.addEventListener('DOMContentLoaded', initializeTabs);
 
 // Handle back/forward navigation
 window.addEventListener('popstate', initializeTabs);
+
+      // Fade-in on load
+      document.addEventListener('DOMContentLoaded', function() {
+        document.body.classList.add('fadein');
+        document.documentElement.style.opacity = '1';
+      });
+
+      // Fade-out on navigation for all <a> and .back-button
+      function fadeNavigate(href) {
+        document.body.classList.remove('fadein');
+        document.body.classList.add('fadeout');
+        setTimeout(function() {
+          window.location.href = href;
+        }, 1100); // match with transition duration (1.2s - a bit less for snappier feel)
+      }
+
+      // Attach fade-out to all <a> and .back-button
+      document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('a[href], button.back-button').forEach(function(el) {
+          el.addEventListener('click', function(e) {
+            const href = el.getAttribute('href') || el.getAttribute('onclick')?.match(/'([^']+)'/)?.[1];
+            if (href && !href.startsWith('#') && !el.hasAttribute('target')) {
+              e.preventDefault();
+              fadeNavigate(href);
+            }
+          });
+        });
+      });
     </script>
 </body>
 </html>

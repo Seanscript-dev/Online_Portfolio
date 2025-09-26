@@ -1,480 +1,150 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CropSentinel | Loading...</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), 
-                        radial-gradient(ellipse at center, rgba(46, 204, 113, 0.1) 0%, rgba(0, 0, 0, 0.9) 100%),
-                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="%23ffffff" opacity="0.1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grain)"/></svg>');
-            background-size: cover, cover, 200px 200px;
-            background-attachment: fixed;
-            color: #fff;
-            min-height: 100vh;
-            overflow: hidden;
-        }
-        
-        .loading-container {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            position: relative;
-            z-index: 2;
-        }
-        
-        .logo-container {
-            position: relative;
-            margin-bottom: 30px;
-            text-align: center;
-        }
-        
-        .logo-svg {
-            width: 120px;
-            height: auto;
-            filter: drop-shadow(0 0 20px rgba(46, 204, 113, 0.4));
-            animation: logoFloat 3s ease-in-out infinite;
-        }
-        
-        .logo-glow {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 160px;
-            height: 160px;
-            background: radial-gradient(circle, rgba(46, 204, 113, 0.3) 0%, transparent 70%);
-            border-radius: 50%;
-            animation: glow 2s ease-in-out infinite alternate;
-        }
-        
-        .logo-text {
-            color: white;
-            font-size: 42px;
-            font-weight: 700;
-            margin-top: 15px;
-            text-shadow: 0 0 30px rgba(46, 204, 113, 0.5);
-            animation: textGlow 2s ease-in-out infinite alternate;
-            letter-spacing: 2px;
-        }
-        
-        .brand-subtitle {
-            font-size: 18px;
-            color: rgba(255, 255, 255, 0.8);
-            font-weight: 300;
-            letter-spacing: 1px;
-            margin-bottom: 20px;
-        }
-        
-        .loading-content {
-            text-align: center;
-            color: white;
-            max-width: 500px;
-            padding: 0 20px;
-        }
-        
-        .loading-title {
-            font-size: 24px;
-            margin-bottom: 15px;
-            font-weight: 500;
-        }
-        
-        .loading-subtitle {
-            font-size: 16px;
-            margin-bottom: 30px;
-            opacity: 0.8;
-        }
-        
-        .progress-container {
-            width: 100%;
-            max-width: 300px;
-            height: 6px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            margin: 30px auto;
-            position: relative;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            overflow: hidden;
-        }
-        
-        .progress-bar {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, 
-                rgba(46, 204, 113, 0.8) 0%, 
-                rgba(46, 204, 113, 1) 50%, 
-                rgba(104, 249, 64, 1) 100%);
-            border-radius: 10px;
-            position: relative;
-            overflow: hidden;
-            transition: width 0.3s ease;
-        }
-        
-        .progress-bar::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, 
-                transparent 0%, 
-                rgba(255, 255, 255, 0.4) 50%, 
-                transparent 100%);
-            animation: shimmer 2s ease-in-out infinite;
-        }
-        
-        .loading-stats {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-top: 30px;
-            flex-wrap: wrap;
-        }
-        
-        .stat-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: white;
-        }
-        
-        .stat-icon {
-            font-size: 20px;
-            margin-bottom: 5px;
-            color: #2ecc71;
-            animation: pulse 2s infinite;
-        }
-        
-        .stat-value {
-            font-size: 14px;
-            opacity: 0.8;
-        }
-        
-        .loading-footer {
-            position: absolute;
-            bottom: 20px;
-            text-align: center;
-            width: 100%;
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 14px;
-        }
-        
-        .loading-footer a {
-            color: #2ecc71;
-            text-decoration: none;
-        }
-        
-        .loading-footer a:hover {
-            text-decoration: underline;
-        }
-        
-        .particles {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
-        
-        .particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: rgba(46, 204, 113, 0.6);
-            border-radius: 50%;
-            animation: float 8s ease-in-out infinite;
-        }
-        
-        .particle:nth-child(1) { left: 10%; animation-delay: 0s; }
-        .particle:nth-child(2) { left: 20%; animation-delay: 1s; }
-        .particle:nth-child(3) { left: 30%; animation-delay: 2s; }
-        .particle:nth-child(4) { left: 40%; animation-delay: 3s; }
-        .particle:nth-child(5) { left: 50%; animation-delay: 4s; }
-        .particle:nth-child(6) { left: 60%; animation-delay: 1.5s; }
-        .particle:nth-child(7) { left: 70%; animation-delay: 2.5s; }
-        .particle:nth-child(8) { left: 80%; animation-delay: 3.5s; }
-        .particle:nth-child(9) { left: 90%; animation-delay: 0.5s; }
-        
-        .status-indicator {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(15px);
-            padding: 15px 25px;
-            border-radius: 25px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            background: #2ecc71;
-            border-radius: 50%;
-            animation: pulse 2s infinite;
-        }
-        
-        .status-text {
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 14px;
-            font-weight: 500;
-        }
-        
-        .loading-text {
-            margin-top: 25px;
-            font-size: 16px;
-            color: rgba(255, 255, 255, 0.9);
-            font-weight: 500;
-            min-height: 24px;
-            animation: textFade 3s ease-in-out infinite;
-        }
-        
-        .loading-dots {
-            display: inline-block;
-            animation: dots 1.5s steps(4, end) infinite;
-        }
-        
-        @keyframes logoFloat {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-10px) rotate(2deg); }
-        }
-        
-        @keyframes glow {
-            0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.5; }
-            100% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.8; }
-        }
-        
-        @keyframes textGlow {
-            0% { text-shadow: 0 0 30px rgba(46, 204, 113, 0.5); }
-            100% { text-shadow: 0 0 40px rgba(46, 204, 113, 0.8), 0 0 60px rgba(46, 204, 113, 0.3); }
-        }
-        
-        @keyframes shimmer {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
-        
-        @keyframes textFade {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
-        }
-        
-        @keyframes dots {
-            0%, 20% { content: '.'; }
-            40% { content: '..'; }
-            60% { content: '...'; }
-            80%, 100% { content: '....'; }
-        }
-        
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(100vh) rotate(0deg);
-                opacity: 0;
-            }
-            10%, 90% {
-                opacity: 1;
-            }
-            50% {
-                transform: translateY(-20px) rotate(180deg);
-                opacity: 0.8;
-            }
-        }
-        
-        @keyframes pulse {
-            0% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(1.2); }
-            100% { opacity: 1; transform: scale(1); }
-        }
-        
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .logo-svg {
-                width: 100px;
-            }
-            
-            .logo-text {
-                font-size: 32px;
-            }
-            
-            .brand-subtitle {
-                font-size: 16px;
-            }
-            
-            .loading-title {
-                font-size: 20px;
-            }
-            
-            .progress-container {
-                max-width: 250px;
-            }
-            
-            .loading-stats {
-                gap: 20px;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="particles">
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-    </div>
-    
-    <div class="loading-container">
-        <div class="logo-container">
-            <div class="logo-glow"></div>
-            <svg class="logo-svg" version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300.000000 255.000000" preserveAspectRatio="xMidYMid meet">
-                <g transform="translate(0.000000,255.000000) scale(0.100000,-0.100000)" fill="#2ecc71" stroke="none">
-                    <path d="M1285 2159 c-107 -7 -177 -36 -254 -105 -210 -189 -152 -557 108 -688 25 -13 184 -66 352 -119 168 -52 331 -107 362 -121 95 -45 147 -127 155 -242 8 -133 -36 -222 -139 -279 l-54 -30 -323 0 -324 0 -24 28 c-20 24 -24 39 -24 98 l0 70 -87 -3 -88 -3 -3 -90 c-2 -64 2 -102 13 -132 20 -51 81 -108 132 -123 26 -8 156 -10 413 -8 l375 3 65 31 c89 42 171 124 213 211 28 61 32 79 35 178 6 164 -26 246 -138 361 -70 71 -137 103 -339 164 -295 88 -454 141 -496 165 -88 51 -127 120 -127 224 0 80 19 128 72 181 66 66 95 70 471 70 393 0 371 7 379 -117 l5 -78 94 -3 93 -3 -3 113 c-5 130 -21 169 -92 216 l-40 27 -346 5 c-190 3 -386 2 -436 -1z"/>
-                    <path d="M398 1825 c-38 -21 -68 -75 -68 -125 0 -34 6 -48 34 -76 57 -57 168 -47 202 18 14 27 18 29 67 26 l52 -3 7 -60 c14 -123 28 -162 76 -210 24 -25 50 -45 57 -45 7 0 15 -7 19 -15 5 -13 -15 -15 -139 -15 l-144 0 -21 30 c-60 84 -179 78 -226 -12 -20 -39 -12 -87 22 -127 56 -67 153 -62 200 9 l27 40 171 0 171 0 86 -89 c101 -104 123 -112 296 -115 l107 -1 7 -28 c11 -42 28 -57 64 -57 77 0 90 100 18 138 -14 8 -79 12 -175 13 -91 0 -165 5 -183 12 -17 7 -64 48 -106 92 -41 44 -110 114 -153 155 -99 95 -108 112 -108 214 -1 55 -6 90 -17 109 -14 25 -19 27 -86 27 l-71 0 -13 36 c-23 64 -109 93 -173 59z m104 -72 c25 -23 23 -59 -6 -88 -26 -26 -46 -25 -78 3 -22 19 -23 51 -2 80 18 26 60 29 86 5z m-33 -427 c28 -30 24 -63 -10 -88 -53 -39 -106 20 -74 82 19 37 53 40 84 6z"/>
-                    <path d="M2242 1624 c-22 -15 -22 -19 -22 -233 0 -155 3 -220 12 -229 15 -15 420 -17 449 -2 18 10 19 23 19 235 0 212 -1 225 -19 235 -12 6 -100 10 -218 10 -164 0 -202 -3 -221 -16z m373 -166 c4 -62 5 -138 3 -168 l-3 -55 -150 -5 c-82 -3 -153 -3 -158 0 -5 5 -12 281 -8 333 1 4 70 7 155 7 l154 0 7 -112z"/>
-                    <path d="M700 1108 c-40 -27 -63 -82 -53 -130 3 -17 23 -48 44 -69 l37 -37 4 -119 c4 -103 7 -118 22 -121 10 -2 22 0 27 5 5 5 9 62 10 127 2 98 5 119 18 123 9 3 29 18 44 32 28 26 30 26 235 32 114 4 210 7 215 8 4 1 7 12 7 26 l0 25 -203 0 -203 0 -12 33 c-29 80 -123 112 -192 65z m105 -63 c30 -29 32 -58 5 -85 -26 -26 -55 -25 -81 1 -35 35 -8 109 38 109 8 0 25 -11 38 -25z"/>
-                </g>
-            </svg>
-            <div class="logo-text">CropSentinel</div>
-            <p class="brand-subtitle">Smart Agriculture Management System</p>
-        </div>
-        
-        <div class="loading-content">
-            <h1 class="loading-title">Initializing FarmSmart Dashboard</h1>
-            <p class="loading-subtitle">Loading field data, drone status, and blockchain traceability information...</p>
-            
-            <div class="progress-container">
-                <div class="progress-bar" id="progress-bar"></div>
-            </div>
-            
-            <div class="loading-text" id="loadingText">
-                Initializing system<span class="loading-dots"></span>
-            </div>
-            
-            <div class="loading-stats">
-                <div class="stat-item">
-                    <i class="fas fa-tractor stat-icon"></i>
-                    <span class="stat-value" id="field-status">Connecting to sensors...</span>
-                </div>
-                <div class="stat-item">
-                    <i class="fas fa-drone stat-icon"></i>
-                    <span class="stat-value" id="drone-status">Calibrating drone...</span>
-                </div>
-                <div class="stat-item">
-                    <i class="fas fa-link stat-icon"></i>
-                    <span class="stat-value" id="blockchain-status">Syncing blockchain...</span>
-                </div>
-            </div>
-        </div>
-        
-        <div class="status-indicator">
-            <div class="status-dot"></div>
-            <span class="status-text" id="statusText">Connecting to farm sensors</span>
-        </div>
-        
-        <div class="loading-footer">
-            <p>FarmSmart Dashboard v2.1 | Developed by <a href="https://github.com/Seanscript-dev" target="_blank">SeanScript Development</a></p>
-        </div>
-    </div>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Loading | SeanScript Development</title>
+  <style>
+    :root {
+      --bg-dark: #0f172a;
+      --text-dark: #f1f5f9;
+      --bg-light: #f8fafc;
+      --text-light: #0f172a;
+      --accent: #3b82f6;
+    }
 
-    <script>
-        // Simulate loading progress
-        let progress = 0;
-        const progressBar = document.getElementById('progress-bar');
-        const fieldStatus = document.getElementById('field-status');
-        const droneStatus = document.getElementById('drone-status');
-        const blockchainStatus = document.getElementById('blockchain-status');
-        const loadingTextEl = document.getElementById('loadingText');
-        const statusTextEl = document.getElementById('statusText');
-        
-        const loadingTexts = [
-            "Initializing system",
-            "Connecting to sensors", 
-            "Loading crop data",
-            "Analyzing field conditions",
-            "Preparing dashboard",
-            "Almost ready"
-        ];
-        
-        const statusTexts = [
-            "Connecting to farm sensors",
-            "Synchronizing drone network", 
-            "Loading field maps",
-            "Checking weather data",
-            "Initializing blockchain",
-            "Starting monitoring system"
-        ];
-        
-        let textIndex = 0;
-        let statusIndex = 0;
-        
-        // Update loading text
-        setInterval(() => {
-            loadingTextEl.innerHTML = loadingTexts[textIndex] + '<span class="loading-dots"></span>';
-            textIndex = (textIndex + 1) % loadingTexts.length;
-        }, 2500);
-        
-        // Update status text
-        setInterval(() => {
-            statusTextEl.textContent = statusTexts[statusIndex];
-            statusIndex = (statusIndex + 1) % statusTexts.length;
-        }, 3000);
-        
-        const interval = setInterval(() => {
-            progress += Math.random() * 10;
-            if (progress > 100) progress = 100;
-            
-            progressBar.style.width = progress + '%';
-            
-            // Update status messages based on progress
-            if (progress < 30) {
-                fieldStatus.textContent = "Connecting to sensors...";
-                droneStatus.textContent = "Calibrating drone...";
-                blockchainStatus.textContent = "Syncing blockchain...";
-            } else if (progress < 60) {
-                fieldStatus.textContent = "Reading sensor data...";
-                droneStatus.textContent = "Drone ready for deployment";
-                blockchainStatus.textContent = "Verifying transactions...";
-            } else if (progress < 90) {
-                fieldStatus.textContent = "Analyzing crop health...";
-                droneStatus.textContent = "Drone systems online";
-                blockchainStatus.textContent = "Blockchain synchronized";
-            } else {
-                fieldStatus.textContent = "Field data loaded";
-                droneStatus.textContent = "All systems operational";
-                blockchainStatus.textContent = "Traceability active";
-            }
-            
-            // Redirect to main dashboard when loading is complete
-            if (progress >= 100) {
-                clearInterval(interval);
-                setTimeout(() => {
-                    window.location.href = "dashboard.html"; // Replace with your actual dashboard URL
-                }, 1000);
-            }
-        }, 300);
-    </script>
+    body {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 100vh;
+      background-color: var(--bg-dark);
+      color: var(--text-dark);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      animation: fadeIn 1s ease-in;
+      transition: background-color 0.4s ease, color 0.4s ease, opacity 1s ease;
+    }
+
+    @media (prefers-color-scheme: light) {
+      body {
+        background-color: var(--bg-light);
+        color: var(--text-light);
+      }
+    }
+
+    .logo-loader {
+  width: 200px;
+  height: 200px;
+  margin-bottom: 1.4rem;
+  animation: pulse 1.8s ease-in-out infinite, glow 2s ease-in-out infinite;
+}
+
+
+
+    .logo-loader svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .brand {
+      text-align: center;
+      margin-bottom: 1rem;
+      line-height: 1.3;
+    }
+
+    .brand .main-name {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .brand .main-name span {
+      color: var(--accent);
+    }
+
+    .brand .sub-name {
+      font-size: 0.9rem;
+      letter-spacing: 5px;
+      font-weight: 400;
+      opacity: 0.75;
+    }
+
+    .loading-text {
+      font-size: 1rem;
+      font-weight: 500;
+      display: inline-block;
+      border-right: 2px solid currentColor;
+      white-space: nowrap;
+      overflow: hidden;
+      width: 0;
+      animation: typing 2s steps(20, end) forwards, blink 0.8s infinite;
+      opacity: 0.85;
+    }
+
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 160px; }
+    }
+
+    @keyframes blink {
+      0%, 100% { border-color: transparent; }
+      50% { border-color: currentColor; }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.07); }
+    }
+
+    @keyframes glow {
+      0%, 100% { filter: drop-shadow(0 0 0px var(--accent)); }
+      50% { filter: drop-shadow(0 0 12px var(--accent)); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    .fade-out {
+      opacity: 0;
+    }
+  </style>
+
+  <script>
+    setTimeout(() => {
+      document.body.classList.add('fade-out');
+      setTimeout(() => {
+        window.location.href = "portfolio.html?fadein=1";
+      }, 1000);
+    }, 2500);
+  </script>
+</head>
+
+<body>
+  <div class="logo-loader">
+    <!-- Inline SVG Logo -->
+    <svg version="1.0" xmlns="http://www.w3.org/2000/svg" 
+      viewBox="0 0 300 255" preserveAspectRatio="xMidYMid meet">
+      <g transform="translate(0,255) scale(0.1,-0.1)" fill="#00bfff" stroke="none">
+        <path d="M1285 2159 c-107 -7 -177 -36 -254 -105 -210 -189 -152 -557 108 -688 25 -13 184 -66 352 -119 168 -52 331 -107 362 -121 95 -45 147 -127 155 -242 8 -133 -36 -222 -139 -279 l-54 -30 -323 0 -324 0 -24 28 c-20 24 -24 39 -24 98 l0 70 -87 -3 -88 -3 -3 -90 c-2 -64 2 -102 13 -132 20 -51 81 -108 132 -123 26 -8 156 -10 413 -8 l375 3 65 31 c89 42 171 124 213 211 28 61 32 79 35 178 6 164 -26 246 -138 361 -70 71 -137 103 -339 164 -295 88 -454 141 -496 165 -88 51 -127 120 -127 224 0 80 19 128 72 181 66 66 95 70 471 70 393 0 371 7 379 -117 l5 -78 94 -3 93 -3 -3 113 c-5 130 -21 169 -92 216 l-40 27 -346 5 c-190 3 -386 2 -436 -1z"/>
+        <path d="M398 1825 c-38 -21 -68 -75 -68 -125 0 -34 6 -48 34 -76 57 -57 168 -47 202 18 14 27 18 29 67 26 l52 -3 7 -60 c14 -123 28 -162 76 -210 24 -25 50 -45 57 -45 7 0 15 -7 19 -15 5 -13 -15 -15 -139 -15 l-144 0 -21 30 c-60 84 -179 78 -226 -12 -20 -39 -12 -87 22 -127 56 -67 153 -62 200 9 l27 40 171 0 171 0 86 -89 c101 -104 123 -112 296 -115 l107 -1 7 -28 c11 -42 28 -57 64 -57 77 0 90 100 18 138 -14 8 -79 12 -175 13 -91 0 -165 5 -183 12 -17 7 -64 48 -106 92 -41 44 -110 114 -153 155 -99 95 -108 112 -108 214 -1 55 -6 90 -17 109 -14 25 -19 27 -86 27 l-71 0 -13 36 c-23 64 -109 93 -173 59z m104 -72 c25 -23 23 -59 -6 -88 -26 -26 -46 -25 -78 3 -22 19 -23 51 -2 80 18 26 60 29 86 5z m-33 -427 c28 -30 24 -63 -10 -88 -53 -39 -106 20 -74 82 19 37 53 40 84 6z"/>
+        <path d="M2242 1624 c-22 -15 -22 -19 -22 -233 0 -155 3 -220 12 -229 15 -15 420 -17 449 -2 18 10 19 23 19 235 0 212 -1 225 -19 235 -12 6 -100 10 -218 10 -164 0 -202 -3 -221 -16z m373 -166 c4 -62 5 -138 3 -168 l-3 -55 -150 -5 c-82 -3 -153 -3 -158 0 -5 5 -12 281 -8 333 1 4 70 7 155 7 l154 0 7 -112z"/>
+        <path d="M700 1108 c-40 -27 -63 -82 -53 -130 3 -17 23 -48 44 -69 l37 -37 4 -119 c4 -103 7 -118 22 -121 10 -2 22 0 27 5 5 5 9 62 10 127 2 98 5 119 18 123 9 3 29 18 44 32 28 26 30 26 235 32 114 4 210 7 215 8 4 1 7 12 7 26 l0 25 -203 0 -203 0 -12 33 c-29 80 -123 112 -192 65z m105 -63 c30 -29 32 -58 5 -85 -26 -26 -55 -25 -81 1 -35 35 -8 109 38 109 8 0 25 -11 38 -25z"/>
+      </g>
+    </svg>
+  </div>
+
+  <div class="brand">
+    <div class="main-name"><span>Sean</span>Script</div>
+    <div class="sub-name">DEVELOPMENT</div>
+  </div>
+
+  <div class="loading-text">Loading portfolio...</div>
 </body>
 </html>

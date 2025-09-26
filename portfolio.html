@@ -244,7 +244,22 @@
       color: #6ca9ff;
       text-decoration: none;
     }
+    a.cert1-link {
+      text-decoration: none;
+      color: #0d47a1;
+      max-width: 300px;        /* set a width, otherwise ellipsis won’t work */
+      text-overflow: ellipsis;
+    
+    }
 
+    a.cert1-link:hover {
+      color: #1bc35e;
+      text-decoration: none;
+    }
+    body.dark a.cert1-link:hover {
+      color: #1bc35e;
+      text-decoration: none;
+    }
     .social-icons {
       display: flex;
       justify-content: center;
@@ -714,59 +729,7 @@
     body.dark #education .edu-card .psu-school {
       color: #1976d2 !important;
     }
-    .psa-fab {
-      position: absolute;
-      right: 1.5rem;
-      bottom: 1.5rem;
-      display: flex;
-      align-items: center;
-      gap: 0.7em;
-      background: linear-gradient(90deg, #1976d2 60%, #1b76d0 100%);
-      color: #fff;
-      padding: 0.65em 1.5em;
-      border-radius: 2em;
-      font-weight: 600;
-      font-size: 1.05rem;
-      text-decoration: none;
-      border: none;
-      outline: none;
-      cursor: pointer;
-      transition: 
-        background 0.25s cubic-bezier(.4,0,.2,1),
-        box-shadow 0.22s cubic-bezier(.4,0,.2,1),
-        transform 0.18s cubic-bezier(.4,0,.2,1);
-      animation: psa-fab-fadein 0.7s 0.2s backwards cubic-bezier(.4,0,.2,1);
-      z-index: 10;
-    }
-    .psa-fab i {
-      font-size: 1.25em;
-      transition: transform 0.22s cubic-bezier(.4,0,.2,1);
-    }
-    .psa-fab:hover {
-      background: linear-gradient(90deg, #0d47a1 60%, #1976d2 100%);
-      transform: translateY(-3px) scale(1.06) rotate(-2deg);
-      text-decoration: none;
-    }
-    .psa-fab:hover i {
-      transform: scale(1.18) rotate(-8deg);
-    }
-    @keyframes psa-fab-fadein {
-      from {
-        opacity: 0;
-        transform: translateY(18px) scale(0.95);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
-    }
-    body.dark .psa-fab {
-      background: linear-gradient(90deg, #145a9f 60%, #3078b3 100%);
-      color: #fff;
-    }
-    body.dark .psa-fab:hover {
-      background: linear-gradient(90deg, #0c4395 60%, #1668ba 100%);
-    }
+    
     .skill-anim {
       transition: box-shadow 0.35s cubic-bezier(.4,0,.2,1),
                   background 0.35s cubic-bezier(.4,0,.2,1),
@@ -1070,12 +1033,6 @@ body.dark #scrollToTopBtn:hover {
       .corner-sub {
         font-size: 0.5rem;
       }
-      .psa-fab {
-        font-size: 0.85rem;
-        padding: 0.4em 0.8em;
-        right: 0.7rem;
-        bottom: 0.7rem;
-      }
       .main-footer {
         flex-direction: column;
         gap: 0.3rem;
@@ -1231,28 +1188,13 @@ body.dark #scrollToTopBtn:hover {
         font-size: 0.6rem;
       }
       
-      .psa-fab {
-        font-size: 0.9rem;
-        padding: 0.5em 1em;
-        right: 1rem;
-        bottom: 1rem;
-        margin-top: 10px;
-      
-      }
     }
     @media (max-width: 600px) {
   #personal-info {
     padding-bottom: 3.5rem !important;
     position: relative;
   }
-  .psa-fab {
-    right: 1rem;
-    bottom: 1rem;
-    position: absolute;
-    margin-top: 0;
-    /* Ensure it stays above content */
-    z-index: 2;
-  }
+  
 }
     </style>
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -1293,7 +1235,7 @@ body.dark #scrollToTopBtn:hover {
     </script>
 
 <div class="corner-logo" aria-label="Site logo">
-  <img src="dp2.svg" alt="Logo" />
+  <img src="logos.svg" alt="Logo" />
   <div class="corner-text">
     <span class="corner-name">Seanscript</span>
     <span class="corner-sub">DEVELOPMENT</span>
@@ -1313,7 +1255,7 @@ body.dark #scrollToTopBtn:hover {
             </label>
           </span>
         </div>
-        <p>Computer Engineer | Full-Stack Developer | Tech Enthusiast</p>
+        <p>Computer Engineer | Full-Stack Developer | Tech Enthusiast | QA Tester</p>
       </div>
     </div>
   </header>
@@ -1340,13 +1282,10 @@ body.dark #scrollToTopBtn:hover {
           <li style="margin-bottom: 0.5rem;"><strong>Civil Status:</strong> Single</li>
           <li style="margin-bottom: 0.5rem;"><strong>Religion:</strong> Catholic</li>
           <li style="margin-bottom: 0.5rem;"><strong>Height and Weight:</strong> 6'0 and 85Kg</li>
-          <!-- Add more personal info as needed -->
+          <li style="margin-bottom: 0.5rem;"><strong>Professional Interests:</strong> AI Development, Embedded Systems, Web & App Engineering</li>
+          <li style="margin-bottom: 0.5rem;"><strong>Work Approach:</strong> Problem-Solver, Detail-Oriented, Innovative</li>
+          <li style="margin-bottom: 0.5rem;"><strong>Languages Spoken:</strong> English, Filipino</li><!-- Add more personal info as needed -->
         </ul>
-        <!-- View PSA Button -->
-        <a href="psa.html" target="blank" class="psa-fab">
-          <i class="fa fa-id-card"></i>
-          <span>View PSA</span>
-        </a>
       </section>
 
       <!-- Education Section -->
@@ -1398,7 +1337,7 @@ body.dark #scrollToTopBtn:hover {
         <div class="section-divider"></div>
         <p class="intro-text">
   I’m a passionate Computer Engineer with experience in designing, building, and optimizing software and hardware systems. I specialize in full-stack web development, embedded systems, and tech consulting. My mission is to solve problems with efficient code and intuitive design.
-</p>
+    My approach combines problem-solving, innovation, and attention to detail—whether architecting scalable cloud solutions, crafting intuitive user interfaces, or integrating hardware with efficient code. </p>
 
       </section>
 
@@ -1427,16 +1366,16 @@ body.dark #scrollToTopBtn:hover {
       <!-- Slide 2 (Next 3 projects) -->
       <div class="projects-slide">
         <div class="project">
-         <h3><a href="AlgoSolver.exe" download class="aproject" target="_blank">Algorithm Visualizer</a></h3>
+         <h3><a href="dist/AlgoSolver.exe" download class="aproject" target="_blank">Algorithm Visualizer</a></h3>
           <p>It provides an interactive GUI to visualize how different sorting algorithms work step-by-step.</p>
         </div>
         <div class="project">
-          <h3><a href="#" class="aproject" target="blank">Weather Dashboard</a></h3>
-          <p>Real-time weather forecasting application with interactive maps and charts.</p>
+          <h3><a href="https://seanscriptfarm.netlify.app/" class="aproject" target="blank">CropSentinel Dashboard</a></h3>
+          <p>UI/UX for an agricultural management system with simulated data visualization.</p>
         </div>
         <div class="project">
-          <h3><a href="#" class="aproject" target="blank">Recipe Finder</a></h3>
-          <p>Culinary platform with ingredient-based search and dietary filters.</p>
+          <h3><a href="#" class="aproject" target="blank">Philippine Statistics Authority</a></h3>
+          <p>UI/UX  for the Philippine Statistics Authority (IMITATION WEBSITE)  </p>
         </div>
       </div>
 
@@ -1655,15 +1594,19 @@ body.dark #scrollToTopBtn:hover {
             <a href="language.html#html" class="cert-link skill-anim" >HTML</a>,
             <a href="language.html#css" class="cert-link skill-anim" >CSS</a>,
             <a href="language.html" class="cert-link skill-anim" >JavaScript,</a>
-             <a href="language.html#php" class="cert-link skill-anim" >PHP</a>
+            <a href="language.html#php" class="cert-link skill-anim" >PHP,</a>
+            <a href="language.html#verilog" class="cert-link skill-anim" >Verilog,</a>
+            <a href="language.html#c" class="cert-link skill-anim" >C</a>
           </td>
         </tr>
         <tr>
           <td style="vertical-align:top; font-weight:bold; padding-right:1.2rem;">Frameworks:</td>
           <td>
-            <a href="framework.html" class="cert-link skill-anim" >Django</a>,
-            <a href="framework.html" class="cert-link skill-anim" >React</a>,
-            <a href="framework.html" class="cert-link skill-anim" >Tkinter</a>
+            <a href="framework.html" class="cert-link skill-anim" >Django,</a>
+            <a href="framework.html" class="cert-link skill-anim" >React,</a>
+            <a href="framework.html" class="cert-link skill-anim" >Tkinter,</a>
+            <a href="framework.html#mat" class="cert-link skill-anim" >Matplotlib,</a>
+            <a href="framework.html#electron" class="cert-link skill-anim" >Electron</a>
           </td>
         </tr>
         <tr>
@@ -1692,7 +1635,10 @@ body.dark #scrollToTopBtn:hover {
           <td>
             <a href="additional-expertise.html" class="cert-link skill-anim" >AutoCAD</a>,
             <a href="additional-expertise.html" class="cert-link skill-anim" >Cisco</a>,
-            <a href="additional-expertise.html" class="cert-link skill-anim" >Circuit Wizard</a>
+            <a href="additional-expertise.html" class="cert-link skill-anim" >Circuit Wizard,</a>
+            <a href="additional-expertise.html#arduino" class="cert-link skill-anim" >Arduino IDE,</a>
+            <a href="additional-expertise.html#tinker" class="cert-link skill-anim" >Tinkercad,</a>
+            <a href="additional-expertise.html#ki" class="cert-link skill-anim" >KiCad</a>
           </td>
         </tr>
       </table>
@@ -1703,7 +1649,19 @@ body.dark #scrollToTopBtn:hover {
 
 
 <section id="Certifications" class="formal-section" data-aos="fade-up">
-  <h2>Certifications</h2>
+  <div style="display: flex; align-items: center; justify-content: flex-start; gap: 1.2rem; margin-bottom: 0;">
+    <h2 style="margin-bottom: 0; margin-right: 0.8rem;">Certifications</h2>
+    <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 0.2em;">
+      <span style="display: flex; align-items: center; gap: 0.4em;">
+        <span style="display: inline-block; width: 14px; height: 14px; background: #1976d2; border-radius: 4px; border: 1.5px solid #1565c0;"></span>
+        <span style="font-size: 0.8rem; color: #1976d2; font-weight: 500;">Minor Certificates</span>
+      </span>
+      <span style="display: flex; align-items: center; gap: 0.4em;">
+        <span style="display: inline-block; width: 14px; height: 14px; background: #1bc35e; border-radius: 4px; border: 1.5px solid #0c813b;"></span>
+        <span style="font-size: 0.8rem; color: #0c813b; font-weight: 500;">Major Certificates</span>
+      </span>
+    </div>
+  </div>
   <div class="section-divider"></div>
   <div class="certifications-wrapper">
     <div class="slide-arrow prev-slide-arrow">‹</div>
@@ -1711,19 +1669,19 @@ body.dark #scrollToTopBtn:hover {
       <div class="certifications-slide active-slide">
         <ul>
           <li><a href="certif.html?file=certif1.pdf" class="cert-link">Digital Transformation 101: A Webinar Series on Technology Adoption of MSMEs</a></li>
-          <li><a href="certif.html?file=certif2.jpeg" class="cert-link">Resilience and Response: Cybersecurity & Digital Forensics for Cyber and Critical Technologies</a></li>
-          <li><a href="certif.html?file=certif3.png" class="cert-link">Digital Security and Data Privacy: How to Safeguard Our Data in Today's World</a></li>
+          <li><a href="certif.html?file=certif2.jpeg" class="cert1-link">Resilience and Response: Cybersecurity & Digital Forensics for Cyber and Critical Technologies</a></li>
           <li><a href="certif.html?file=certif4.png" class="cert-link">How to Start Content Creating: from Ideas to Execution</a></li>
           <li><a href="certif.html?file=certif5.pdf" class="cert-link">Be Smart, Stay Safe: Protecting Yourself in the Digital Age</a></li>
+          <li><a href="certif.html?file=certif3.png" class="cert1-link">Digital Security and Data Privacy: How to Safeguard Our Data in Today's World</a></li>
         </ul>
       </div>
       <div class="certifications-slide">
         <ul>
-          <li><a href="certif.html?file=certif6.pdf" class="cert-link">Introduction to Data Science: Roles and Basic MySQL Skills</a></li>
+          <li><a href="certif.html?file=certif6.pdf" class="cert1-link">Introduction to Data Science: Roles and Basic MySQL Skills</a></li>
           <li><a href="certif.html?file=certif7.pdf" class="cert-link">Formulating Competitive Marketing Strategies in the Digital Age</a></li>
           <li><a href="certif.html?file=certif8.pdf" class="cert-link">Work-Life Balance in the Digital Age: Setting Boundaries for Well-Being</a></li>
           <li><a href="certif.html?file=certif9.pdf" class="cert-link">Next-Gen Computer Engineers: Empoweringg Future Innovators Through the Digital Economy and ICT Development Plan</a></li>
-          <li><a href="certif.html?file=certif10.pdf" class="cert-link">Cloud Computing Fundamentals</a></li>
+          <li><a href="certif.html?file=certif10.jpg" class="cert1-link">Software QA Manual Testing Workshop: Become A Confident QA Specialist Step-By-Step, Using Jira, Testrail, & Excel.</a></li>
         </ul>
       </div>
       <div class="certifications-slide">
@@ -1927,17 +1885,17 @@ document.addEventListener('DOMContentLoaded', function() {
   const nextArrow = document.querySelector('.next-slide-arrow');
   const dots = document.querySelectorAll('.cert-dot');
   let currentSlide = 0;
-  
+
   // Check if there's a stored slide index and restore it
   const storedSlide = sessionStorage.getItem('certSlideIndex');
   if (storedSlide) {
-    currentSlide = parseInt(storedSlide);
+    currentSlide = parseInt(storedSlide, 10);
   }
-  
+
   function showSlide(index) {
     // Ensure index is within bounds
     index = Math.max(0, Math.min(index, slides.length - 1));
-    
+
     slides.forEach((slide, i) => {
       slide.classList.toggle('active-slide', i === index);
     });
@@ -1950,21 +1908,23 @@ document.addEventListener('DOMContentLoaded', function() {
     // Hide prev arrow on first slide, next arrow on last slide
     prevArrow.style.visibility = index === 0 ? 'hidden' : 'visible';
     nextArrow.style.visibility = index === slides.length - 1 ? 'hidden' : 'visible';
-    
+
     // Update current slide
     currentSlide = index;
+    // Save current slide index for persistence
+    sessionStorage.setItem('certSlideIndex', currentSlide);
   }
-  
+
   nextArrow.addEventListener('click', function() {
     currentSlide = (currentSlide + 1) % slides.length;
     showSlide(currentSlide);
   });
-  
+
   prevArrow.addEventListener('click', function() {
     currentSlide = (currentSlide - 1 + slides.length) % slides.length;
     showSlide(currentSlide);
   });
-  
+
   // Add click event listeners to dots
   dots.forEach((dot, index) => {
     dot.addEventListener('click', () => {
@@ -1972,31 +1932,44 @@ document.addEventListener('DOMContentLoaded', function() {
       showSlide(currentSlide);
     });
   });
-  
+
   // Add click event listeners to certificate links to store current slide
-  document.querySelectorAll('.cert-link').forEach(link => {
+  document.querySelectorAll('.cert-link, .cert1-link').forEach(link => {
     link.addEventListener('click', () => {
       sessionStorage.setItem('certSlideIndex', currentSlide);
     });
   });
-  
+
   // Initialize
   showSlide(currentSlide);
 });
+
 // At the bottom of your portfolio page script
 document.addEventListener('DOMContentLoaded', function() {
   // Check if we're returning from a certificate view
   if (sessionStorage.getItem('returningFromCert') === 'true') {
-    // Remove the flag
     sessionStorage.removeItem('returningFromCert');
-    
-    // Scroll to certifications section
     const certSection = document.getElementById('Certifications');
     if (certSection) {
       setTimeout(() => {
         certSection.scrollIntoView({ behavior: 'smooth' });
       }, 100);
     }
+  }
+  // Restore certifications slide if coming back from certif.html
+  if (window.location.hash === "#Certifications" && sessionStorage.getItem('certSlideIndex')) {
+    const slideIndex = parseInt(sessionStorage.getItem('certSlideIndex'), 10);
+    setTimeout(() => {
+      // Find and trigger the correct slide
+      const slides = document.querySelectorAll('.certifications-slide');
+      const dots = document.querySelectorAll('.cert-dot');
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('active-slide', i === slideIndex);
+      });
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('active-dot', i === slideIndex);
+      });
+    }, 200);
   }
 });
 </script>
@@ -2021,7 +1994,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <footer id=footmo class="main-footer">
   <div class="footer-brand">
-    <img src="dp2.svg" alt="Logo">
+    <img src="logos.svg" alt="Logo">
     <div class="footer-text">
       <span class="footer-title">Seanscript</span>
       <span class="footer-subtitle">DEVELOPMENT</span>
@@ -2072,35 +2045,32 @@ document.addEventListener('DOMContentLoaded', function() {
     // Restore scroll position or center section after returning from certif.html
     window.addEventListener('load', function() {
       // Center Certifications section if coming back from certif.html back button
-      if (sessionStorage.getItem('restoreCertBack') === '1') {
-        // If hash is #Certifications, center Certifications section
-        if (window.location.hash === "#Certifications") {
-          var certSection = document.getElementById('Certifications');
-          if (certSection) {
-            var rect = certSection.getBoundingClientRect();
-            var scrollY = window.scrollY + rect.top + rect.height / 2 - window.innerHeight / 2;
-            window.scrollTo(0, scrollY);
-          }
-        // Center Skills section if hash is #skills
-        } else if (window.location.hash === "#skills") {
-          var skillsSection = document.getElementById('skills');
-          if (skillsSection) {
-            var rect = skillsSection.getBoundingClientRect();
-            var scrollY = window.scrollY + rect.top + rect.height / 2 - window.innerHeight / 2;
-            window.scrollTo(0, scrollY);
-          }
-        } else {
-          // Otherwise, center Personal Information section
-          var personalSection = document.getElementById('personal-info');
-          if (personalSection) {
-            var rect = personalSection.getBoundingClientRect();
-            var scrollY = window.scrollY + rect.top + rect.height / 2 - window.innerHeight / 2;
-            window.scrollTo(0, scrollY);
-          }
+      if (sessionStorage.getItem('returningFromCert') === 'true') {
+        // Remove the flag
+        sessionStorage.removeItem('returningFromCert');
+        
+        // Scroll to certifications section
+        const certSection = document.getElementById('Certifications');
+        if (certSection) {
+          setTimeout(() => {
+            certSection.scrollIntoView({ behavior: 'smooth' });
+          }, 100);
         }
-        sessionStorage.removeItem('restoreCertBack');
-        sessionStorage.removeItem('certBackScroll');
-        return;
+      }
+      // Restore certifications slide if coming back from certif.html
+      if (window.location.hash === "#Certifications" && sessionStorage.getItem('certSlideIndex')) {
+        const slideIndex = parseInt(sessionStorage.getItem('certSlideIndex'), 10);
+        setTimeout(() => {
+          // Find and trigger the correct slide
+          const slides = document.querySelectorAll('.certifications-slide');
+          const dots = document.querySelectorAll('.cert-dot');
+          slides.forEach((slide, i) => {
+            slide.classList.toggle('active-slide', i === slideIndex);
+          });
+          dots.forEach((dot, i) => {
+            dot.classList.toggle('active-dot', i === slideIndex);
+          });
+        }, 200);
       }
       // Otherwise, restore previous scroll position if available
       var scrollY = sessionStorage.getItem('certBackScroll');

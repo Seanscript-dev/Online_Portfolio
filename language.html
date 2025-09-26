@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Programming Languages</title>
   <style>
     * {
@@ -14,7 +15,7 @@
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: #f5faff;
       color: #0f172a;
-      padding: 2rem;
+      padding: 1.5rem;
       transition: background 0.3s, color 0.3s;
       animation: fadeSlideUp 1.2s cubic-bezier(.4,0,.2,1);
     }
@@ -60,7 +61,7 @@
       border-radius: 0;
       font-size: 1rem;
       font-weight: 500;
-      padding: 0.1rem 0.2rem;
+      padding: 0.5rem 0.5rem;
       text-decoration: none;
       box-shadow: none;
       transition: 
@@ -89,10 +90,11 @@
 
     h1 {
       text-align: center;
-      font-size: 2.75rem;
+      font-size: 2.25rem;
       color: #1976d2;
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
       text-shadow: 0 0 10px rgba(56, 189, 248, 0.13);
+      line-height: 1.2;
     }
     body.dark h1 {
       color: #38bdf8;
@@ -102,9 +104,10 @@
     .languages-container {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2rem;
+      gap: 1.5rem;
       max-width: 1200px;
       margin: 0 auto;
+      padding: 0.5rem;
     }
 
     .language-card {
@@ -112,7 +115,7 @@
       border-radius: 12px;
       box-shadow: 0 1px 6px rgba(56, 189, 248, 0.08), 0 0 0 2px #2223;
       border: 1.5px solid #2223;
-      padding: 2rem 1.2rem 1.2rem 1.2rem;
+      padding: 1.5rem 1rem 1rem 1rem;
       transition: transform 0.18s, box-shadow 0.18s;
       margin-bottom: 0.5rem;
       color: #0f172a;
@@ -144,7 +147,18 @@
 
     .language-image {
       width: 100%;
-      height: 180px;
+      height: 160px;
+      object-fit: cover;
+      background: #0f172a;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      border: 2px solid #38bdf8;
+      padding: 0.5rem;
+      display: block;
+    }
+    .language-image {
+      width: 100%;
+      height: 160px;
       object-fit: cover;
       background: #0f172a;
       border-radius: 8px;
@@ -155,7 +169,7 @@
     }
 
     .language-card h2 {
-      font-size: 1.5rem;
+      font-size: 1.4rem;
       color: #1976d2;
       margin-bottom: 0.5rem;
     }
@@ -164,9 +178,10 @@
     }
 
     .language-card p {
-      font-size: 1rem;
+      font-size: 0.95rem;
       margin-bottom: 1rem;
       color: #333;
+      line-height: 1.5;
     }
     body.dark .language-card p {
       color: #cbd5e1;
@@ -177,6 +192,8 @@
       text-decoration: none;
       font-weight: bold;
       transition: color 0.3s ease;
+      display: inline-block;
+      padding: 0.3rem 0;
     }
     body.dark .language-card a {
       color: #ffffff;
@@ -190,9 +207,9 @@
 
     /* Dark mode toggle styles */
     .dark-toggle-frame {
-      position: absolute;
-      top: 18px;
-      right: 32px;
+      position: fixed;
+      top: 12px;
+      right: 12px;
       z-index: 10;
       background: #e3f2fd;
       border-radius: 18px;
@@ -202,7 +219,7 @@
       display: flex;
       align-items: center;
       gap: 0.4rem;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       cursor: pointer;
       transition: background 0.3s, border 0.3s;
     }
@@ -217,20 +234,124 @@
       cursor: pointer;
       margin-right: 0.4em;
     }
-    @media (max-width: 600px) {
-      h1 {
-        font-size: 2rem;
+    
+    #scrollToTopBtn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 18px;
+      display: none;
+      opacity: 0.8;
+      transition: all 0.3s ease;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    #scrollToTopBtn:hover {
+      opacity: 1;
+      background: rgba(0, 0, 0, 0.9);
+      transform: translateY(-3px);
+    }
+    
+    #scrollToTopBtn i {
+      font-size: 1em;
+    }
+    
+    /* Dark mode styles */
+    body.dark #scrollToTopBtn {
+      background: rgba(255, 255, 255, 0.2);
+      color: #e0e0e0;
+      backdrop-filter: blur(5px);
+    }
+    
+    body.dark #scrollToTopBtn:hover {
+      background: rgba(255, 255, 255, 0.3);
+      color: white;
+    }
+
+    /* Mobile Responsive Adjustments */
+    @media (max-width: 768px) {
+      body {
+        padding: 1rem;
       }
+      
+      h1 {
+        font-size: 1.8rem;
+        margin-bottom: 1.2rem;
+        padding-top: 0.5rem;
+      }
+      
+      .languages-container {
+        grid-template-columns: 1fr;
+        gap: 1.2rem;
+        padding: 0;
+      }
+      
+      .language-card {
+        padding: 1.2rem 1rem;
+      }
+      
+      .language-image {
+        height: 140px;
+      }
+      
+      .back-container {
+        margin-bottom: 1rem;
+      }
+      
+      .back-line {
+        height: 24px;
+        margin-right: 10px;
+      }
+      
+      .back-button {
+        font-size: 0.95rem;
+        padding: 0.4rem 0.5rem;
+      }
+      
       .dark-toggle-frame {
         top: 8px;
         right: 8px;
-        font-size: 0.9rem;
-        padding: 0.2em 0.6em;
+        font-size: 0.85rem;
+        padding: 0.25em 0.8em;
+      }
+      
+      .dark-toggle-frame input[type="checkbox"] {
+        transform: scale(1.1);
       }
     }
+    
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .languages-container {
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      }
+      
+      .language-image {
+        height: 150px;
+      }
+    }
+    
+    @media (min-width: 1025px) {
+      /* Maintain original desktop styles */
+    }
   </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
+
 <body>
+  <button id="scrollToTopBtn" title="Go to top">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
   <span class="dark-toggle-frame">
     <label style="display:flex;align-items:center;gap:0.4em;">
       <input type="checkbox" id="darkToggle">
@@ -246,7 +367,6 @@
   <h1>Programming Languages</h1>
 
   <div class="languages-container">
-
     <div class="language-card">
       <img src="python.jpg" alt="Python Logo" class="language-image">
       <h2>Python</h2>
@@ -288,6 +408,25 @@
       <p>Styles web pages, controlling layout, colors, fonts, and responsiveness.</p>
       <a href="https://developer.mozilla.org/en-US/docs/Web/CSS" target="_blank">Style with CSS →</a>
     </div>
+
+    <div class="language-card" id="php">
+      <img src="php.svg" style="object-fit: fill;" alt="PHP Logo" class="language-image">
+      <h2>PHP</h2>
+      <p>A server-side scripting language for dynamic web pages, powering sites like WordPress and Facebook.</p>
+      <a href="https://www.php.net/" target="_blank">Learn PHP →</a>
+    </div>
+    <div class="language-card" id="c">
+      <img src="c.svg" alt="C Logo" class="language-image" style ="object-fit: contain;">
+      <h2>C</h2>
+      <p>A foundational, high-performance language used in operating systems, embedded systems, and hardware programming.</p>
+      <a href="https://en.cppreference.com/w/c" target="_blank">Learn C →</a>
+    </div>
+   <div class="language-card" id="verilog">
+  <img src="verilog.png" alt="Verilog Logo" class="language-image" style="object-fit: contain;">
+  <h2>Verilog</h2>
+  <p>A hardware description language (HDL) used to model electronic systems and design digital circuits (FPGA/ASIC).</p>
+  <a href="https://www.chipverify.com/verilog/verilog-tutorial" target="_blank">Explore Verilog →</a>
+</div>
 
   </div>
 
@@ -393,6 +532,24 @@
       
       // Then handle any anchor scrolling
       setTimeout(handleInitialScroll, 100);
+      
+      // Scroll to top button functionality
+      const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+      
+      window.addEventListener('scroll', function() {
+        if (window.pageYOffset > 300) {
+          scrollToTopBtn.style.display = 'flex';
+        } else {
+          scrollToTopBtn.style.display = 'none';
+        }
+      });
+      
+      scrollToTopBtn.addEventListener('click', function() {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
     });
 
     // Also handle when page is fully loaded

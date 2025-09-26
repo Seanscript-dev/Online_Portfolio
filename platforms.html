@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Platforms and Systems</title>
   <style>
     * {
@@ -14,7 +15,7 @@
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: #f5faff;
       color: #0f172a;
-      padding: 2rem;
+      padding: 1rem;
       transition: background 0.3s, color 0.3s;
       animation: fadeSlideUp 1.2s cubic-bezier(.4,0,.2,1);
     }
@@ -89,10 +90,11 @@
 
     h1 {
       text-align: center;
-      font-size: 2.75rem;
+      font-size: clamp(1.8rem, 5vw, 2.75rem);
       color: #1976d2;
       margin-bottom: 2rem;
       text-shadow: 0 0 10px rgba(56, 189, 248, 0.13);
+      padding: 0 1rem;
     }
     body.dark h1 {
       color: #38bdf8;
@@ -102,15 +104,16 @@
     .frameworks-container {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2rem;
+      gap: 1.5rem;
       max-width: 1200px;
       margin: 0 auto;
+      padding: 0 1rem;
     }
 
     .framework-card {
       background-color: #fff;
       border-radius: 12px;
-      padding: 1.5rem;
+      padding: 1.25rem;
       box-shadow: 0 0 6px rgba(56, 189, 248, 0.1), 0 0 0 2px #2223;
       border: 1.5px solid #2223;
       transition: transform 1.5s ease, box-shadow 0.3s ease, opacity 0.5s ease;
@@ -131,7 +134,9 @@
 
     .framework-image {
       width: 100%;
-      height: 180px;
+      height: auto;
+      max-height: 180px;
+      min-height: 120px;
       object-fit: contain;
       background: #0f172a;
       border-radius: 8px;
@@ -141,7 +146,7 @@
     }
 
     .framework-card h2 {
-      font-size: 1.5rem;
+      font-size: clamp(1.25rem, 4vw, 1.5rem);
       color: #1976d2;
       margin-bottom: 0.5rem;
     }
@@ -150,9 +155,10 @@
     }
 
     .framework-card p {
-      font-size: 1rem;
+      font-size: clamp(0.9rem, 3vw, 1rem);
       margin-bottom: 1rem;
       color: #333;
+      line-height: 1.5;
     }
     body.dark .framework-card p {
       color: #cbd5e1;
@@ -163,6 +169,7 @@
       text-decoration: none;
       font-weight: bold;
       transition: color 0.3s ease;
+      font-size: clamp(0.9rem, 3vw, 1rem);
     }
     body.dark .framework-card a {
       color: #ffffff;
@@ -178,9 +185,9 @@
 
     /* Dark mode toggle styles */
     .dark-toggle-frame {
-      position: absolute;
-      top: 18px;
-      right: 32px;
+      position: fixed;
+      top: 12px;
+      right: 12px;
       z-index: 10;
       background: #e3f2fd;
       border-radius: 18px;
@@ -190,7 +197,7 @@
       display: flex;
       align-items: center;
       gap: 0.4rem;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       cursor: pointer;
       transition: background 0.3s, border 0.3s;
     }
@@ -201,25 +208,12 @@
       color: #90caf9;
     }
     .dark-toggle-frame input[type="checkbox"] {
-      transform: scale(1.2);
+      transform: scale(1.1);
       cursor: pointer;
       margin-right: 0.4em;
     }
-    @media (max-width: 600px) {
-      h1 {
-        font-size: 2rem;
-      }
-      .dark-toggle-frame {
-        top: 8px;
-        right: 8px;
-        font-size: 0.9rem;
-        padding: 0.2em 0.6em;
-      }
-    }
 
     .framework-card {
-      /* Remove animation property so cards don't fade in on load */
-      /* animation: popup 1.5s ease forwards; */
       opacity: 1;
     }
 
@@ -235,6 +229,45 @@
     @keyframes fadeSlideUp {
       0% { opacity: 0; transform: translateY(24px);}
       100% { opacity: 1; transform: translateY(0);}
+    }
+
+    /* Mobile-specific adjustments */
+    @media (max-width: 480px) {
+      body {
+        padding: 0.75rem;
+      }
+      
+      .frameworks-container {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+        padding: 0 0.5rem;
+      }
+      
+      .framework-card {
+        padding: 1rem;
+      }
+      
+      .back-container {
+        margin-bottom: 1rem;
+        margin-top: 0.5rem;
+      }
+      
+      .back-line {
+        height: 24px;
+        margin-right: 10px;
+      }
+      
+      h1 {
+        margin-bottom: 1.5rem;
+      }
+    }
+
+    /* Tablet adjustments */
+    @media (min-width: 481px) and (max-width: 768px) {
+      .frameworks-container {
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 1.5rem;
+      }
     }
   </style>
 </head>
@@ -256,21 +289,21 @@
 <div class="frameworks-container">
 
   <div class="framework-card">
-    <img src="raspberry.svg" alt="Raspberry Pi logo" class="framework-image" loading="lazy">
+    <img src="pics/raspberry.svg" alt="Raspberry Pi logo" class="framework-image" loading="lazy">
     <h2>Raspberry Pi</h2>
     <p>Raspberry Pi is a small, affordable computer used to learn programming, build electronics projects, and prototype embedded systems.</p>
     <a href="https://www.raspberrypi.org/" target="_blank" rel="noopener noreferrer">Explore Raspberry Pi →</a>
   </div>
 
   <div class="framework-card">
-    <img src="linux.svg" alt="Linux OS logo" class="framework-image" loading="lazy">
+    <img src="pics/linux.svg" alt="Linux OS logo" class="framework-image" loading="lazy">
     <h2>Linux</h2>
     <p>Linux is an open-source operating system known for stability and performance. It powers servers, desktops, mobile devices, and more.</p>
     <a href="https://www.linux.org/" target="_blank" rel="noopener noreferrer">Discover Linux →</a>
   </div>
 
   <div class="framework-card">
-    <img src="awa.svg" alt="Amazon Web Services logo" class="framework-image" loading="lazy">
+    <img src="pics/awa.svg" alt="Amazon Web Services logo" class="framework-image" loading="lazy">
     <h2>AWS</h2>
     <p>Amazon Web Services (AWS) is a secure cloud platform that offers computing power, database storage, and other services at scale.</p>
     <a href="https://aws.amazon.com/" target="_blank" rel="noopener noreferrer">Visit AWS →</a>

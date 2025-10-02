@@ -1,5 +1,5 @@
-Sean Script Portfolio Website
-A modern, responsive portfolio website for Sean Script, a Computer Engineer and Full-Stack Developer.
+# Sean Script Portfolio Website
+# A modern, responsive portfolio website for Sean Script, a Computer Engineer and Full-Stack Developer.
 
 🌟 Features
 Responsive Design: Optimized for all devices (desktop, tablet, mobile)

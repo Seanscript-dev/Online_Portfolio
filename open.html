@@ -4,8 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Loading | SeanScript Development</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.birds.min.js"></script>
   <style>
     :root {
       --bg-dark: #0f172a;
@@ -13,6 +11,8 @@
       --bg-light: #f5f9ff;
       --text-light: #0f172a;
       --accent: #3b82f6;
+      --accent-light: #60a5fa;
+      --accent-dark: #1e40af;
     }
 
     * {
@@ -30,17 +30,70 @@
       height: 100vh;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       overflow: hidden;
-      background-color: var(--bg-light);
+      background: #ffffff;
       color: var(--text-light);
+      position: relative;
     }
 
-    #vanta-background {
+    /* White background */
+    .gradient-background {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      z-index: -1;
+      z-index: 0;
+      background: #ffffff;
+    }
+
+    /* Floating particles */
+    .particles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .particle {
+      position: absolute;
+      background: var(--accent);
+      border-radius: 50%;
+      opacity: 0.3;
+      animation: float linear infinite;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(100vh) scale(0);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.3;
+      }
+      90% {
+        opacity: 0.3;
+      }
+      100% {
+        transform: translateY(-100vh) scale(1);
+        opacity: 0;
+      }
+    }
+
+  
+
+    @keyframes orbFloat {
+      0%, 100% {
+        transform: translate(0, 0) scale(1);
+      }
+      33% {
+        transform: translate(50px, -50px) scale(1.1);
+      }
+      66% {
+        transform: translate(-50px, 50px) scale(0.9);
+      }
     }
 
     .loading-content {
@@ -48,46 +101,82 @@
       z-index: 10;
       max-width: 90%;
       position: relative;
+      animation: fadeInUp 1s ease-out;
     }
 
-    /* Bird exclusion zone */
-    .bird-exclusion-zone {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 400px;
-      height: 400px;
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 5;
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .logo {
-      width: 120px;
-      height: 120px;
+      width: 156px;
+      height: 156px;
       margin: 0 auto 2rem;
-      opacity: 0.9;
+      position: relative;
+      overflow: hidden;
     }
 
     .logo svg {
       width: 100%;
       height: 100%;
+      position: relative;
+      z-index: 0;
+    }
+
+    .logo::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #ffffff;
+      z-index: 2;
+      animation: logoReveal 6s ease-out forwards;
+    }
+
+    @keyframes logoReveal {
+      0% {
+        transform: translateY(0%);
+      }
+      100% {
+        transform: translateY(-100%);
+      }
+    }
+
+    .logo svg {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      z-index: 0;
     }
 
     .brand {
       margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeIn 1s ease-out 0.5s forwards;
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
     }
 
     .brand-name {
-      font-size: 2.2rem;
+      font-size: 2.5rem;
       font-weight: 700;
       margin-bottom: 0.5rem;
       letter-spacing: -0.5px;
-    }
-
-    .brand-name span {
-      color: var(--accent);
+      background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     .brand-tagline {
@@ -95,26 +184,31 @@
       letter-spacing: 3px;
       text-transform: uppercase;
       opacity: 0.7;
+      font-weight: 500;
     }
 
     .loading-indicator {
       display: flex;
       flex-direction: column;
       align-items: center;
+      opacity: 0;
+      animation: fadeIn 1s ease-out 0.7s forwards;
     }
 
     .loading-text {
       font-size: 1rem;
-      margin-bottom: 1rem;
+      margin-bottom: 1.5rem;
       opacity: 0.8;
+      font-weight: 500;
     }
 
     .progress-container {
-      width: 200px;
+      width: 250px;
       height: 2px;
       background: rgba(0, 0, 0, 0.1);
-      border-radius: 1px;
+      border-radius: 0;
       overflow: hidden;
+      box-shadow: none;
     }
 
     .progress-bar {
@@ -122,6 +216,14 @@
       width: 0%;
       background: var(--accent);
       transition: width 0.3s ease;
+      border-radius: 0;
+      box-shadow: none;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .progress-bar::after {
+      display: none;
     }
 
     .fade-out {
@@ -129,15 +231,14 @@
       transition: opacity 1s ease;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
     @media (prefers-color-scheme: dark) {
       body {
-        background-color: var(--bg-dark);
+        background: var(--bg-dark);
         color: var(--text-dark);
+      }
+      
+      .gradient-background {
+        background: #1a1a1a;
       }
       
       .progress-container {
@@ -147,13 +248,13 @@
 
     @media (max-width: 768px) {
       .logo {
-        width: 100px;
-        height: 100px;
+        width: 130px;
+        height: 130px;
         margin-bottom: 1.5rem;
       }
       
       .brand-name {
-        font-size: 1.8rem;
+        font-size: 2rem;
       }
       
       .brand-tagline {
@@ -161,20 +262,19 @@
         letter-spacing: 2px;
       }
       
-      .bird-exclusion-zone {
-        width: 300px;
-        height: 300px;
+      .progress-container {
+        width: 200px;
+      }
+      
+      .orb-1, .orb-2, .orb-3 {
+        width: 250px;
+        height: 250px;
       }
     }
   </style>
 </head>
 
 <body>
-  <div id="vanta-background"></div>
-  
-  <!-- Bird exclusion zone -->
-  <div class="bird-exclusion-zone"></div>
-  
   <div class="loading-content">
     <div class="logo">
       <svg version="1.0" xmlns="http://www.w3.org/2000/svg" 
@@ -189,7 +289,7 @@
     </div>
 
     <div class="brand">
-      <h1 class="brand-name"><span>Sean</span>Script</h1>
+      <h1 class="brand-name">SeanScript</h1>
       <div class="brand-tagline">Development</div>
     </div>
 
@@ -202,88 +302,22 @@
   </div>
 
   <script>
-    // Initialize Vanta.js birds effect
-    let vantaEffect;
-    
-    function initVanta() {
-      if (typeof VANTA !== 'undefined') {
-        vantaEffect = VANTA.BIRDS({
-          el: "#vanta-background",
-          mouseControls: true,
-          touchControls: true,
-          gyroControls: false,
-          minHeight: 200.00,
-          minWidth: 200.00,
-          scale: 1.00,
-          scaleMobile: 1.00,
-          backgroundColor: 0xf5f9ff,
-          color1: 0x3b82f6,
-          color2: 0x1e40af,
-          birdSize: 1.20,
-          wingSpan: 20.00,
-          speedLimit: 5.00,
-          separation: 40.00,
-          alignment: 40.00,
-          cohesion: 40.00
-        });
-        
-        // Add bird containment logic
-        setTimeout(() => {
-          containBirds();
-        }, 1000);
-      }
-    }
-    
-    // Function to keep birds away from text area
-    function containBirds() {
-      if (!vantaEffect || !vantaEffect.birdEntities) return;
-      
-      const exclusionZone = document.querySelector('.bird-exclusion-zone');
-      const zoneRect = exclusionZone.getBoundingClientRect();
-      const zoneCenterX = zoneRect.left + zoneRect.width / 2;
-      const zoneCenterY = zoneRect.top + zoneRect.height / 2;
-      const zoneRadius = zoneRect.width / 2;
-      
-      // Update bird positions every frame
-      const originalUpdate = vantaEffect.update;
-      vantaEffect.update = function() {
-        originalUpdate.call(this);
-        
-        if (this.birdEntities) {
-          this.birdEntities.forEach(bird => {
-            // Calculate distance from bird to center of exclusion zone
-            const dx = bird.position.x - zoneCenterX;
-            const dy = bird.position.y - zoneCenterY;
-            const distance = Math.sqrt(dx * dx + dy * dy);
-            
-            // If bird is inside exclusion zone, push it out
-            if (distance < zoneRadius) {
-              const pushForce = 1.5;
-              const pushX = (dx / distance) * pushForce;
-              const pushY = (dy / distance) * pushForce;
-              
-              bird.position.x += pushX;
-              bird.position.y += pushY;
-              
-              // Also adjust velocity to prevent immediate re-entry
-              bird.velocity.x += pushX * 0.1;
-              bird.velocity.y += pushY * 0.1;
-            }
-          });
-        }
-      };
-    }
-    
     // Initialize when DOM is loaded
     document.addEventListener('DOMContentLoaded', function() {
-      initVanta();
-      
-      // Simulate loading progress with longer timer
+      // Simulate loading progress (7.5 seconds total - 2x faster)
       let progress = 0;
       const progressBar = document.getElementById('progress-bar');
+      const totalDuration = 4000; // 7.5 seconds (15s / 2)
+      const updateInterval = 100; // Update every 100ms
+      const totalSteps = totalDuration / updateInterval;
+      
+      let currentStep = 0;
       const progressInterval = setInterval(() => {
-        progress += Math.random() * 8;
-        if (progress > 100) {
+        currentStep++;
+        // Smooth linear progression
+        progress = (currentStep / totalSteps) * 100;
+        
+        if (progress >= 100) {
           progress = 100;
           clearInterval(progressInterval);
           
@@ -296,14 +330,7 @@
           }, 500);
         }
         progressBar.style.width = `${progress}%`;
-      }, 200);
-    });
-
-    // Clean up Vanta effect when leaving page
-    window.addEventListener('beforeunload', function() {
-      if (vantaEffect) {
-        vantaEffect.destroy();
-      }
+      }, updateInterval);
     });
   </script>
 </body>

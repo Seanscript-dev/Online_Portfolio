@@ -1,714 +1,1410 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Certification - Sean Script</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Certificate Gallery - Sean Script</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    html, body {
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #0d1b2a;
-      color: #e0f7fa;
-      touch-action: pan-y;
-    }
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            opacity: 1;
+            transition: opacity 0.5s cubic-bezier(.4,0,.2,1);
+        }
 
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-      overflow: auto;
-      -webkit-overflow-scrolling: touch;
-    }
+        body.fade-out {
+            opacity: 0;
+        }
 
-    .bg-video {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: -1;
-      opacity: 0.15;
-      filter: blur(2px);
-      pointer-events: none;
-    }
+        body {
+            background: #0d1b2a;
+            color: #e0f7fa;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
 
-    .certificate-container {
-      width: 95vw;
-      height: 95vh;
-      max-width: 1200px;
-      max-height: 800px;
-      padding: 1.5rem;
-      border-radius: 16px;
-      background: rgba(0, 30, 60, 0.85);
-      box-shadow: 0 0 3px rgba(0, 188, 212, 0.4);
-      animation: fadeInZoom 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      backdrop-filter: blur(4px);
-      border: 1px solid rgba(0, 188, 212, 0.2);
-      transition: all 0.3s ease;
-      overflow: hidden;
-    }
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 30, 60, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 2px solid rgba(0, 188, 212, 0.3);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+        }
 
-    @keyframes fadeInZoom {
-      0% { transform: scale(0.92) translateY(20px); opacity: 0; }
-      100% { transform: scale(1) translateY(0); opacity: 1; }
-    }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex: 1;
+        }
 
-    .viewer-content {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-    }
+        .header-center {
+            flex: 2;
+            text-align: center;
+        }
+
+        .logo {
+            width: 3.0rem;
+            height: 3.0rem;
+            display: flex;
+            align-items: left;
+            justify-content: left;
+        }
+
+        .header-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #2196f3, #00bcd4);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-align: center;
+        }
+
+        /* Back button container */
+        .back-container {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .back-line {
+            width: 3px;
+            height: 28px;
+            background: #38bdf8;
+            border-radius: 2px;
+            box-shadow: 0 0 8px rgba(56, 189, 248, 0.3);
+        }
+
+        .back-button {
+            color: #67aeeb;
+            background: transparent;
+            border: none;
+            font-size: 1.1rem;
+            font-weight: 500;
+            text-decoration: none;
+            padding: 0.4rem 0.8rem;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .back-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(56, 189, 248, 0.1);
+            transition: left 0.6s ease;
+            z-index: -1;
+        }
+
+        .back-button:hover::before {
+            left: 0;
+        }
+
+        .back-button:hover {
+            color: #0d47a1;
+            border-bottom: 2px solid #38bdf8;
+        }
+
+        body.dark .back-button {
+            color: #90caf9;
+        }
+
+        body.dark .back-button:hover {
+            color: #b3e5fc;
+        }
+
+        /* Main Container */
+        .main-container {
+            width: 100%;
+            height: 100vh;
+            padding-top: 100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        /* Polygonal Background */
+        .polygon-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            opacity: 0.3;
+        }
+
+        .polygon {
+            position: absolute;
+            background: rgba(33, 150, 243, 0.1);
+            clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+            animation: float 20s infinite linear;
+        }
+
+        .polygon:nth-child(1) {
+            width: 100px;
+            height: 100px;
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .polygon:nth-child(2) {
+            width: 150px;
+            height: 150px;
+            top: 60%;
+            right: 10%;
+            animation-delay: -5s;
+        }
+
+        .polygon:nth-child(3) {
+            width: 80px;
+            height: 80px;
+            bottom: 20%;
+            left: 20%;
+            animation-delay: -10s;
+        }
+
+        .polygon:nth-child(4) {
+            width: 120px;
+            height: 120px;
+            top: 30%;
+            right: 20%;
+            animation-delay: -15s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            25% {
+                transform: translate(30px, 30px) rotate(90deg);
+            }
+            50% {
+                transform: translate(0, 60px) rotate(180deg);
+            }
+            75% {
+                transform: translate(-30px, 30px) rotate(270deg);
+            }
+        }
+
+        /* Carousel Container */
+        .carousel-container {
+            width: 95%;
+            max-width: 1400px;
+            height: 65vh;
+            position: relative;
+            margin: 0 auto;
+            perspective: 1000px;
+        }
+
+        /* Carousel Track */
+        .carousel-track {
+            display: flex;
+            height: 100%;
+            transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            align-items: center;
+            gap: 2rem;
+            padding: 0 3rem;
+        }
+
+        /* Certificate Card */
+        .certificate-card {
+            flex: 0 0 320px;
+            height: 85%;
+            background: rgba(0, 30, 60, 0.9);
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            transition: all 0.4s ease;
+            transform-style: preserve-3d;
+            border: 2px solid rgba(33, 150, 243, 0.3);
+            box-shadow: 
+                0 10px 30px rgba(0, 0, 0, 0.5),
+                0 0 30px rgba(33, 150, 243, 0.2);
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+        }
+
+        .certificate-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            background: linear-gradient(45deg, 
+                transparent 0%, 
+                rgba(33, 150, 243, 0.1) 45%,
+                rgba(33, 150, 243, 0.05) 50%,
+                transparent 55%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* Active (current) card visual */
+        .certificate-card.active {
+            transform: scale(1.05) translateY(-20px);
+            border-color: rgba(0, 188, 212, 0.25);
+            box-shadow:
+                /* base ambient shadow (darker, soft spread) */
+                0 16px 40px rgba(4, 12, 24, 0.55),
+                /* subtle diffusion for depth */
+                0 6px 18px rgba(4, 12, 24, 0.28),
+                /* slight surface highlight */
+                inset 0 1px 0 rgba(255, 255, 255, 0.02);
+            z-index: 4;
+            transition: transform 0.4s ease 0.2s, box-shadow 0.4s ease 0.2s, border-color 0.4s ease 0.2s;
+        }
+
+        /* Hovered card gets priority (darker, softer emphasis) */
+        .certificate-card.hovered {
+            transform: scale(1.05) translateY(-20px);
+            border-color: rgba(0, 188, 212, 0.32);
+            box-shadow:
+                0 22px 56px rgba(4, 12, 24, 0.62),
+                0 10px 30px rgba(4, 12, 24, 0.36),
+                /* a very subtle cool glow beneath to suggest elevation */
+                0 0 28px rgba(0, 188, 212, 0.06),
+                inset 0 1px 0 rgba(255, 255, 255, 0.02);
+            z-index: 6; /* keep hovered visually on top */
+            transition: transform 0.4s ease 0.2s, box-shadow 0.4s ease 0.2s, border-color 0.4s ease 0.2s;
+        }
+
+        /* Card Header */
+        .card-header {
+            height: 80px;
+            background: linear-gradient(90deg, 
+                rgba(33, 150, 243, 0.3), 
+                rgba(0, 188, 212, 0.3));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            clip-path: polygon(0 0, 100% 0, 100% 70%, 50% 100%, 0 70%);
+        }
+
+        .card-header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.3), 
+                transparent);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .certificate-icon {
+            font-size: 2.5rem;
+            color: #fff;
+            filter: drop-shadow(0 0 10px rgba(0, 188, 212, 0.7));
+            z-index: 2;
+        }
+
+        /* Card Content */
+        .card-content {
+            padding: 2rem;
+            height: calc(100% - 80px);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .certificate-title {
+            font-size: 1.0rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #00bcd4;
+            line-height: 1.3;
+            max-height: 4.2rem; /* 3 lines * 1.4rem */
+            overflow: hidden;
+            text-overflow: break-word;
+            display: -webkit-box
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            word-wrap: break-word;
+            hyphens: auto;
+            overflow-wrap: break-word;
+        }
+
+        .certificate-type {
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            width: fit-content;
+        }
+
+        .certificate-type.major {
+            color: #1bc35e;
+            background: rgba(27, 195, 94, 0.15);
+            border: 1px solid rgba(27, 195, 94, 0.3);
+        }
+
+        .certificate-type.minor {
+            color: #2196f3;
+            background: rgba(33, 150, 243, 0.15);
+            border: 1px solid rgba(33, 150, 243, 0.3);
+        }
+
+        .certificate-issuer {
+            font-size: 1rem;
+            color: #a0c8e0;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .certificate-issuer i {
+            color: #2196f3;
+        }
+
+        .certificate-date {
+            font-size: 0.9rem;
+            color: #8ab4d6;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .certificate-date i {
+            color: #00bcd4;
+        }
+
+        .view-btn {
+            margin-top: auto;
+            padding: 0.8rem 1.5rem;
+            background: linear-gradient(90deg, #2196f3, #00bcd4);
+            border: none;
+            color: white;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1rem;
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .view-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: linear-gradient(90deg, #1565c0, #00838f);
+            transition: width 0.7s ease;
+            z-index: -1;
+        }
+
+        .view-btn:hover::before {
+            width: 100%;
+        }
+
+        .view-btn:hover {
+            box-shadow: 0 5px 20px rgba(33, 150, 243, 0.4);
+        }
+
+        .open-cert-btn {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .open-cert-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: linear-gradient(90deg, #1565c0, #00838f);
+            transition: width 0.7s ease;
+            z-index: -1;
+        }
+
+        .open-cert-btn:hover::before {
+            width: 100%;
+        }
+
+        /* Navigation Arrows */
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 2rem;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .nav-arrow {
+            width: 60px;
+            height: 60px;
+            background: rgba(0, 30, 60, 0.8);
+            border: 2px solid rgba(33, 150, 243, 0.4);
+            color: #2196f3;
+            font-size: 1.8rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            pointer-events: auto;
+            clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+        }
+
+        .nav-arrow:hover {
+            background: rgba(33, 150, 243, 0.2);
+            border-color: #00bcd4;
+            color: #00bcd4;
+            transform: scale(1.1);
+            box-shadow: 0 0 25px rgba(0, 188, 212, 0.3);
+        }
+
+        /* Indicators */
+        .carousel-indicators {
+            display: flex;
+            gap: 0.8rem;
+            margin-top: 2rem;
+            padding: 1rem;
+            background: rgba(0, 30, 60, 0.7);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(33, 150, 243, 0.3);
+            position: relative;
+        }
+
+
+
+        .indicator {
+            width: 14px;
+            height: 14px;
+            background: rgba(33, 150, 243, 0.3);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+        }
+
+        .indicator.active {
+            background: #00bcd4;
+            transform: scale(1.3);
+            box-shadow: 0 0 15px rgba(0, 188, 212, 0.7);
+        }
+
+        .indicator:hover {
+            background: #2196f3;
+            transform: scale(1.2);
+        }
+
+        /* Legend */
+        .legend {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1.0 rem;
+            margin-bottom: 1rem;
+            padding: 1rem 2rem;
     
-    /* Mobile specific styles */
-    @media (max-width: 768px) {
-      .certificate-container {
-        width: 100vw;
-        height: auto;
-        min-height: 100vh;
-        padding: 0.5rem;
-        border-radius: 0;
-        max-width: 100%;
-        max-height: none;
-      }
+        }
 
-      .viewer-content {
-        padding: 0.5rem;
-      }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            
+        }
 
-      .certificate-title {
-        font-size: 1.3rem;
-        padding: 0.4rem 1rem;
-        top: 0.5rem;
-      }
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+            border: 2px solid;
+        }
 
-      .back-link {
-        bottom: 0.5rem;
-        right: 0.5rem;
-        font-size: 0.9rem;
-        padding: 0.3em 0.7em;
-      }
+        .legend-color.major {
+            background: #1bc35e;
+            border-color: #0c813b;
+        }
 
-      img, iframe {
-        border-radius: 4px;
-        object-fit: contain;
-        max-width: 100%;
-        height: auto;
-        max-height: calc(100vh - 100px);
-      }
+        .legend-color.minor {
+            background: #2196f3;
+            border-color: #1565c0;
+        }
 
-      /* Disable hover effects on mobile */
-      img:hover {
-        transform: none;
-        box-shadow: 0 0 5px rgba(0, 188, 212, 0.6);
-      }
+        /* Certificate Modal */
+        .cert-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .cert-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            width: 90%;
+            max-width: 900px;
+            max-height: 90vh;
+            background: rgba(0, 30, 60, 0.95);
+            border-radius: 20px;
+            padding: 3.0rem;
+            position: relative;
+            border: 2px solid rgba(33, 150, 243, 0.4);
+            overflow-y: auto;
+        }
+
+        .certificate-inner-container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 0;
+        }
+
+        .certificate-viewer {
+            width: 100%;
+            height: 100%;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .certificate-viewer.active {
+            display: flex;
+        }
+
+        .certificate-iframe, .certificate-image {
+            max-width: 100%;
+            max-height: 80vh;
+            border-radius: 10px;
+            border: 2px solid rgba(33, 150, 243, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 40px;
+            height: 40px;
+            background: rgba(33, 150, 243, 0.2);
+            border: 2px solid rgba(33, 150, 243, 0.4);
+            color: #2196f3;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+        }
+
+        .modal-close:hover {
+            background: rgba(33, 150, 243, 0.3);
+            transform: rotate(90deg);
+            color: #00bcd4;
+        }
+
+        /* Responsive Design */
+        @media (min-width: 1201px) {
+            .carousel-container {
+                height: 70vh;
+            }
+
+            .certificate-card {
+                flex: 0 0 350px;
+            }
+
+            .header-title {
+                font-size: 2rem;
+            }
+
+            .nav-arrow {
+                width: 70px;
+                height: 70px;
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .carousel-container {
+                height: 60vh;
+            }
+
+            .certificate-card {
+                flex: 0 0 280px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .carousel-container {
+                height: 58vh;
+            }
+
+            .certificate-card {
+                flex: 0 0 260px;
+            }
+
+            .header-title {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+           .body {
+                overflow: auto;
+            }.certificate-title {
+            display: hidden;
+            text-overflow: hidden;
+        }
+        .view-btn {
+           overflow: visible;
+           padding-bottom: 1rem;
+        }.certificate-card {
+            overflow-y: visible;
+        }.nav-arrow {
+            width: 40px;
+            height: 40px;
+        
+        }
     }
 
-    @media (max-width: 480px) {
-      .certificate-container {
-        padding: 0;
-      }
-
-      .viewer-content {
-        padding: 0.5rem;
-        align-items: flex-start;
-      }
-
-      img {
-        width: 100%;
-        height: auto;
-        max-height: calc(100vh - 80px);
-        object-fit: contain;
-      }
-
-      .back-link {
-        width: 36px;
-        height: 36px;
-      }
-
-      .back-link .back-svg svg {
-        width: 20px;
-        height: 20px;
-      }
+        @media (max-width: 640px) {
+           .body {
+                overflow: auto;
+            }.certificate-title {
+            display: hidden;
+            text-overflow: hidden;
+        }
+        .view-btn {
+           overflow: visible;
+           padding-bottom: 1rem;
+        }.certificate-card {
+            overflow-y: visible;
+        }.nav-arrow {
+            width: 40px;
+            height: 40px;
+        
+        }
     }
 
-    /* Landscape orientation fixes */
-    @media (orientation: landscape) and (max-width: 768px) {
-      .certificate-container {
-        height: 100vh;
-      }
 
-      img {
-        max-height: calc(100vh - 60px);
-        width: auto;
-        max-width: 100%;
-      }
+
+        @media (max-width: 480px) {
+          .body {
+                overflow: auto;
+            }.certificate-title {
+            display: hidden;
+            text-overflow: hidden;
+        }
+        .view-btn {
+           overflow: visible;
+           padding-bottom: 1rem;
+        }.certificate-card {
+            overflow-y: visible;
+        }.nav-arrow {
+            width: 40px;
+            height: 40px;
+        
+        }
     }
 
-    img, iframe {
-      width: 100%;
-      height: 100%;
-      max-height: 100%;
-      border-radius: 8px;
-      box-shadow: 0 0 5px rgba(0, 188, 212, 0.6);
-      border: none;
-      object-fit: contain;
-      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        @media (max-width: 360px) {
+        .nav-arrow {
+            width: 40px;
+            height: 40px;
+        
+        }
+            .body {
+                overflow: auto;
+            }
+        .certificate-title {
+            display: none;
+            
+        }
+        .view-btn {
+           overflow: visible;
+           padding-bottom: 1rem;
+        }.certificate-card {
+            overflow-y: visible;
+        }
     }
-
-    /* Image hover effects */
-    img {
-      cursor: zoom-in;
-      transform-origin: center center;
-    }
-
-    img:hover {
-      transform: scale(1.02);
-      box-shadow: 0 0 15px rgba(0, 188, 212, 0.8);
-    }
-
-    img:active {
-      cursor: zoom-out;
-      transform: scale(1.8);
-      z-index: 100;
-      transition: transform 0.3s ease;
-    }
-
-    .back-link {
-      position: absolute;
-      bottom: 1.5rem;
-      right: 1.5rem;
-      display: flex;
-      align-items: center;
-      gap: 0.7em;
-      background: rgba(33, 150, 243, 0.15);
-      border: 1px solid rgba(33, 150, 243, 0.3);
-      color: #2196f3;
-      font-size: 1.08rem;
-      font-weight: 600;
-      text-decoration: none;
-      padding: 0.5em 1em 0.5em 0.8em;
-      border-radius: 50px;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      cursor: pointer;
-      outline: none;
-      z-index: 10;
-      backdrop-filter: blur(4px);
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    }
-
-    .back-link .back-svg svg {
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      border-radius: 50%;
-    }
-
-    .back-link:hover,
-    .back-link:focus {
-      background: rgba(33, 150, 243, 0.3);
-      color: #7ecbff;
-      transform: translateY(-2px);
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
-    }
-
-    .back-link:hover .back-svg svg,
-    .back-link:focus .back-svg svg {
-      stroke: #7ecbff;
-      transform: rotate(-15deg);
-    }
-
-    .back-link .back-text {
-      font-size: 1.08rem;
-      font-weight: 600;
-      letter-spacing: 0.01em;
-      user-select: none;
-      transition: color 0.3s ease;
-    }
-
-    .error {
-      font-size: 1.2rem;
-      color: #ff6f61;
-      text-align: center;
-      padding: 2rem;
-      animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
-    }
-
-    @keyframes shake {
-      10%, 90% { transform: translateX(-1px); }
-      20%, 80% { transform: translateX(2px); }
-      30%, 50%, 70% { transform: translateX(-4px); }
-      40%, 60% { transform: translateX(4px); }
-    }
-
-    .loading {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 1rem;
-    }
-
-    .spinner {
-      width: 50px;
-      height: 50px;
-      border: 4px solid rgba(33, 150, 243, 0.2);
-      border-top-color: #2196f3;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    .certificate-title {
-      position: absolute;
-      top: 1.5rem;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 1.8rem;
-      font-weight: 600;
-      color: #e0f7fa;
-      z-index: 10;
-      text-align: center;
-      background: rgba(0, 30, 60, 0.7);
-      padding: 0.5rem 1.5rem;
-      border-radius: 50px;
-      backdrop-filter: blur(4px);
-      border: 1px solid rgba(0, 188, 212, 0.3);
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-      transition: opacity 0.3s ease;
-    }
-
-    .certificate-container:hover .certificate-title {
-      opacity: 0;
-    }
-     /* Mobile specific styles */
-    @media (max-width: 768px) {
-      .certificate-container {
-        width: 100vw;
-        height: 100vh;
-        padding: 0;
-        border-radius: 0;
-        max-width: 100%;
-        max-height: none;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-      }
-
-      .viewer-content {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 0.5rem;
-      }
-
-      .certificate-title {
-        position: fixed;
-        top: 0.5rem;
-        left: 50%;
-        transform: translateX(-50%);
-        font-size: 1.2rem;
-        padding: 0.3rem 0.8rem;
-        z-index: 100;
-      }
-
-      .back-link {
-        position: fixed;
-        bottom: 0.5rem;
-        right: 0.5rem;
-        font-size: 0.9rem;
-        padding: 0.3em 0.7em;
-        z-index: 100;
-      }
-
-      img, iframe {
-        max-width: 100%;
-        max-height: 100%;
-        width: auto;
-        height: auto;
-        object-fit: contain;
-        display: block;
-        margin: auto;
-      }
-
-      /* Disable hover effects on mobile */
-      img:hover {
-        transform: none;
-        box-shadow: 0 0 5px rgba(0, 188, 212, 0.6);
-      }
-    }
-
-    @media (max-width: 480px) {
-      .viewer-content {
-        padding: 0.2rem;
-      }
-
-      img {
-        max-width: 95%;
-        max-height: 95%;
-      }
-
-      .back-link {
-        width: 36px;
-        height: 36px;
-        bottom: 0.3rem;
-        right: 0.3rem;
-      }
-    }
-
-    /* Landscape orientation fixes */
-    @media (orientation: landscape) and (max-width: 768px) {
-      .viewer-content {
-        padding: 0.3rem;
-      }
-
-      img {
-        max-width: 95%;
-        max-height: 95%;
-      }
-    }
-
-    /* Mobile specific styles */
-    @media (max-width: 768px) {
-      .certificate-container {
-        width: 98vw;
-        height: 98vh;
-        padding: 1rem;
-        border-radius: 12px;
-      }
-
-      .certificate-title {
-        font-size: 1.5rem;
-        padding: 0.4rem 1.2rem;
-        top: 1rem;
-      }
-
-      .back-link {
-        bottom: 1rem;
-        right: 1rem;
-        font-size: 1rem;
-        padding: 0.4em 0.8em 0.4em 0.7em;
-      }
-
-      img, iframe {
-        border-radius: 6px;
-        object-fit: contain;
-      }
-
-      /* Disable hover effects on mobile */
-      img:hover {
-        transform: none;
-        box-shadow: 0 0 5px rgba(0, 188, 212, 0.6);
-      }
-    }
-
-    @media (max-width: 480px) {
-      .certificate-container {
-        padding: 0.8rem;
-      }
-
-      .certificate-title {
-        font-size: 1.3rem;
-        padding: 0.3rem 1rem;
-        top: 0.8rem;
-      }
-
-      .back-link {
-        width: 40px;
-        height: 40px;
-        justify-content: center;
-        padding: 0;
-        overflow: hidden;
-      }
-
-      .back-link .back-text {
-        display: none;
-      }
-
-      .back-link .back-svg svg {
-        width: 24px;
-        height: 24px;
-      }
-
-      .error {
-        font-size: 1rem;
-      }
-
-      /* Mobile-specific image handling */
-      img {
-        object-fit: contain;
-        width: 100%;
-        height: auto;
-        max-height: 100%;
-        cursor: default;
-      }
-
-      /* Pinch-to-zoom for mobile images */
-      img:active {
-        transform: none;
-        transition: none;
-      }
-    }
-
-    /* Landscape orientation fixes */
-    @media (orientation: landscape) and (max-height: 500px) {
-      .certificate-container {
-        height: 90vh;
-        max-height: 90vh;
-      }
-
-      .back-link {
-        bottom: 0.5rem;
-        right: 0.5rem;
-        font-size: 0.9rem;
-      }
-
-      img {
-        object-fit: contain;
-        width: auto;
-        max-width: 100%;
-        height: 100%;
-      }
-    }
-
-    /* Print styles */
-    @media print {
-      body {
-        background: none;
-      }
-
-      .certificate-container {
-        background: none;
-        box-shadow: none;
-        border: none;
-        width: 100%;
-        height: 100%;
-        padding: 0;
-      }
-
-      .back-link {
-        display: none;
-      }
-
-      img, iframe {
-        box-shadow: none;
-        border-radius: 0;
-      }
-    }
-  </style>
+    </style>
 </head>
 <body>
-
-  <div class="certificate-container" id="viewer">
-    <div class="certificate-title">Certifications</div>
-    <div class="viewer-content" id="viewerContent">
-      <!-- Dynamic content gets loaded here -->
+    <!-- Header -->
+    <div class="header">
+        <div class="header-left">
+            <div class="logo"><img src="logos.svg" alt="Logo"></div>
+            <div class="header-title">CERTIFICATE GALLERY</div>
+        </div>
+        <div class="back-container">
+            <span class="back-line"></span>
+            <a class="back-button" href="portfolio.html" id="backToPortfolio">Back to Home</a>
+        </div>
     </div>
-  </div>
 
-  <a class="back-link" href="#" id="backToCertifications" aria-label="Back to Home">
-    <span class="back-svg">
-      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" style="vertical-align:middle;">
-        <circle cx="14" cy="14" r="13" stroke="#2196f3" stroke-width="2" fill="none"/>
-        <polyline points="16,9 11,14 16,19" fill="none" stroke="#2196f3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </span>
-    <span class="back-text">Back to Home</span>
-  </a>
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Polygonal Background -->
+        <div class="polygon-bg">
+            <div class="polygon"></div>
+            <div class="polygon"></div>
+            <div class="polygon"></div>
+            <div class="polygon"></div>
+        </div>
 
-  <script>
-    const viewerContent = document.getElementById('viewerContent');
-    const params = new URLSearchParams(window.location.search);
-    const file = params.get("file");
-
-    // Show loading state initially
-    viewerContent.innerHTML = `
-      <div class="loading">
-        <div class="spinner"></div>
-        <div>Loading certificate...</div>
-      </div>
-    `;
-
-    // Function to handle content loading
-    function loadCertificate() {
-      if (!file) {
-        viewerContent.innerHTML = `
-          <p class='error'>No certificate file specified in the URL.<br>
-          Please go back and select a certificate.</p>
-        `;
-      } else if (file.match(/\.(pdf)$/i)) {
-        viewerContent.innerHTML = `
-          <iframe src="${file}" onload="hideLoading()"></iframe>
-        `;
-      } else if (file.match(/\.(jpg|jpeg|png|gif|webp)$/i)) {
-        const img = new Image();
-        img.src = file;
-        img.alt = "Certificate Image";
-        img.onload = function() {
-          viewerContent.innerHTML = '';
-          viewerContent.appendChild(img);
-          
-          // Add touch event for mobile zoom
-          if ('ontouchstart' in window) {
-            let initialDistance = null;
+        <!-- Carousel -->
+        <div class="carousel-container">
+            <div class="carousel-track" id="carouselTrack">
+                <!-- Certificate cards will be dynamically inserted here -->
+            </div>
             
-            img.addEventListener('touchstart', function(e) {
-              if (e.touches.length === 2) {
-                initialDistance = Math.hypot(
-                  e.touches[0].clientX - e.touches[1].clientX,
-                  e.touches[0].clientY - e.touches[1].clientY
-                );
-              }
-            });
+            <!-- Navigation Arrows -->
+            <div class="carousel-nav">
+                <div class="nav-arrow prev-arrow">
+                    <i class="fas fa-chevron-left"></i>
+                </div>
+                <div class="nav-arrow next-arrow">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Indicators -->
+        <div class="carousel-indicators" id="indicators">
+            <!-- Indicators will be dynamically inserted here -->
+        </div>
+
+
+
+        <!-- Legend -->
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color major"></div>
+                <span>Major Certificates</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color minor"></div>
+                <span>Minor Certificates</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Certificate Modal -->
+    <div class="cert-modal" id="certModal">
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <div id="modalDetails">
+                <!-- Certificate details will be loaded here -->
+            </div>
+            <div class="certificate-viewer" id="certificateViewer">
+                <!-- Certificate viewer will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Certificate Data (from your portfolio)
+        const certificates = [
+            {
+                id: 1,
+                title: "Digital Transformation 101: A Webinar Series on Technology Adoption of MSMEs",
+                type: "minor",
+                issuer: "University of the Philippines",
+                date: "2024",
+                icon: "fas fa-laptop-code",
+                details: "A comprehensive webinar series focusing on technology adoption strategies for micro, small, and medium enterprises.",
+                file: "certif1.pdf"
+            },
+            {
+                id: 2,
+                title: "Resilience and Response: Cybersecurity & Digital Forensics for",
+                type: "major",
+                issuer: "Institute of Computer Engineers of the Philippines",
+                date: "2024",
+                icon: "fas fa-shield-alt",
+                details: "Advanced training in cybersecurity measures and digital forensics for protecting critical technologies.",
+                file: "certif2.jpeg"
+            },
+            {
+                id: 3,
+                title: "How to Start Content Creating: from Ideas to Execution",
+                type: "minor",
+                issuer: "Institute of Computer Engineers of the Philippines",
+                date: "2025",
+                icon: "fas fa-video",
+                details: "Comprehensive guide to content creation covering ideation, production, and distribution strategies.",
+                file: "certif4.png"
+            },
+            {
+                id: 4,
+                title: "Be Smart, Stay Safe: Protecting Yourself in the Digital Age",
+                type: "minor",
+                issuer: "Department of Information and Communications Technology",
+                date: "2025",
+                icon: "fas fa-user-shield",
+                details: "Essential digital safety practices and personal protection strategies for the modern internet user.",
+                file: "certif5.pdf"
+            },
+            {
+                id: 5,
+                title: "Digital Security and Data Privacy: How to Safeguard Our Data in ",
+                type: "major",
+                issuer: "Institute of Computer Engineers of the Philippines",
+                date: "2025",
+                icon: "fas fa-database",
+                details: "In-depth training on data privacy regulations and security measures for protecting sensitive information.",
+                file: "certif3.png"
+            },
+            {
+                id: 6,
+                title: "Introduction to Data Science: Roles and Basic MySQL Skills",
+                type: "major",
+                issuer: "Department of Information and Communications Technology",
+                date: "2025",
+                icon: "fas fa-chart-bar",
+                details: "Fundamental data science concepts with practical MySQL database management skills.",
+                file: "certif6.pdf"
+            },
+            {
+                id: 7,
+                title: "Formulating Competitive Marketing Strategies in the Digital Age",
+                type: "minor",
+                issuer: "Institute of Computer Engineers of the Philippines",
+                date: "2025",
+                icon: "fas fa-bullhorn",
+                details: "Modern marketing strategy development for competitive advantage in digital markets.",
+                file: "certif7.pdf"
+            },
+            {
+                id: 8,
+                title: "Work-Life Balance in the Digital Age: Setting Boundaries for Well-Being",
+                type: "minor",
+                issuer: "Department of trade and industry",
+                date: "2025",
+                icon: "fas fa-balance-scale",
+                details: "Strategies for maintaining healthy work-life balance in increasingly connected digital environments.",
+                file: "certif8.pdf"
+            },
+            {
+                id: 9,
+                title: "Next-Gen Computer Engineers: Empowering Future Innovators ",
+                type: "minor",
+                issuer: "Institute of Computer Engineers of the Philippines",
+                date: "2025",
+                icon: "fas fa-microchip",
+                details: "Training program for computer engineers focusing on innovation in the digital economy and ICT development.",
+                file: "certif9.pdf"
+            },
+            {
+                id: 10,
+                title: "Software QA Manual Testing Workshop: Become A Confident QA Specialist Step-By-Step, Using Jira, Testrail, & Excel.",
+                type: "major",
+                issuer: "MSTConnect",
+                date: "2025",
+                icon: "fas fa-bug",
+                details: "Comprehensive manual software testing training using industry-standard tools like Jira and TestRail.",
+                file: "certif10.jpg"
+            }
+        ];
+
+        // DOM Elements
+        const carouselTrack = document.getElementById('carouselTrack');
+        const indicators = document.getElementById('indicators');
+        const prevArrow = document.querySelector('.prev-arrow');
+        const nextArrow = document.querySelector('.next-arrow');
+        const certModal = document.getElementById('certModal');
+        const modalClose = document.getElementById('modalClose');
+        const modalDetails = document.getElementById('modalDetails');
+
+        // State variables
+        let currentIndex = Math.floor(certificates.length / 2); // Start with middle card for center focus
+        let cardWidth = 320;
+        let cardGap = 32; // pixel fallback for spacing
+        let hoveredIndex = null; // reserved for future hover logic (do not use to re-center)
+        let isDragging = false;
+        let startPosition = 0;
+        let currentTranslate = 0;
+        let prevTranslate = 0;
+
+        // Initialize the carousel
+        function initCarousel() {
+            // Clear existing content
+            carouselTrack.innerHTML = '';
+            indicators.innerHTML = '';
             
-            img.addEventListener('touchmove', function(e) {
-              if (e.touches.length === 2) {
-                e.preventDefault();
-                const currentDistance = Math.hypot(
-                  e.touches[0].clientX - e.touches[1].clientX,
-                  e.touches[0].clientY - e.touches[1].clientY
-                );
+            // Create certificate cards
+            certificates.forEach((cert, index) => {
+                // Create card element
+                const card = document.createElement('div');
+                card.className = `certificate-card ${index === currentIndex ? 'active' : ''}`;
+                card.dataset.index = index;
                 
-                if (initialDistance) {
-                  const scale = currentDistance / initialDistance;
-                  img.style.transform = `scale(${scale})`;
-                }
-              }
+                card.innerHTML = `
+                    <div class="card-header">
+                        <i class="${cert.icon} certificate-icon"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="certificate-title">${cert.title}</h3>
+                        <div class="certificate-type ${cert.type}">
+                            <i class="fas fa-${cert.type === 'major' ? 'award' : 'certificate'}"></i>
+                            <span>${cert.type === 'major' ? 'Major Certificate' : 'Minor Certificate'}</span>
+                        </div>
+                        <div class="certificate-issuer">
+                            <i class="fas fa-building"></i>
+                            <span>${cert.issuer}</span>
+                        </div>
+                        <div class="certificate-date">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>${cert.date}</span>
+                        </div>
+                        <button class="view-btn" onclick="viewCertificate(${index})">
+                            <i class="fas fa-eye"></i> View Details
+                        </button>
+                    </div>
+                `;
+
+                    carouselTrack.appendChild(card);
+                
+                // Setup hover behavior for prioritizing hovered card
+                card.addEventListener('pointerenter', () => {
+                    hoveredIndex = index;
+                    updateHoverStates();
+                });
+
+                card.addEventListener('pointerleave', () => {
+                    hoveredIndex = null;
+                    updateHoverStates();
+                });
+                
+                // Create indicator
+                const indicator = document.createElement('div');
+                indicator.className = `indicator ${index === currentIndex ? 'active' : ''}`;
+                indicator.dataset.index = index;
+                indicator.addEventListener('click', () => {
+                    goToSlide(index);
+                });
+                indicators.appendChild(indicator);
             });
             
-            img.addEventListener('touchend', function() {
-              initialDistance = null;
-              setTimeout(() => {
-                img.style.transform = 'scale(1)';
-              }, 300);
+            updateCardWidth();
+            updateCarouselPosition();
+            updateHoverStates();
+        }
+
+        // Update card width and gap
+        function updateCardWidth() {
+            const card = document.querySelector('.certificate-card');
+            if (card) {
+                const computed = window.getComputedStyle(carouselTrack);
+                const gapValue = parseFloat(computed.gap) || 32; // read computed gap (px) or fallback
+                cardGap = gapValue;
+                cardWidth = card.offsetWidth; // only card's width; gap handled separately
+            }
+            // Reposition carousel after recalculation
+            updateCarouselPosition();
+        }
+
+        // Update carousel position
+        function updateCarouselPosition() {
+            // Always center the currentIndex — hovering should NOT re-center the track
+            const centerIndex = currentIndex;
+
+            // Calculate offset to center the active card
+            const containerWidth = carouselTrack.parentElement.offsetWidth;
+            const cardCenterOffset = cardWidth / 2;
+            const containerCenter = containerWidth / 2;
+            const activeCardPosition = centerIndex * (cardWidth + cardGap); // cardWidth + gap
+            const offset = containerCenter - cardCenterOffset - activeCardPosition;
+
+            carouselTrack.style.transform = `translateX(${offset}px)`;
+
+            // Keep indicators tied to the real currentIndex
+            document.querySelectorAll('.indicator').forEach((indicator, index) => {
+                indicator.classList.toggle('active', index === currentIndex);
             });
-          }
-        };
-        img.onerror = function() {
-          showError();
-        };
-      } else {
-        showError();
-      }
-    }
 
-    function hideLoading() {
-      // Loading is automatically hidden when content replaces it
-    }
+            // Update visual active/hover states (do not alter centering)
+            updateHoverStates();
+        }
 
-    function showError() {
-      viewerContent.innerHTML = `
-        <p class='error'>
-          Failed to load certificate.<br>
-          The file may be corrupted or in an unsupported format.
-        </p>
-      `;
-    }
+        // Update progress bar and diamond position
+        function updateProgress() {
+            const totalSlides = certificates.length;
+            const progressPercentage = ((currentIndex + 1) / totalSlides) * 100;
 
-    // Load certificate after a small delay for better UX
-    setTimeout(loadCertificate, 500);
+            const progressBar = document.getElementById('progressBar');
+            const progressDiamond = document.getElementById('progressDiamond');
 
-    // Back button functionality
-    document.getElementById('backToCertifications').addEventListener('click', function(e) {
-      e.preventDefault();
-      
-      // Add animation to the container before leaving
-      const container = document.querySelector('.certificate-container');
-      container.style.animation = 'fadeInZoom 0.5s ease reverse forwards';
-      
-      // Navigate after animation completes
-      setTimeout(() => {
-        sessionStorage.setItem('restoreCertBack', '1');
-        window.location.href = 'portfolio.html#Certifications';
-      }, 300);
-    });
+            if (progressBar) {
+                progressBar.style.width = `${progressPercentage}%`;
+            }
 
-    // Handle orientation changes
-    function handleOrientationChange() {
-      const container = document.querySelector('.certificate-container');
-      if (window.orientation === 90 || window.orientation === -90) {
-        // Landscape
-        container.style.maxHeight = '90vh';
-      } else {
-        // Portrait
-        container.style.maxHeight = '800px';
-      }
-    }
+            if (progressDiamond) {
+                progressDiamond.style.left = `${progressPercentage}%`;
+            }
 
-    // Initial orientation check
-    handleOrientationChange();
-    
-    // Listen for orientation changes
-    window.addEventListener('orientationchange', handleOrientationChange);
-    window.addEventListener('resize', handleOrientationChange);
+            // Enhanced effects when progress is high
+            if (progressPercentage >= 80) {
+                // Add sparkle effect to diamond
+                progressDiamond.style.animation = 'sparkle 1s infinite alternate';
+                progressDiamond.style.boxShadow = '0 0 40px rgba(255, 107, 107, 1), 0 0 80px rgba(255, 215, 61, 0.8)';
+            } else {
+                progressDiamond.style.animation = '';
+                progressDiamond.style.boxShadow = '0 0 20px rgba(255, 107, 107, 0.6)';
+            }
+        }
 
-    // Persist dark mode across navigation
-    if (localStorage.getItem("darkMode") === "true") {
-      document.body.classList.add("dark");
-    }
-    function loadCertificate() {
-      if (!file) {
-        viewerContent.innerHTML = `
-          <p class='error'>No certificate file specified in the URL.<br>
-          Please go back and select a certificate.</p>
+        // Update hover/active states so only hovered card is prioritized
+        function updateHoverStates() {
+            document.querySelectorAll('.certificate-card').forEach((card, idx) => {
+                if (hoveredIndex !== null) {
+                    // While a card is hovered: prioritize hovered card only
+                    card.classList.toggle('hovered', idx === hoveredIndex);
+                    card.classList.toggle('active', false);
+                } else {
+                    // Restore normal active state tied to currentIndex
+                    card.classList.toggle('hovered', false);
+                    card.classList.toggle('active', idx === currentIndex);
+                }
+            });
+        }
+
+        // Add sparkle animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes sparkle {
+                0% { filter: brightness(1) hue-rotate(0deg); }
+                50% { filter: brightness(1.5) hue-rotate(180deg); }
+                100% { filter: brightness(1) hue-rotate(360deg); }
+            }
         `;
-      } else if (file.match(/\.(pdf)$/i)) {
-        viewerContent.innerHTML = `
-          <iframe src="${file}" onload="hideLoading()"></iframe>
-        `;
-      } else if (file.match(/\.(jpg|jpeg|png|gif|webp)$/i)) {
-        const img = new Image();
-        img.src = file;
-        img.alt = "Certificate Image";
-        img.onload = function() {
-          viewerContent.innerHTML = '';
-          
-          // Mobile-specific image centering
-          if (window.innerWidth <= 768) {
-            img.style.display = 'block';
-            img.style.margin = 'auto';
-            img.style.maxWidth = '100%';
-            img.style.maxHeight = '100%';
-            img.style.width = 'auto';
-            img.style.height = 'auto';
-          }
-          
-          viewerContent.appendChild(img);
-          
-          // [Rest of the touch event handlers remain the same]
-        };
-        img.onerror = function() {
-          showError();
-        };
-      } else {
-        showError();
-      }
-    }
+        document.head.appendChild(style);
 
-    // [Rest of the JavaScript remains the same]
-  </script>
+        // Navigate to slide
+        function goToSlide(index) {
+            currentIndex = index;
+            if (currentIndex < 0) currentIndex = certificates.length - 1;
+            if (currentIndex >= certificates.length) currentIndex = 0;
+            
+            updateCarouselPosition();
+            updateHoverStates();
+        }
+
+        // View certificate details
+        function viewCertificate(index) {
+            const cert = certificates[index];
+
+            modalDetails.innerHTML = `
+                <div class="certificate-inner-container">
+                    <div style="margin-bottom: 2rem;">
+                        <h2 style="font-size: 1.8rem; color: #00bcd4; margin-bottom: 1rem;">
+                            <i class="${cert.icon}" style="margin-right: 0.5rem;"></i>
+                            ${cert.title}
+                        </h2>
+
+                        <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem;">
+                            <div style="display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem;
+                                 background: ${cert.type === 'major' ? 'rgba(27, 195, 94, 0.15)' : 'rgba(33, 150, 243, 0.15)'};
+                                 border-radius: 10px; border: 1px solid ${cert.type === 'major' ? 'rgba(27, 195, 94, 0.3)' : 'rgba(33, 150, 243, 0.3)'}">
+                                <i class="fas fa-${cert.type === 'major' ? 'award' : 'certificate'}"
+                                   style="color: ${cert.type === 'major' ? '#1bc35e' : '#2196f3'}"></i>
+                                <span style="color: ${cert.type === 'major' ? '#1bc35e' : '#2196f3'}; font-weight: 600;">
+                                    ${cert.type === 'major' ? 'Major Certificate' : 'Minor Certificate'}
+                                </span>
+                            </div>
+
+                            <div style="display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem;
+                                 background: rgba(33, 150, 243, 0.1); border-radius: 10px;">
+                                <i class="fas fa-building" style="color: #2196f3"></i>
+                                <span>${cert.issuer}</span>
+                            </div>
+
+                            <div style="display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem;
+                                 background: rgba(0, 188, 212, 0.1); border-radius: 10px;">
+                                <i class="fas fa-calendar-alt" style="color: #00bcd4"></i>
+                                <span>${cert.date}</span>
+                            </div>
+                        </div>
+
+                        <div style="background: rgba(0, 188, 212, 0.05); padding: 1.5rem; border-radius: 10px;
+                             margin: 1.5rem 0; border-left: 4px solid #00bcd4;">
+                            <h3 style="color: #00bcd4; margin-bottom: 1rem; font-size: 1.3rem;">
+                                Certificate Description
+                            </h3>
+                            <p style="line-height: 1.6; color: #e0f7fa;">
+                                ${cert.details}
+                            </p>
+                        </div>
+
+                        <div style="display: flex; justify-content: space-between; align-items: center;
+                             margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(33, 150, 243, 0.3);">
+                            <div>
+                                <h3 style="color: #2196f3; margin-bottom: 0.5rem;">Certificate ID</h3>
+                                <div style="font-family: monospace; font-size: 1.1rem; padding: 0.5rem 1rem;
+                                     background: rgba(0, 0, 0, 0.2); border-radius: 5px; display: inline-block;">
+                                    CERT-${String(cert.id).padStart(3, '0')}
+                                </div>
+                            </div>
+
+                            <button onclick="openCertificate('${cert.file}')"
+                                    class="open-cert-btn"
+                                    style="display: flex; align-items: center; gap: 0.5rem; padding: 0.8rem 1.5rem;
+                                           background: linear-gradient(90deg, #2196f3, #00bcd4); border: none;
+                                           color: white; border-radius: 10px; font-weight: 600; cursor: pointer;
+                                           transition: transform 0.3s ease; clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);">
+                                <i class="fas fa-external-link-alt"></i>
+                                Open Full Certificate
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            certModal.classList.add('active');
+        }
+
+        // Open certificate in viewer
+        function openCertificate(file) {
+            const modalDetails = document.getElementById('modalDetails');
+            const certificateViewer = document.getElementById('certificateViewer');
+
+            // Hide details and show viewer
+            modalDetails.style.display = 'none';
+            certificateViewer.classList.add('active');
+
+            // Clear previous content
+            certificateViewer.innerHTML = '';
+
+            // Check file extension to determine how to display
+            const fileExtension = file.split('.').pop().toLowerCase();
+
+            if (fileExtension === 'pdf') {
+                // Display PDF using iframe
+                const iframe = document.createElement('iframe');
+                iframe.src = file;
+                iframe.className = 'certificate-iframe';
+                iframe.style.width = '100%';
+                iframe.style.height = '80vh';
+                certificateViewer.appendChild(iframe);
+            } else if (['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(fileExtension)) {
+                // Display image
+                const img = document.createElement('img');
+                img.src = file;
+                img.className = 'certificate-image';
+                img.style.maxWidth = '100%';
+                img.style.maxHeight = '80vh';
+                img.style.objectFit = 'contain';
+                certificateViewer.appendChild(img);
+            } else {
+                // Fallback: try to display as image or show download link
+                const img = document.createElement('img');
+                img.src = file;
+                img.className = 'certificate-image';
+                img.style.maxWidth = '100%';
+                img.style.maxHeight = '80vh';
+                img.style.objectFit = 'contain';
+                img.onerror = function() {
+                    // If image fails to load, show download link
+                    certificateViewer.innerHTML = `
+                        <div style="text-align: center; padding: 2rem;">
+                            <p style="color: #e0f7fa; margin-bottom: 1rem;">Unable to preview this file type.</p>
+                            <a href="${file}" download style="color: #00bcd4; text-decoration: none; padding: 0.5rem 1rem; border: 1px solid #00bcd4; border-radius: 5px;">
+                                Download Certificate
+                            </a>
+                        </div>
+                    `;
+                };
+                certificateViewer.appendChild(img);
+            }
+        }
+
+        // Handle URL parameters for certificate viewing
+        window.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const file = urlParams.get('file');
+            if (file) {
+                // Automatically open the certificate modal if file parameter is present
+                const certIndex = certificates.findIndex(cert => cert.file === file);
+                if (certIndex !== -1) {
+                    viewCertificate(certIndex);
+                }
+            }
+        });
+
+        // Event Listeners
+        prevArrow.addEventListener('click', () => goToSlide(currentIndex - 1));
+        nextArrow.addEventListener('click', () => goToSlide(currentIndex + 1));
+
+        modalClose.addEventListener('click', () => {
+            certModal.classList.remove('active');
+            // Reset modal to details view
+            setTimeout(() => {
+                const modalDetails = document.getElementById('modalDetails');
+                const certificateViewer = document.getElementById('certificateViewer');
+                modalDetails.style.display = 'block';
+                certificateViewer.classList.remove('active');
+            }, 400); // Wait for modal close animation
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') goToSlide(currentIndex - 1);
+            if (e.key === 'ArrowRight') goToSlide(currentIndex + 1);
+            if (e.key === 'Escape') certModal.classList.remove('active');
+        });
+
+        // Close modal when clicking outside
+        certModal.addEventListener('click', (e) => {
+            if (e.target === certModal) {
+                certModal.classList.remove('active');
+            }
+        });
+
+        // Touch/Mouse drag support
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        carouselTrack.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+        }, {passive: true});
+
+        carouselTrack.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].clientX;
+            handleSwipe();
+        }, {passive: true});
+
+        carouselTrack.addEventListener('mousedown', (e) => {
+            touchStartX = e.clientX;
+            document.addEventListener('mouseup', handleMouseSwipe);
+        });
+
+        function handleMouseSwipe(e) {
+            touchEndX = e.clientX;
+            handleSwipe();
+            document.removeEventListener('mouseup', handleMouseSwipe);
+        }
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const diff = touchStartX - touchEndX;
+            
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0) {
+                    // Swipe left
+                    goToSlide(currentIndex + 1);
+                } else {
+                    // Swipe right
+                    goToSlide(currentIndex - 1);
+                }
+            }
+        }
+
+        // Initialize on load
+        window.addEventListener('load', initCarousel);
+        window.addEventListener('resize', updateCardWidth);
+
+        // Auto-rotate (optional)
+        let autoRotateInterval;
+        
+        function startAutoRotate() {
+            autoRotateInterval = setInterval(() => {
+                goToSlide(currentIndex + 1);
+            }, 5000);
+        }
+        
+        function stopAutoRotate() {
+            clearInterval(autoRotateInterval);
+        }
+        
+        // Auto-rotate disabled as per request
+        // startAutoRotate();
+
+        // Pause on hover (disabled since auto-rotate is off)
+        // carouselTrack.addEventListener('mouseenter', stopAutoRotate);
+        // carouselTrack.addEventListener('mouseleave', startAutoRotate);
+        // carouselTrack.addEventListener('touchstart', stopAutoRotate);
+        // carouselTrack.addEventListener('touchend', () => {
+            // setTimeout(startAutoRotate, 3000);
+        // });
+
+        // Back button navigation with smooth transition
+        document.getElementById('backToPortfolio').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.body.classList.add('fade-out');
+            sessionStorage.setItem('restoreCertBack', '1');
+            setTimeout(() => {
+                window.location.href = 'portfolio.html#Certifications';
+            }, 500);
+        });
+    </script>
 </body>
 </html>

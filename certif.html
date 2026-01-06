@@ -13,10 +13,23 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --bg: #0d1b2a;
+            --card-bg: #071626;
+            --accent: #00bcd4;
+            --accent-contrast: #062028;
+            --major: #0b7a36;
+            --minor: #0e6fb8;
+            --text: #e0f7fa;
+            --muted: #9fb7c9;
+        }
+
         html, body {
             width: 100%;
             height: 100%;
-            overflow: hidden;
+            /* allow vertical scrolling on small devices while preventing horizontal overflow */
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             opacity: 1;
             transition: opacity 0.5s cubic-bezier(.4,0,.2,1);
@@ -27,14 +40,17 @@
         }
 
         body {
-            background: #0d1b2a;
-            color: #e0f7fa;
+            background: var(--bg);
+            color: var(--text);
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start; /* start at the top so content is visible on small devices */
             position: relative;
-            overflow: hidden;
+            /* allow vertical scrolling by default; media queries can tighten this if needed */
+            overflow-y: auto;
+            -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+            -webkit-overflow-scrolling: touch;
         }
 
         /* Header */
@@ -43,15 +59,13 @@
             top: 0;
             left: 0;
             width: 100%;
-            padding: 1.5rem;
+            padding: 0.9rem 1rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(0, 30, 60, 0.95);
-            backdrop-filter: blur(10px);
+            background: rgba(0, 16, 30, 0.6);
             z-index: 1000;
-            border-bottom: 2px solid rgba(0, 188, 212, 0.3);
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+            border-bottom: 1px solid rgba(255,255,255,0.03);
         }
 
         .header-left {
@@ -70,18 +84,18 @@
             width: 3.0rem;
             height: 3.0rem;
             display: flex;
-            align-items: left;
+            align-items: center;
             justify-content: left;
         }
+        .logo img { height: 36px; width: auto; display: block; }
 
         .header-title {
-            font-size: 1.8rem;
-            font-weight: 700;
-            background: linear-gradient(90deg, #2196f3, #00bcd4);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-align: center;
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text);
+            text-align: left;
+            text-transform: none;
+            letter-spacing: 0.2px;
         }
 
         /* Back button container */
@@ -92,24 +106,19 @@
         }
 
         .back-line {
-            width: 3px;
-            height: 28px;
-            background: #38bdf8;
-            border-radius: 2px;
-            box-shadow: 0 0 8px rgba(56, 189, 248, 0.3);
+            display: none; /* remove decorative line to reduce clutter */
         }
 
         .back-button {
-            color: #67aeeb;
+            color: #ffffff;
             background: transparent;
-            border: none;
-            font-size: 1.1rem;
-            font-weight: 500;
+            border: 1px solid rgba(255,255,255,0.06);
+            font-size: 0.95rem;
+            font-weight: 600;
+            padding: 0.5rem 0.8rem;
+            border-radius: 8px;
             text-decoration: none;
-            padding: 0.4rem 0.8rem;
-            border-bottom: 2px solid transparent;
-            transition: all 0.2s ease;
-            cursor: pointer;
+            transition: background 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
             position: relative;
             overflow: hidden;
         }
@@ -121,8 +130,8 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: rgba(56, 189, 248, 0.1);
-            transition: left 0.6s ease;
+            background: rgba(255,255,255,0.03);
+            transition: left 0.5s ease;
             z-index: -1;
         }
 
@@ -131,28 +140,37 @@
         }
 
         .back-button:hover {
-            color: #0d47a1;
-            border-bottom: 2px solid #38bdf8;
+            background: rgba(255,255,255,0.03);
+            transform: translateY(-2px);
         }
 
-        body.dark .back-button {
-            color: #90caf9;
-        }
-
-        body.dark .back-button:hover {
-            color: #b3e5fc;
+        .back-button:focus {
+            outline: 3px solid rgba(255,255,255,0.08);
+            box-shadow: 0 12px 30px rgba(255,255,255,0.06);
+            transform: translateY(-2px);
         }
 
         /* Main Container */
         .main-container {
             width: 100%;
-            height: 100vh;
-            padding-top: 100px;
+            min-height: calc(100vh - 96px); /* leave space for fixed header */
+            height: auto;
+            padding-top: 96px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start; /* keep content anchored to top on small screens */
             position: relative;
+            box-sizing: border-box;
+        }
+
+        /* Reduce header spacing for smaller viewports so content stays visible */
+        @media (max-width: 768px) {
+            .main-container { padding-top: 72px; min-height: calc(100vh - 72px); }
+        }
+
+        @media (max-width: 480px) {
+            .main-container { padding-top: 64px; min-height: calc(100vh - 64px); }
         }
 
         /* Polygonal Background */
@@ -164,14 +182,20 @@
             height: 100%;
             z-index: -1;
             overflow: hidden;
-            opacity: 0.3;
+            opacity: 0.12;
+            pointer-events: none;
+        }
+
+        @media (max-width: 480px) {
+            .polygon-bg { display: none; }
         }
 
         .polygon {
             position: absolute;
-            background: rgba(33, 150, 243, 0.1);
+            background: rgba(33, 150, 243, 0.05);
             clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
             animation: float 20s infinite linear;
+            filter: blur(0.6px);
         }
 
         .polygon:nth-child(1) {
@@ -235,134 +259,111 @@
         .carousel-track {
             display: flex;
             height: 100%;
-            transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            transition: transform 0.45s cubic-bezier(0.23, 1, 0.32, 1);
             align-items: center;
-            gap: 2rem;
-            padding: 0 3rem;
+            gap: 1rem;
+            padding: 0 1.5rem;
+
+            /* Keep horizontal scrolling where enabled but hide the native scrollbar visually */
+            -ms-overflow-style: none; /* IE and Edge */
+            scrollbar-width: none; /* Firefox */
         }
 
-        /* Certificate Card */
+        /* WebKit browsers (Chrome, Safari) - hide the horizontal scrollbar */
+        .carousel-track::-webkit-scrollbar {
+            height: 0;
+            display: none;
+        }
+
+        /* Utility: screen-reader only */
+        .sr-only { position: absolute !important; height: 1px; width: 1px; overflow: hidden; clip: rect(1px, 1px, 1px, 1px); white-space: nowrap; }
+
+        /* Mobile: use scroll-snap for natural swipe on small viewports */
+        @media (max-width: 768px) {
+            .carousel-track {
+                overflow-x: auto;
+                scroll-snap-type: x mandatory;
+                gap: 0.8rem;
+                padding: 0 1rem;
+            }
+
+            .certificate-card {
+                scroll-snap-align: center;
+                flex: 0 0 82%;
+                min-width: 82%;
+            }
+
+            .carousel-nav { display: none; }
+            .carousel-container { height: auto; padding-bottom: 1rem; }
+        }
+
+        /* Certificate Card (simplified) */
         .certificate-card {
-            flex: 0 0 320px;
-            height: 85%;
-            background: rgba(0, 30, 60, 0.9);
-            border-radius: 20px;
+            flex: 0 0 280px;
+            background: #071626;
+            border-radius: 12px;
             overflow: hidden;
             position: relative;
-            transition: all 0.4s ease;
-            transform-style: preserve-3d;
-            border: 2px solid rgba(33, 150, 243, 0.3);
-            box-shadow: 
-                0 10px 30px rgba(0, 0, 0, 0.5),
-                0 0 30px rgba(33, 150, 243, 0.2);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            border: 1px solid rgba(255,255,255,0.04);
+            box-shadow: 0 6px 18px rgba(2,8,18,0.6);
             cursor: pointer;
-            backdrop-filter: blur(10px);
-        }
-
-        .certificate-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 100%;
-            background: linear-gradient(45deg, 
-                transparent 0%, 
-                rgba(33, 150, 243, 0.1) 45%,
-                rgba(33, 150, 243, 0.05) 50%,
-                transparent 55%);
-            z-index: 1;
-            pointer-events: none;
+            height: auto;
+            display: flex;
+            flex-direction: column;
         }
 
         /* Active (current) card visual */
         .certificate-card.active {
-            transform: scale(1.05) translateY(-20px);
-            border-color: rgba(0, 188, 212, 0.25);
-            box-shadow:
-                /* base ambient shadow (darker, soft spread) */
-                0 16px 40px rgba(4, 12, 24, 0.55),
-                /* subtle diffusion for depth */
-                0 6px 18px rgba(4, 12, 24, 0.28),
-                /* slight surface highlight */
-                inset 0 1px 0 rgba(255, 255, 255, 0.02);
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(2,8,18,0.7);
             z-index: 4;
-            transition: transform 0.4s ease 0.2s, box-shadow 0.4s ease 0.2s, border-color 0.4s ease 0.2s;
         }
 
-        /* Hovered card gets priority (darker, softer emphasis) */
+        /* Hovered card */
         .certificate-card.hovered {
-            transform: scale(1.05) translateY(-20px);
-            border-color: rgba(0, 188, 212, 0.32);
-            box-shadow:
-                0 22px 56px rgba(4, 12, 24, 0.62),
-                0 10px 30px rgba(4, 12, 24, 0.36),
-                /* a very subtle cool glow beneath to suggest elevation */
-                0 0 28px rgba(0, 188, 212, 0.06),
-                inset 0 1px 0 rgba(255, 255, 255, 0.02);
-            z-index: 6; /* keep hovered visually on top */
-            transition: transform 0.4s ease 0.2s, box-shadow 0.4s ease 0.2s, border-color 0.4s ease 0.2s;
+            transform: translateY(-6px);
+            box-shadow: 0 10px 24px rgba(2,8,18,0.65);
+            z-index: 5;
         }
 
-        /* Card Header */
+        /* Card Header (tight) */
         .card-header {
-            height: 80px;
-            background: linear-gradient(90deg, 
-                rgba(33, 150, 243, 0.3), 
-                rgba(0, 188, 212, 0.3));
+            height: 56px;
+            background: transparent;
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
             position: relative;
-            overflow: hidden;
-            clip-path: polygon(0 0, 100% 0, 100% 70%, 50% 100%, 0 70%);
-        }
-
-        .card-header::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, 
-                transparent, 
-                rgba(255, 255, 255, 0.3), 
-                transparent);
-            animation: shine 3s infinite;
-        }
-
-        @keyframes shine {
-            0% { left: -100%; }
-            100% { left: 100%; }
+            padding: 0 1rem;
+            gap: 0.6rem;
         }
 
         .certificate-icon {
-            font-size: 2.5rem;
-            color: #fff;
-            filter: drop-shadow(0 0 10px rgba(0, 188, 212, 0.7));
+            font-size: 1.8rem;
+            color: var(--accent);
+            margin-right: 0.6rem;
             z-index: 2;
         }
 
         /* Card Content */
         .card-content {
-            padding: 2rem;
-            height: calc(100% - 80px);
+            padding: 0.8rem 1rem 1rem 1rem;
             display: flex;
             flex-direction: column;
+            gap: 0.35rem;
         }
 
         .certificate-title {
-            font-size: 1.0rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            color: #00bcd4;
-            line-height: 1.3;
-            max-height: 4.2rem; /* 3 lines * 1.4rem */
+            font-size: 1.12rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            color: #ffffff;
+            line-height: 1.42;
+            max-height: calc(1.42em * 2);
             overflow: hidden;
-            text-overflow: break-word;
-            display: -webkit-box
-            -webkit-line-clamp: 3;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             word-wrap: break-word;
             hyphens: auto;
@@ -370,71 +371,72 @@
         }
 
         .certificate-type {
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-            display: flex;
+            font-size: 0.78rem;
+            margin-bottom: 0.6rem;
+            display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
+            gap: 0.4rem;
+            padding: 0.28rem 0.7rem;
+            border-radius: 12px;
             width: fit-content;
+            font-weight: 600;
         }
 
         .certificate-type.major {
-            color: #1bc35e;
-            background: rgba(27, 195, 94, 0.15);
-            border: 1px solid rgba(27, 195, 94, 0.3);
+            color: #11aa4c;
+            background: rgba(11, 122, 54, 0.08);
+            border: 1px solid rgba(11, 122, 54, 0.15);
         }
 
         .certificate-type.minor {
-            color: #2196f3;
-            background: rgba(33, 150, 243, 0.15);
-            border: 1px solid rgba(33, 150, 243, 0.3);
+            color: #2a91df;
+            background: rgba(14, 111, 184, 0.08);
+            border: 1px solid rgba(14, 111, 184, 0.15);
         }
 
         .certificate-issuer {
-            font-size: 1rem;
-            color: #a0c8e0;
-            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: #9fb7c9;
+            margin-bottom: 0.6rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
 
         .certificate-issuer i {
-            color: #2196f3;
+            color: #0e6fb8;
         }
 
         .certificate-date {
-            font-size: 0.9rem;
-            color: #8ab4d6;
-            margin-bottom: 1.5rem;
+            font-size: 0.85rem;
+            color: #8aa9bf;
+            margin-bottom: 1rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
 
         .certificate-date i {
-            color: #00bcd4;
+            color: #0db8c0;
         }
 
         .view-btn {
-            margin-top: auto;
-            padding: 0.8rem 1.5rem;
-            background: linear-gradient(90deg, #2196f3, #00bcd4);
+            margin-top: 0.6rem;
+            padding: 0.7rem 0.9rem;
+            background: var(--accent);
             border: none;
-            color: white;
-            border-radius: 10px;
+            color: var(--accent-contrast);
+            border-radius: 8px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: color 0.2s ease;
             text-align: center;
-            font-size: 1rem;
-            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
+            font-size: 0.95rem;
             position: relative;
-            overflow: hidden;
+            overflow: hidden; /* ensure overlay clips to button */
         }
 
+        /* Dark left-to-right overlay that slides in from the left */
         .view-btn::before {
             content: '';
             position: absolute;
@@ -442,7 +444,7 @@
             left: 0;
             width: 0;
             height: 100%;
-            background: linear-gradient(90deg, #1565c0, #00838f);
+            background: rgba(18, 85, 93, 0.329);
             transition: width 0.7s ease;
             z-index: -1;
         }
@@ -451,9 +453,6 @@
             width: 100%;
         }
 
-        .view-btn:hover {
-            box-shadow: 0 5px 20px rgba(33, 150, 243, 0.4);
-        }
 
         .open-cert-btn {
             position: relative;
@@ -467,13 +466,44 @@
             left: 0;
             width: 0;
             height: 100%;
-            background: linear-gradient(90deg, #1565c0, #00838f);
+            background: rgba(18, 85, 93, 0.329);
             transition: width 0.7s ease;
             z-index: -1;
         }
 
         .open-cert-btn:hover::before {
             width: 100%;
+        }
+
+        /* Modal CTA: make overlay darker and slide left->right like the view button */
+        .modal-open-btn {
+            background: var(--accent);
+            color: var(--accent-contrast);
+            border: none;
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+      
+        .modal-open-btn:hover::before {
+            left: 0;
+        }
+
+        /* Keep hover color stable and accessible */
+        .modal-open-btn:hover {
+            color: var(--accent-contrast);
+        }
+
+        .modal-open-btn:focus {
+            outline: 3px solid rgba(0,188,212,0.14);
         }
 
         /* Navigation Arrows */
@@ -490,71 +520,68 @@
         }
 
         .nav-arrow {
-            width: 60px;
-            height: 60px;
-            background: rgba(0, 30, 60, 0.8);
-            border: 2px solid rgba(33, 150, 243, 0.4);
-            color: #2196f3;
-            font-size: 1.8rem;
+            width: 56px;
+            height: 56px;
+            background: rgba(255,255,255,0.04);
+            color: #00bcd4;
+            font-size: 1.1rem;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 50%;
-            transition: all 0.3s ease;
+            transition: transform 0.18s ease, background 0.18s ease;
             pointer-events: auto;
-            clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+            border: none;
         }
 
         .nav-arrow:hover {
-            background: rgba(33, 150, 243, 0.2);
-            border-color: #00bcd4;
-            color: #00bcd4;
-            transform: scale(1.1);
-            box-shadow: 0 0 25px rgba(0, 188, 212, 0.3);
+            transform: scale(1.08);
+            background: rgba(255,255,255,0.06);
         }
 
         /* Indicators */
         .carousel-indicators {
             display: flex;
             gap: 0.8rem;
-            margin-top: 2rem;
-            padding: 1rem;
-            background: rgba(0, 30, 60, 0.7);
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(33, 150, 243, 0.3);
+            margin-top: 1.2rem;
+            padding: 0.4rem 0.6rem;
+            background: transparent;
+            border-radius: 12px;
             position: relative;
         }
 
 
 
         .indicator {
-            width: 14px;
-            height: 14px;
-            background: rgba(33, 150, 243, 0.3);
+            width: 12px;
+            height: 12px;
+            background: rgba(255,255,255,0.06);
             border-radius: 50%;
             cursor: pointer;
-            transition: all 0.3s ease;
-            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+            transition: transform 0.18s ease, background 0.18s ease;
+            border: none;
+            padding: 0;
+            appearance: none;
         }
 
         .indicator.active {
-            background: #00bcd4;
-            transform: scale(1.3);
-            box-shadow: 0 0 15px rgba(0, 188, 212, 0.7);
+            background: var(--accent);
+            transform: scale(1.15);
         }
 
         .indicator:hover {
-            background: #2196f3;
-            transform: scale(1.2);
+            background: rgba(0, 188, 212, 0.15);
         }
+
+        .indicator:focus { outline: 3px solid rgba(0,188,212,0.12); }
+
 
         /* Legend */
         .legend {
             display: flex;
             gap: 2rem;
-            margin-top: 1.0 rem;
+            margin-top: 1rem;
             margin-bottom: 1rem;
             padding: 1rem 2rem;
     
@@ -575,13 +602,13 @@
         }
 
         .legend-color.major {
-            background: #1bc35e;
-            border-color: #0c813b;
+            background: var(--major);
+            border-color: rgba(11,122,54,0.9);
         }
 
         .legend-color.minor {
-            background: #2196f3;
-            border-color: #1565c0;
+            background: var(--minor);
+            border-color: rgba(14,111,184,0.9);
         }
 
         /* Certificate Modal */
@@ -652,148 +679,125 @@
             right: 1rem;
             width: 40px;
             height: 40px;
-            background: rgba(33, 150, 243, 0.2);
-            border: 2px solid rgba(33, 150, 243, 0.4);
-            color: #2196f3;
+            background: rgba(0,188,212,0.06);
+            border: 1px solid rgba(0,188,212,0.12);
+            color: var(--accent);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 1.2rem;
+            transition: transform 0.18s ease, background 0.18s ease;
+            font-size: 1.1rem;
         }
 
         .modal-close:hover {
-            background: rgba(33, 150, 243, 0.3);
+            background: rgba(0,188,212,0.09);
             transform: rotate(90deg);
-            color: #00bcd4;
+            color: var(--accent);
         }
+
+        .modal-close:focus { outline: 3px solid rgba(0,188,212,0.14); }
+
+        .nav-arrow:focus { outline: none; box-shadow: 0 0 0 4px rgba(0,188,212,0.08); transform: translateY(-3px); }
 
         /* Responsive Design */
         @media (min-width: 1201px) {
-            .carousel-container {
-                height: 70vh;
-            }
-
-            .certificate-card {
-                flex: 0 0 350px;
-            }
-
-            .header-title {
-                font-size: 2rem;
-            }
-
-            .nav-arrow {
-                width: 70px;
-                height: 70px;
-                font-size: 2rem;
-            }
+            .carousel-container { height: 70vh; }
+            .certificate-card { flex: 0 0 350px; }
+            .header-title { font-size: 2rem; }
+            .nav-arrow { width: 70px; height: 70px; font-size: 1.4rem; }
         }
 
         @media (max-width: 1200px) {
-            .carousel-container {
-                height: 60vh;
-            }
-
-            .certificate-card {
-                flex: 0 0 280px;
-            }
+            .carousel-container { height: 60vh; }
+            .certificate-card { flex: 0 0 320px; }
         }
 
         @media (max-width: 992px) {
-            .carousel-container {
-                height: 58vh;
-            }
-
-            .certificate-card {
-                flex: 0 0 260px;
-            }
-
-            .header-title {
-                font-size: 1.5rem;
-            }
+            .carousel-container { height: 58vh; }
+            .certificate-card { flex: 0 0 280px; }
+            .header-title { font-size: 1.5rem; }
         }
 
+        /* Tablet and small desktops */
         @media (max-width: 768px) {
-           .body {
-                overflow: auto;
-            }.certificate-title {
-            display: hidden;
-            text-overflow: hidden;
+            body { overflow: auto; }
+            .carousel-container { height: auto; padding-bottom: 1.25rem; }
+            .carousel-track { overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; gap: 0.8rem; padding: 0 1rem; }
+            .certificate-card { flex: 0 0 82%; min-width: 82%; scroll-snap-align: center; overflow-y: visible; }
+            .certificate-title { font-size: 1rem; -webkit-line-clamp: 2; }
+            .view-btn { padding: 0.9rem 1rem; font-size: 1rem; }
+            .modal-open-btn { padding: 0.9rem 1rem; font-size: 1rem; }
+            /* Keep arrows visible on small screens but make them smaller and less intrusive */
+            .nav-arrow { display: flex; width: 44px; height: 44px; font-size: 0.95rem; background: rgba(255,255,255,0.06); color: var(--accent); border-radius: 50%; box-shadow: 0 6px 16px rgba(2,8,18,0.5); }
+            .modal-content { max-width: 95%; width: 95%; padding: 1.5rem; border-radius: 12px; max-height: 90vh; }
+            .modal-close { width: 44px; height: 44px; font-size: 1.2rem; }
+            .header { padding: 0.6rem 0.8rem; }
+            .header-title { font-size: 1rem; }
         }
-        .view-btn {
-           overflow: visible;
-           padding-bottom: 1rem;
-        }.certificate-card {
-            overflow-y: visible;
-        }.nav-arrow {
-            width: 40px;
-            height: 40px;
-        
-        }
-    }
 
-        @media (max-width: 640px) {
-           .body {
-                overflow: auto;
-            }.certificate-title {
-            display: hidden;
-            text-overflow: hidden;
-        }
-        .view-btn {
-           overflow: visible;
-           padding-bottom: 1rem;
-        }.certificate-card {
-            overflow-y: visible;
-        }.nav-arrow {
-            width: 40px;
-            height: 40px;
-        
-        }
-    }
+        /* Portrait-dominant devices: occupy vertical space and enlarge cards for better visibility */
+        @media (orientation: portrait) {
+            .carousel-container {
+                /* Fill the available vertical space under the header */
+                height: calc(100vh - 96px);
+                max-height: none;
+                display: flex;
+                align-items: center;
+                padding-bottom: 1rem;
+            }
 
+            /* Make cards larger so they occupy most of the viewport width */
+            .certificate-card { flex: 0 0 88%; min-width: 88%; }
 
+            /* Ensure indicators don't push content down on very small portrait screens */
+            .carousel-indicators { margin-top: 0.8rem; }
+
+            /* Keep nav arrows visible and overlayed at the sides */
+            .carousel-nav { pointer-events: none; }
+            .nav-arrow { pointer-events: auto; z-index: 30; }
+        }
 
         @media (max-width: 480px) {
-          .body {
-                overflow: auto;
-            }.certificate-title {
-            display: hidden;
-            text-overflow: hidden;
+            .certificate-card { flex: 0 0 92%; min-width: 92%; }
+            .certificate-title { font-size: 0.95rem; }
+            .card-header { height: 48px; }
+            .view-btn, .modal-open-btn { padding: 1rem 1.1rem; font-size: 1rem; border-radius: 10px; }
+            .modal-content { width: 100%; height: 100%; max-width: 100%; max-height: 100vh; border-radius: 0; padding: 1.0rem; }
+            .certificate-iframe, .certificate-image { max-height: 70vh; }
+            .polygon-bg { display: none; }
         }
-        .view-btn {
-           overflow: visible;
-           padding-bottom: 1rem;
-        }.certificate-card {
-            overflow-y: visible;
-        }.nav-arrow {
-            width: 40px;
-            height: 40px;
-        
-        }
-    }
 
+        /* Mobile phones */
+        @media (max-width: 480px) {
+            .certificate-card { flex: 0 0 92%; min-width: 92%; }
+            .certificate-title { font-size: 0.95rem; }
+            .card-header { height: 48px; }
+            .view-btn, .modal-open-btn { padding: 1rem 1.1rem; font-size: 1rem; border-radius: 10px; }
+            .modal-content { width: 100%; height: 100%; max-width: 100%; max-height: 100vh; border-radius: 0; padding: 1.0rem; }
+            .certificate-iframe, .certificate-image { max-height: 70vh; }
+            .polygon-bg { display: none; }
+        }
+
+        /* Very small devices */
         @media (max-width: 360px) {
-        .nav-arrow {
-            width: 40px;
-            height: 40px;
-        
+            .certificate-title { font-size: 0.9rem; }
+            .view-btn, .modal-open-btn { padding: 1rem; font-size: 0.95rem; }
+            .header-title { font-size: 0.95rem; }
         }
-            .body {
-                overflow: auto;
-            }
-        .certificate-title {
-            display: none;
-            
-        }
-        .view-btn {
-           overflow: visible;
-           padding-bottom: 1rem;
-        }.certificate-card {
-            overflow-y: visible;
-        }
-    }
+
+        /* Ensure hover overlays appear above button backgrounds and text stays visible */
+        .view-btn { z-index: 0; }
+        .view-btn::before { z-index: 1; pointer-events: none; }
+        .view-btn > * { position: relative; z-index: 2; }
+        .modal-open-btn { z-index: 0; }
+        .modal-open-btn::before { z-index: 1; pointer-events: none; }
+        .modal-open-btn > * { position: relative; z-index: 2; }
+
+        /* Ensure .open-cert-btn clips overlay smoothly */
+        .open-cert-btn { overflow: hidden; }
+
     </style>
 </head>
 <body>
@@ -801,7 +805,7 @@
     <div class="header">
         <div class="header-left">
             <div class="logo"><img src="logos.svg" alt="Logo"></div>
-            <div class="header-title">CERTIFICATE GALLERY</div>
+            <div class="header-title">Certificate Gallery</div>
         </div>
         <div class="back-container">
             <span class="back-line"></span>
@@ -827,12 +831,12 @@
             
             <!-- Navigation Arrows -->
             <div class="carousel-nav">
-                <div class="nav-arrow prev-arrow">
-                    <i class="fas fa-chevron-left"></i>
-                </div>
-                <div class="nav-arrow next-arrow">
-                    <i class="fas fa-chevron-right"></i>
-                </div>
+                <button class="nav-arrow prev-arrow" aria-label="Previous certificate">
+                    <i class="fas fa-chevron-left" aria-hidden="true"></i>
+                </button>
+                <button class="nav-arrow next-arrow" aria-label="Next certificate">
+                    <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                </button>
             </div>
         </div>
 
@@ -840,6 +844,7 @@
         <div class="carousel-indicators" id="indicators">
             <!-- Indicators will be dynamically inserted here -->
         </div>
+        <div id="carouselStatus" class="sr-only" aria-live="polite"></div>
 
 
 
@@ -857,7 +862,7 @@
     </div>
 
     <!-- Certificate Modal -->
-    <div class="cert-modal" id="certModal">
+    <div class="cert-modal" id="certModal" role="dialog" aria-modal="true" aria-hidden="true">
         <div class="modal-content">
             <button class="modal-close" id="modalClose">
                 <i class="fas fa-times"></i>
@@ -882,7 +887,7 @@
                 date: "2024",
                 icon: "fas fa-laptop-code",
                 details: "A comprehensive webinar series focusing on technology adoption strategies for micro, small, and medium enterprises.",
-                file: "certif1.pdf"
+                file: "pics/certif1.pdf"
             },
             {
                 id: 2,
@@ -892,7 +897,7 @@
                 date: "2024",
                 icon: "fas fa-shield-alt",
                 details: "Advanced training in cybersecurity measures and digital forensics for protecting critical technologies.",
-                file: "certif2.jpeg"
+                file: "pics/certif2.jpeg"
             },
             {
                 id: 3,
@@ -902,7 +907,7 @@
                 date: "2025",
                 icon: "fas fa-video",
                 details: "Comprehensive guide to content creation covering ideation, production, and distribution strategies.",
-                file: "certif4.png"
+                file: "pics/certif4.png"
             },
             {
                 id: 4,
@@ -912,7 +917,7 @@
                 date: "2025",
                 icon: "fas fa-user-shield",
                 details: "Essential digital safety practices and personal protection strategies for the modern internet user.",
-                file: "certif5.pdf"
+                file: "pics/certif5.pdf"
             },
             {
                 id: 5,
@@ -922,7 +927,7 @@
                 date: "2025",
                 icon: "fas fa-database",
                 details: "In-depth training on data privacy regulations and security measures for protecting sensitive information.",
-                file: "certif3.png"
+                file: "pics/certif3.png"
             },
             {
                 id: 6,
@@ -932,7 +937,7 @@
                 date: "2025",
                 icon: "fas fa-chart-bar",
                 details: "Fundamental data science concepts with practical MySQL database management skills.",
-                file: "certif6.pdf"
+                file: "pics/certif6.pdf"
             },
             {
                 id: 7,
@@ -942,7 +947,7 @@
                 date: "2025",
                 icon: "fas fa-bullhorn",
                 details: "Modern marketing strategy development for competitive advantage in digital markets.",
-                file: "certif7.pdf"
+                file: "pics/certif7.pdf"
             },
             {
                 id: 8,
@@ -952,7 +957,7 @@
                 date: "2025",
                 icon: "fas fa-balance-scale",
                 details: "Strategies for maintaining healthy work-life balance in increasingly connected digital environments.",
-                file: "certif8.pdf"
+                file: "pics/certif8.pdf"
             },
             {
                 id: 9,
@@ -962,7 +967,7 @@
                 date: "2025",
                 icon: "fas fa-microchip",
                 details: "Training program for computer engineers focusing on innovation in the digital economy and ICT development.",
-                file: "certif9.pdf"
+                file: "pics/certif9.pdf"
             },
             {
                 id: 10,
@@ -972,7 +977,7 @@
                 date: "2025",
                 icon: "fas fa-bug",
                 details: "Comprehensive manual software testing training using industry-standard tools like Jira and TestRail.",
-                file: "certif10.jpg"
+                file: "pics/certif10.jpg"
             }
         ];
 
@@ -994,6 +999,8 @@
         let startPosition = 0;
         let currentTranslate = 0;
         let prevTranslate = 0;
+        let lastFocusedElement = null;
+        let _focusTrapHandler = null;
 
         // Initialize the carousel
         function initCarousel() {
@@ -1026,11 +1033,24 @@
                             <i class="fas fa-calendar-alt"></i>
                             <span>${cert.date}</span>
                         </div>
-                        <button class="view-btn" onclick="viewCertificate(${index})">
+                        <button class="view-btn" onclick="viewCertificate(${index})" aria-label="View details for ${cert.title}">
                             <i class="fas fa-eye"></i> View Details
                         </button>
                     </div>
                 `;
+
+                // Make card keyboard/focus accessible and clickable
+                card.tabIndex = 0;
+                card.setAttribute('role', 'button');
+                card.setAttribute('aria-label', `Open details for ${cert.title}`);
+                card.setAttribute('aria-hidden', index === currentIndex ? 'false' : 'true');
+                card.addEventListener('click', () => viewCertificate(index));
+                card.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        viewCertificate(index);
+                    }
+                });
 
                     carouselTrack.appendChild(card);
                 
@@ -1045,10 +1065,13 @@
                     updateHoverStates();
                 });
                 
-                // Create indicator
-                const indicator = document.createElement('div');
+                // Create indicator (button for accessibility)
+                const indicator = document.createElement('button');
+                indicator.type = 'button';
                 indicator.className = `indicator ${index === currentIndex ? 'active' : ''}`;
                 indicator.dataset.index = index;
+                indicator.setAttribute('aria-label', `Go to certificate ${index + 1}`);
+                indicator.setAttribute('aria-current', index === currentIndex ? 'true' : 'false');
                 indicator.addEventListener('click', () => {
                     goToSlide(index);
                 });
@@ -1058,6 +1081,38 @@
             updateCardWidth();
             updateCarouselPosition();
             updateHoverStates();
+
+            // Mobile: listen for scroll to update focused card when using native swipe
+            let mobileScrollDebounce;
+            carouselTrack.addEventListener('scroll', () => {
+                if (!isMobileView()) return;
+                clearTimeout(mobileScrollDebounce);
+                mobileScrollDebounce = setTimeout(() => {
+                    const trackRect = carouselTrack.getBoundingClientRect();
+                    const children = Array.from(carouselTrack.querySelectorAll('.certificate-card'));
+                    let nearestIndex = currentIndex;
+                    let nearestDistance = Infinity;
+                    children.forEach((child, idx) => {
+                        const childRect = child.getBoundingClientRect();
+                        const childCenter = childRect.left + childRect.width / 2;
+                        const distance = Math.abs(childCenter - (trackRect.left + trackRect.width / 2));
+                        if (distance < nearestDistance) { nearestDistance = distance; nearestIndex = idx; }
+                    });
+                    if (nearestIndex !== currentIndex) {
+                        currentIndex = nearestIndex;
+                        document.querySelectorAll('.indicator').forEach((indicator, index) => {
+                            indicator.classList.toggle('active', index === currentIndex);
+                            indicator.setAttribute('aria-current', index === currentIndex ? 'true' : 'false');
+                        });
+                        updateAccessibilityStates();
+                    }
+                }, 120);
+            }, { passive: true });
+        }
+
+        // Helper: detect mobile view (matches CSS breakpoint)
+        function isMobileView() {
+            return window.innerWidth <= 768;
         }
 
         // Update card width and gap
@@ -1065,7 +1120,7 @@
             const card = document.querySelector('.certificate-card');
             if (card) {
                 const computed = window.getComputedStyle(carouselTrack);
-                const gapValue = parseFloat(computed.gap) || 32; // read computed gap (px) or fallback
+                const gapValue = parseFloat(computed.gap) || 16; // read computed gap (px) or fallback
                 cardGap = gapValue;
                 cardWidth = card.offsetWidth; // only card's width; gap handled separately
             }
@@ -1075,6 +1130,8 @@
 
         // Update carousel position
         function updateCarouselPosition() {
+            // If mobile, prefer native scroll-snap behavior; do not set transform
+            if (isMobileView()) { updateAccessibilityStates(); return; }
             // Always center the currentIndex — hovering should NOT re-center the track
             const centerIndex = currentIndex;
 
@@ -1087,13 +1144,19 @@
 
             carouselTrack.style.transform = `translateX(${offset}px)`;
 
-            // Keep indicators tied to the real currentIndex
+            // Keep indicators tied to the real currentIndex and announce state
             document.querySelectorAll('.indicator').forEach((indicator, index) => {
-                indicator.classList.toggle('active', index === currentIndex);
+                const isActive = index === currentIndex;
+                indicator.classList.toggle('active', isActive);
+                indicator.setAttribute('aria-current', isActive ? 'true' : 'false');
             });
 
             // Update visual active/hover states (do not alter centering)
             updateHoverStates();
+            // Announce current slide for screen readers
+            const _status = document.getElementById('carouselStatus');
+            if (_status) _status.textContent = `Viewing ${currentIndex + 1} of ${certificates.length}: ${certificates[currentIndex].title}`;
+            updateAccessibilityStates();
         }
 
         // Update progress bar and diamond position
@@ -1112,14 +1175,13 @@
                 progressDiamond.style.left = `${progressPercentage}%`;
             }
 
-            // Enhanced effects when progress is high
-            if (progressPercentage >= 80) {
-                // Add sparkle effect to diamond
-                progressDiamond.style.animation = 'sparkle 1s infinite alternate';
-                progressDiamond.style.boxShadow = '0 0 40px rgba(255, 107, 107, 1), 0 0 80px rgba(255, 215, 61, 0.8)';
-            } else {
-                progressDiamond.style.animation = '';
-                progressDiamond.style.boxShadow = '0 0 20px rgba(255, 107, 107, 0.6)';
+            // Optional enhanced effects (clean, safe)
+            if (progressDiamond) {
+                if (progressPercentage >= 80) {
+                    progressDiamond.style.boxShadow = '0 0 30px rgba(255, 107, 107, 0.9)';
+                } else {
+                    progressDiamond.style.boxShadow = '0 0 12px rgba(255, 107, 107, 0.6)';
+                }
             }
         }
 
@@ -1138,16 +1200,53 @@
             });
         }
 
-        // Add sparkle animation
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes sparkle {
-                0% { filter: brightness(1) hue-rotate(0deg); }
-                50% { filter: brightness(1.5) hue-rotate(180deg); }
-                100% { filter: brightness(1) hue-rotate(360deg); }
+        // Accessibility: set aria-hidden on inactive cards and announce state
+        function updateAccessibilityStates() {
+            const cards = document.querySelectorAll('.certificate-card');
+            cards.forEach((card, idx) => {
+                card.setAttribute('aria-hidden', idx === currentIndex ? 'false' : 'true');
+            });
+            // Update indicators aria-current too (safeguard)
+            document.querySelectorAll('.indicator').forEach((indicator, idx) => {
+                indicator.setAttribute('aria-current', idx === currentIndex ? 'true' : 'false');
+            });
+            const _status = document.getElementById('carouselStatus');
+            if (_status) _status.textContent = `Viewing ${currentIndex + 1} of ${certificates.length}: ${certificates[currentIndex].title}`;
+        }
+
+        // Focus trap helpers for modal dialogs (basic, works without external libs)
+        function enableFocusTrap(modal) {
+            const focusableSelectors = 'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, [tabindex]:not([tabindex="-1"])';
+            const focusable = Array.from(modal.querySelectorAll(focusableSelectors)).filter(el => el.offsetWidth > 0 || el.offsetHeight > 0 || el === document.activeElement);
+            if (!focusable.length) return;
+            const first = focusable[0];
+            const last = focusable[focusable.length - 1];
+            _focusTrapHandler = function(e) {
+                if (e.key === 'Tab') {
+                    if (e.shiftKey) { // tab backwards
+                        if (document.activeElement === first) {
+                            e.preventDefault();
+                            last.focus();
+                        }
+                    } else { // tab forwards
+                        if (document.activeElement === last) {
+                            e.preventDefault();
+                            first.focus();
+                        }
+                    }
+                }
+            };
+            document.addEventListener('keydown', _focusTrapHandler);
+        }
+
+        function disableFocusTrap() {
+            if (_focusTrapHandler) {
+                document.removeEventListener('keydown', _focusTrapHandler);
+                _focusTrapHandler = null;
             }
-        `;
-        document.head.appendChild(style);
+        }
+
+
 
         // Navigate to slide
         function goToSlide(index) {
@@ -1155,6 +1254,23 @@
             if (currentIndex < 0) currentIndex = certificates.length - 1;
             if (currentIndex >= certificates.length) currentIndex = 0;
             
+            // If mobile view uses native scroll-snap, programmatically scroll the active card into view
+            if (isMobileView()) {
+                const target = carouselTrack.querySelector(`.certificate-card[data-index="${currentIndex}"]`);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+                }
+                // Update indicators & accessibility states
+                document.querySelectorAll('.indicator').forEach((indicator, idx) => {
+                    const isActive = idx === currentIndex;
+                    indicator.classList.toggle('active', isActive);
+                    indicator.setAttribute('aria-current', isActive ? 'true' : 'false');
+                });
+                updateHoverStates();
+                updateAccessibilityStates();
+                return;
+            }
+
             updateCarouselPosition();
             updateHoverStates();
         }
@@ -1166,15 +1282,15 @@
             modalDetails.innerHTML = `
                 <div class="certificate-inner-container">
                     <div style="margin-bottom: 2rem;">
-                        <h2 style="font-size: 1.8rem; color: #00bcd4; margin-bottom: 1rem;">
+                        <h2 style="font-size: 1.8rem; color: var(--accent); margin-bottom: 1rem;">
                             <i class="${cert.icon}" style="margin-right: 0.5rem;"></i>
                             ${cert.title}
                         </h2>
 
                         <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem;">
                             <div style="display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem;
-                                 background: ${cert.type === 'major' ? 'rgba(27, 195, 94, 0.15)' : 'rgba(33, 150, 243, 0.15)'};
-                                 border-radius: 10px; border: 1px solid ${cert.type === 'major' ? 'rgba(27, 195, 94, 0.3)' : 'rgba(33, 150, 243, 0.3)'}">
+                                 background: ${cert.type === 'major' ? 'rgba(11,122,54,0.08)' : 'rgba(14,111,184,0.08)'};
+                                 border-radius: 10px; border: 1px solid ${cert.type === 'major' ? 'rgba(11,122,54,0.15)' : 'rgba(14,111,184,0.15)'}">
                                 <i class="fas fa-${cert.type === 'major' ? 'award' : 'certificate'}"
                                    style="color: ${cert.type === 'major' ? '#1bc35e' : '#2196f3'}"></i>
                                 <span style="color: ${cert.type === 'major' ? '#1bc35e' : '#2196f3'}; font-weight: 600;">
@@ -1196,8 +1312,8 @@
                         </div>
 
                         <div style="background: rgba(0, 188, 212, 0.05); padding: 1.5rem; border-radius: 10px;
-                             margin: 1.5rem 0; border-left: 4px solid #00bcd4;">
-                            <h3 style="color: #00bcd4; margin-bottom: 1rem; font-size: 1.3rem;">
+                             margin: 1.5rem 0; border-left: 4px solid var(--accent);">
+                            <h3 style="color: var(--accent); margin-bottom: 1rem; font-size: 1.3rem;">
                                 Certificate Description
                             </h3>
                             <p style="line-height: 1.6; color: #e0f7fa;">
@@ -1215,13 +1331,8 @@
                                 </div>
                             </div>
 
-                            <button onclick="openCertificate('${cert.file}')"
-                                    class="open-cert-btn"
-                                    style="display: flex; align-items: center; gap: 0.5rem; padding: 0.8rem 1.5rem;
-                                           background: linear-gradient(90deg, #2196f3, #00bcd4); border: none;
-                                           color: white; border-radius: 10px; font-weight: 600; cursor: pointer;
-                                           transition: transform 0.3s ease; clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);">
-                                <i class="fas fa-external-link-alt"></i>
+                            <button onclick="openCertificate('${cert.file}')" class="open-cert-btn modal-open-btn" aria-label="Open full certificate">
+                                <i class="fas fa-external-link-alt" aria-hidden="true"></i>
                                 Open Full Certificate
                             </button>
                         </div>
@@ -1229,7 +1340,16 @@
                 </div>
             `;
 
+            // save active element to restore focus later
+            lastFocusedElement = document.activeElement;
             certModal.classList.add('active');
+            certModal.setAttribute('aria-hidden', 'false');
+            document.querySelector('.main-container').setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = 'hidden';
+            // focus the close button for keyboard users
+            setTimeout(() => modalClose.focus(), 80);
+            // Enable focus trap inside modal
+            enableFocusTrap(certModal);
         }
 
         // Open certificate in viewer
@@ -1306,6 +1426,12 @@
 
         modalClose.addEventListener('click', () => {
             certModal.classList.remove('active');
+            certModal.setAttribute('aria-hidden', 'true');
+            document.querySelector('.main-container').removeAttribute('aria-hidden');
+            document.body.style.overflow = '';
+            // Disable focus trap and restore focus
+            disableFocusTrap();
+            if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') lastFocusedElement.focus();
             // Reset modal to details view
             setTimeout(() => {
                 const modalDetails = document.getElementById('modalDetails');
@@ -1319,13 +1445,25 @@
         document.addEventListener('keydown', (e) => {
             if (e.key === 'ArrowLeft') goToSlide(currentIndex - 1);
             if (e.key === 'ArrowRight') goToSlide(currentIndex + 1);
-            if (e.key === 'Escape') certModal.classList.remove('active');
+            if (e.key === 'Escape') {
+                certModal.classList.remove('active');
+                certModal.setAttribute('aria-hidden', 'true');
+                document.querySelector('.main-container').removeAttribute('aria-hidden');
+                document.body.style.overflow = '';
+                disableFocusTrap();
+                if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') lastFocusedElement.focus();
+            }
         });
 
         // Close modal when clicking outside
         certModal.addEventListener('click', (e) => {
             if (e.target === certModal) {
                 certModal.classList.remove('active');
+                certModal.setAttribute('aria-hidden', 'true');
+                document.querySelector('.main-container').removeAttribute('aria-hidden');
+                document.body.style.overflow = '';
+                disableFocusTrap();
+                if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') lastFocusedElement.focus();
             }
         });
 

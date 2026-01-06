@@ -16,7 +16,11 @@
 
     html, body {
       opacity: 0;
-      transition: opacity 0.7s cubic-bezier(.4,0,.2,1);
+      transition: opacity 0.5s cubic-bezier(.4,0,.2,1);
+    }
+
+    body.fade-out {
+      opacity: 0;
     }
 
     body {
@@ -24,6 +28,7 @@
       color: #003366;
       background: #ffffff;
       line-height: 1.6;
+      overflow-x: hidden;
     }
 
     body.dark {
@@ -354,6 +359,29 @@
       font-size: 1.13rem;
       color: #1976d2;
       font-weight: 600;
+      position: relative;
+      display: inline-block;
+    }
+
+    .formal-section .project h3::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: #1976d2;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+
+    .formal-section .project h3:hover::after {
+      transform: scaleX(1);
+    }
+
+    .formal-section .project h3 a:hover {
+      color: inherit;
     }
     .formal-section .project p {
       margin-bottom: 0;
@@ -401,6 +429,9 @@
       background: inherit;
       color: inherit;
       border-top: 1px solid rgba(100, 100, 100, 0.08);
+      overflow-x: hidden;
+      max-width: 100vw;
+      box-sizing: border-box;
     }
 
     .footer-brand {
@@ -436,8 +467,11 @@
       font-style: italic;
       margin-left: 0.8rem;
       flex-shrink: 0;
-      white-space: nowrap;
       opacity: 0.85;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      hyphens: auto;
+      max-width: 100%;
     }
 
     .footer-links button {
@@ -1058,6 +1092,10 @@ body.dark #scrollToTopBtn:hover {
         font-size: 0.85em;
         text-align: center;
         margin-top: 0.3em;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        hyphens: auto;
+        max-width: 100%;
       }
       .footer-links {
         margin-top: 0.3em;
@@ -1202,8 +1240,18 @@ body.dark #scrollToTopBtn:hover {
   <script>
     window.addEventListener('DOMContentLoaded', () => {
       const params = new URLSearchParams(window.location.search);
+      const isReturningFromCert = sessionStorage.getItem('restoreCertBack') === '1';
       if (params.get('fadein') === '1') {
         document.body.classList.add('fadein');
+      } else if (!isReturningFromCert) {
+        // Smooth fade in for normal page loads, skip for return from certif.html to avoid lag
+        requestAnimationFrame(() => {
+          document.body.style.opacity = '1';
+        });
+      } else {
+        // Immediate show for return from certif.html
+        document.body.style.opacity = '1';
+        sessionStorage.removeItem('restoreCertBack');
       }
     });
   </script>
@@ -1366,7 +1414,7 @@ body.dark #scrollToTopBtn:hover {
       <!-- Slide 2 (Next 3 projects) -->
       <div class="projects-slide">
         <div class="project">
-         <h3><a href="dist/AlgoSolver.exe" download class="aproject" target="_blank">Algorithm Visualizer</a></h3>
+         <h3><a href="https://github.com/Seanscript-dev/Algorithm-solver" download class="aproject" target="_blank">Algorithm Visualizer</a></h3>
           <p>It provides an interactive GUI to visualize how different sorting algorithms work step-by-step.</p>
         </div>
         <div class="project">
@@ -1374,16 +1422,16 @@ body.dark #scrollToTopBtn:hover {
           <p>UI/UX for an agricultural management system with simulated data visualization.</p>
         </div>
         <div class="project">
-          <h3><a href="#" class="aproject" target="blank">Philippine Statistics Authority</a></h3>
-          <p>UI/UX  for the Philippine Statistics Authority (IMITATION WEBSITE)  </p>
+          <h3><a href="https://github.com/Seanscript-dev/CPU-Scheduler-Visualizer" class="aproject" target="blank">CPU SCHEDULING VISUALIZER</a></h3>
+          <p>A Python Tkinter app that visually simulates CPU scheduling algorithms with real-time animations and performance metrics. </p>
         </div>
       </div>
 
       <!-- Slide 3 (Additional 3 projects) -->
       <div class="projects-slide">
         <div class="project">
-          <h3><a href="#" class="aproject" target="blank">Fitness Tracker</a></h3>
-          <p>Workout logging app with progress tracking and exercise database.</p>
+          <h3><a href="https://github.com/Seanscript-dev/DryGuard-IoT-Rain-and-Temperature-Based-Laundry-System/tree/main" class="aproject" target="blank">DryGuard:IoT Based Laundry System</a></h3>
+          <p>ESP32-powered IoT system that automatically protects your outdoor laundry via Web.</p>
         </div>
         <div class="project">
           <h3><a href="#" class="aproject" target="blank">Budget Planner</a></h3>
@@ -1606,7 +1654,8 @@ body.dark #scrollToTopBtn:hover {
             <a href="framework.html" class="cert-link skill-anim" >React,</a>
             <a href="framework.html" class="cert-link skill-anim" >Tkinter,</a>
             <a href="framework.html#mat" class="cert-link skill-anim" >Matplotlib,</a>
-            <a href="framework.html#electron" class="cert-link skill-anim" >Electron</a>
+            <a href="framework.html#electron" class="cert-link skill-anim" >Electron,</a>
+            <a href="framework.html#flask" class="cert-link skill-anim" >Flask</a>
           </td>
         </tr>
         <tr>
@@ -2035,20 +2084,34 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Store scroll position before opening certificate (only for certif.html links)
     document.querySelectorAll('a.cert-link').forEach(function(link) {
-      link.addEventListener('click', function() {
+      link.addEventListener('click', function(e) {
         if (link.getAttribute('href') && link.getAttribute('href').indexOf('certif.html') !== -1) {
+          e.preventDefault();
           sessionStorage.setItem('certBackScroll', window.scrollY);
+          document.body.classList.add('fade-out');
+          setTimeout(() => {
+            window.location.href = link.getAttribute('href');
+          }, 500);
         }
       });
     });
 
     // Restore scroll position or center section after returning from certif.html
     window.addEventListener('load', function() {
+      // Handle hash navigation for Certifications section
+      if (window.location.hash === "#Certifications") {
+        const certSection = document.getElementById('Certifications');
+        if (certSection) {
+          // Immediate scroll without delay for back button navigation
+          certSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+
       // Center Certifications section if coming back from certif.html back button
       if (sessionStorage.getItem('returningFromCert') === 'true') {
         // Remove the flag
         sessionStorage.removeItem('returningFromCert');
-        
+
         // Scroll to certifications section
         const certSection = document.getElementById('Certifications');
         if (certSection) {

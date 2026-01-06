@@ -549,6 +549,7 @@
             background: transparent;
             border-radius: 12px;
             position: relative;
+            margin-bottom: 2.0rem;
         }
 
 
@@ -798,6 +799,120 @@
         /* Ensure .open-cert-btn clips overlay smoothly */
         .open-cert-btn { overflow: hidden; }
 
+        /* Footer styles adapted from portfolio, aligned to certif theme */
+        .main-footer {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            padding: 0.6rem 1rem;
+            font-size: 0.78rem;
+            line-height: 1.25;
+            background: transparent;
+            color: var(--text);
+            border-top: 1px solid rgba(255,255,255,0.03);
+            width: 100%;
+            box-sizing: border-box;
+            margin-top: auto; /* push footer to bottom of main-container to remove extra space */
+        }
+
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            white-space: nowrap;
+        }
+
+        .footer-brand img {
+            height: 36px;
+            flex-shrink: 0;
+        }
+
+        .footer-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.05;
+        }
+
+        .footer-title {
+            font-weight: 600;
+            font-size: 1.05rem;
+            color: var(--accent);
+        }
+
+        .footer-subtitle {
+            font-weight: 700;
+            font-size: 0.55rem;
+            letter-spacing: 0.04em;
+            color: rgba(255,255,255,0.85);
+        }
+
+        .footer-tagline {
+            font-style: italic;
+            margin-left: 0.8rem;
+            flex-shrink: 0;
+            opacity: 0.85;
+            max-width: 100%;
+            color: var(--muted);
+        }
+
+        .footer-links button {
+            background: none;
+            border: none;
+            color: var(--accent);
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            margin: 0 8px;
+            padding: 4px 8px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links button:hover {
+            color: rgb(108, 220, 254);
+            text-decoration: none;
+        }
+
+        @media (max-width: 640px) {
+            .footer-tagline { display: none; }
+            .main-footer { padding: 0.6rem 0.6rem; gap: 0.4rem; }
+        }
+
+        /* Phones: ensure footer fits in two rows and policy links stay on same row */
+        @media (max-width: 480px) {
+            .main-footer {
+                align-items: center;
+                justify-content: center;
+                gap: 0.4rem;
+                padding: 0.5rem 0.6rem;
+            }
+            .footer-brand {
+                flex: 0 0 100%;
+                justify-content: center;
+            }
+            .footer-text { text-align: center; }
+            .footer-brand img { height: 30px; }
+            .footer-title { font-size: 0.95rem; }
+            .footer-subtitle { font-size: 0.58rem; }
+            .footer-links {
+                flex: 0 0 100%;
+                display: flex;
+                justify-content: center;
+                gap: 0.5rem;
+                flex-wrap: nowrap;
+                overflow: visible; /* remove horizontal scroll */
+                padding: 6px 0;
+            }
+            .footer-links button {
+                padding: 6px 8px;
+                font-size: 0.82rem;
+                white-space: nowrap;
+                flex: 0 1 auto; /* allow buttons to shrink to fit */
+                min-width: 0;
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -848,17 +963,26 @@
 
 
 
-        <!-- Legend -->
-        <div class="legend">
-            <div class="legend-item">
-                <div class="legend-color major"></div>
-                <span>Major Certificates</span>
+        <!-- Footer (replacing legend) -->
+        <footer id="footmo" class="main-footer">
+            <div class="footer-brand">
+                <img src="logos.svg" alt="Logo">
+                <div class="footer-text">
+                    <span class="footer-title">Seanscript</span>
+                    <span class="footer-subtitle">DEVELOPMENT</span>
+                </div>
             </div>
-            <div class="legend-item">
-                <div class="legend-color minor"></div>
-                <span>Minor Certificates</span>
+
+            <div class="footer-tagline">
+                Delivering innovative, reliable, and efficient software solutions with passion and integrity.
             </div>
-        </div>
+
+            <div class="footer-links">
+                <button onclick="window.location.href='policy.html?tab=privacy'">Privacy Policy</button>
+                <button onclick="window.location.href='policy.html?tab=terms'">Terms of Service</button>
+                <button onclick="window.location.href='policy.html?tab=disclaimer'">Disclaimer</button>
+            </div>
+        </footer>    
     </div>
 
     <!-- Certificate Modal -->

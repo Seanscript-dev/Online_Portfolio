@@ -8,11 +8,12 @@
     :root {
       --bg-dark: #0f172a;
       --text-dark: #f1f5f9;
-      --bg-light: #f5f9ff;
+      --bg-light: #ffffff;
       --text-light: #0f172a;
       --accent: #3b82f6;
       --accent-light: #60a5fa;
       --accent-dark: #1e40af;
+      --logo-cover: var(--bg-light);
     }
 
     * {
@@ -137,9 +138,10 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: #ffffff;
+      background: var(--logo-cover);
       z-index: 2;
       animation: logoReveal 6s ease-out forwards;
+      transition: background 300ms ease;
     }
 
     @keyframes logoReveal {
@@ -236,13 +238,17 @@
         background: var(--bg-dark);
         color: var(--text-dark);
       }
-      
+
       .gradient-background {
         background: #1a1a1a;
       }
-      
+
       .progress-container {
         background: rgba(255, 255, 255, 0.1);
+      }
+
+      :root {
+        --logo-cover: var(--bg-dark);
       }
     }
 
@@ -304,6 +310,23 @@
   <script>
     // Initialize when DOM is loaded
     document.addEventListener('DOMContentLoaded', function() {
+      // Make logo cover match system theme and respond to changes
+      function syncLogoCoverToScheme() {
+        const root = document.documentElement;
+        const m = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
+        const dark = m ? m.matches : false;
+        const bgDark = getComputedStyle(root).getPropertyValue('--bg-dark').trim() || '#0f172a';
+        const bgLight = getComputedStyle(root).getPropertyValue('--bg-light').trim() || '#ffffff';
+        root.style.setProperty('--logo-cover', dark ? bgDark : bgLight);
+      }
+      if (window.matchMedia) {
+        const mq = window.matchMedia('(prefers-color-scheme: dark)');
+        if (mq.addEventListener) mq.addEventListener('change', syncLogoCoverToScheme);
+        else if (mq.addListener) mq.addListener(syncLogoCoverToScheme);
+      }
+      // initialize before progress starts
+      syncLogoCoverToScheme();
+
       // Simulate loading progress (7.5 seconds total - 2x faster)
       let progress = 0;
       const progressBar = document.getElementById('progress-bar');

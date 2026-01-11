@@ -6,6 +6,7 @@
   <title>Sean Script | Computer Engineer</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  
   <style>
     * {
       margin: 0;
@@ -1054,18 +1055,18 @@ body.dark #scrollToTopBtn:hover {
         margin: 0.1rem;
       }
       .corner-logo {
-        top: 6px;
-        left: 6px;
-        gap: 4px;
+        top: 4px;
+        left: 4px;
+        gap: 2px;
       }
       .corner-logo img {
-        height: 32px;
+        height: 40px;
       }
       .corner-name {
-        font-size: 1rem;
+        font-size: 1.3rem;
       }
       .corner-sub {
-        font-size: 0.5rem;
+        font-size: 0.6rem;
       }
       .main-footer {
         flex-direction: column;
@@ -1215,15 +1216,15 @@ body.dark #scrollToTopBtn:hover {
       }
       
       .corner-logo img {
-        height: 40px;
+        height: 30px;
       }
       
       .corner-name {
-        font-size: 1.1rem;
+        font-size: 0.8rem;
       }
       
       .corner-sub {
-        font-size: 0.6rem;
+        font-size: 0.35rem;
       }
       
     }
@@ -1232,7 +1233,20 @@ body.dark #scrollToTopBtn:hover {
     padding-bottom: 3.5rem !important;
     position: relative;
   }
-  
+   @media (max-width: 320px) {
+      .corner-logo {
+        height: 20px;
+        top: 4px;
+        left: 4px;
+        gap: 2px;
+      }
+      .corner-name {
+        font-size: 0.8rem;
+      }
+      .corner-sub {
+        font-size: 0.4rem;
+        }
+    }   
 }
     </style>
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -1259,29 +1273,6 @@ body.dark #scrollToTopBtn:hover {
 <button id="scrollToTopBtn" title="Go to top">
         <i class="fas fa-arrow-up"></i>
     </button>
-    
-    <script>
-        // Scroll to top button functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            const scrollToTopBtn = document.getElementById('scrollToTopBtn');
-            
-            window.addEventListener('scroll', function() {
-                if (window.pageYOffset > 300) {
-                    scrollToTopBtn.style.display = 'flex';
-                } else {
-                    scrollToTopBtn.style.display = 'none';
-                }
-            });
-            
-            scrollToTopBtn.addEventListener('click', function() {
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
-            });
-        });
-    </script>
-
 <div class="corner-logo" aria-label="Site logo">
   <img src="pics/logos.svg" alt="Logo" />
   <div class="corner-text">
@@ -1434,8 +1425,8 @@ body.dark #scrollToTopBtn:hover {
           <p>ESP32-powered IoT system that automatically protects your outdoor laundry via Web.</p>
         </div>
         <div class="project">
-          <h3><a href="#" class="aproject" target="blank">Budget Planner</a></h3>
-          <p>Financial management tool with expense categorization and reports.</p>
+          <h3><a href="https://seandarrell.pythonanywhere.com/" class="aproject" target="blank">Revue: Academic Review Platform</a></h3>
+          <p>A full-stack Academic web application built with Python and Flask Focusing on Flashcard games and shared files.</p>
         </div>
         <div class="project">
           <h3><a href="#" class="aproject" target="blank">Book Recommendation</a></h3>
@@ -2233,6 +2224,26 @@ document.addEventListener('DOMContentLoaded', function() {
         }
       });
     });
+        // Scroll to top button functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+            
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    scrollToTopBtn.style.display = 'flex';
+                } else {
+                    scrollToTopBtn.style.display = 'none';
+                }
+            });
+            
+            scrollToTopBtn.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    
   </script>
 </body>
 </html>

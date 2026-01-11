@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sean Script - My Location</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      position: relative;
+    }
+
+    /* Full screen map */
+    .map-frame {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+      z-index: 0;
+    }
+
+    /* Overlay controls */
+    .controls-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    /* Header bar with glassmorphism */
+    .header-bar {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 1.2rem 2rem;
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+      pointer-events: auto;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .header-bar::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: #38bdf8;
+      border-radius: 2px;
+      box-shadow: 0 0 8px rgba(56, 189, 248, 0.3);
+    }
+
+    body.dark .header-bar {
+      background: rgba(24, 31, 42, 0.95);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Controls container - holds back button and dark mode */
+    .controls-container {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    /* Back button container */
+    .back-container {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      flex: 0 0 auto;
+    }
+
+    .back-line {
+      width: 3px;
+      height: 28px;
+      background: #38bdf8;
+      border-radius: 2px;
+      box-shadow: 0 0 8px rgba(56, 189, 248, 0.3);
+    }
+
+    .back-button {
+      color: #1976d2;
+      background: transparent;
+      border: none;
+      font-size: 1.1rem;
+      font-weight: 500;
+      text-decoration: none;
+      padding: 0.4rem 0.8rem;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .back-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: rgba(56, 189, 248, 0.1);
+      transition: left 0.6s ease;
+      z-index: -1;
+    }
+
+    .back-button:hover::before {
+      left: 0;
+    }
+
+    .back-button:hover {
+      color: #0d47a1;
+      border-bottom: 2px solid #38bdf8;
+    }
+
+    body.dark .back-button {
+      color: #90caf9;
+    }
+
+    body.dark .back-button:hover {
+      color: #b3e5fc;
+    }
+
+    /* Dark mode toggle */
+    .dark-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(227, 242, 253, 0.8);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      border: 1px solid rgba(187, 222, 251, 0.5);
+      font-size: 0.95rem;
+      color: #0d47a1;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+      overflow: hidden;
+      flex: 0 0 auto;
+    }
+
+    .dark-toggle::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: rgba(56, 189, 248, 0.1);
+      transition: left 0.6s ease;
+      z-index: -1;
+    }
+
+    .dark-toggle:hover::before {
+      left: 0;
+    }
+
+    .dark-toggle:hover {
+      background: rgba(187, 222, 251, 0.9);
+    }
+
+    body.dark .dark-toggle {
+      background: rgba(35, 39, 43, 0.9);
+      border: 1px solid rgba(179, 229, 252, 0.3);
+      color: #b3e5fc;
+    }
+
+    body.dark .dark-toggle:hover {
+      background: rgba(35, 39, 43, 1);
+    }
+
+    .dark-toggle input[type="checkbox"] {
+      cursor: pointer;
+      transform: scale(1.2);
+    }
+
+    /* Title section */
+    .title-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.3rem;
+      flex: 1 1 auto;
+    }
+
+    .location-title {
+      color: #0d47a1;
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin: 0;
+      text-shadow: 0 2px 8px rgba(187, 222, 251, 0.3);
+    }
+
+    .location-address {
+      color: #1976d2;
+      font-size: 0.85rem;
+      font-weight: 400;
+      margin: 0;
+      opacity: 0.85;
+      letter-spacing: 0.02em;
+    }
+
+    body.dark .location-title {
+      color: #b3e5fc;
+      text-shadow: 0 2px 8px rgba(144, 202, 249, 0.3);
+    }
+
+    body.dark .location-address {
+      color: #90caf9;
+      opacity: 0.8;
+    }
+
+    /* Google Maps Container */
+    .maps-container {
+      position: fixed;
+      bottom: 2.5rem;
+      right: 2.5rem;
+      z-index: 10;
+      pointer-events: auto;
+    }
+
+    .maps-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #1976d2;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.9rem;
+      padding: 0.8rem 1.5rem;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 12px;
+      border: 1px solid rgba(187, 222, 251, 0.6);
+      box-shadow: 0 4px 15px rgba(25, 118, 210, 0.2);
+      transition: all 0.3s ease;
+      justify-content: center;
+    }
+
+    .maps-link:hover {
+      color: #0d47a1;
+      background: rgba(227, 242, 253, 0.95);
+      border-color: #90caf9;
+      box-shadow: 0 6px 20px rgba(25, 118, 210, 0.3);
+      transform: translateY(-2px);
+    }
+
+    body.dark .maps-link {
+      color: #90caf9;
+      background: rgba(24, 31, 42, 0.95);
+      border: 1px solid rgba(144, 202, 249, 0.3);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    body.dark .maps-link:hover {
+      color: #b3e5fc;
+      background: rgba(35, 39, 43, 0.95);
+      border-color: rgba(179, 229, 252, 0.5);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .maps-link svg {
+      width: 20px;
+      height: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .maps-link:hover svg {
+      transform: scale(1.15);
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .header-bar {
+        padding: 1rem;
+        flex-direction: column;
+        gap: 0.8rem;
+        align-items: stretch;
+      }
+
+      .back-container {
+        order: 1;
+      }
+
+      .dark-toggle {
+        order: 2;
+        padding: 0.4rem 0.8rem;
+        font-size: 0.85rem;
+      }
+
+      .title-section {
+        order: 3;
+        width: 100%;
+      }
+
+      /* Put back button and dark mode on same row */
+      .header-bar {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto;
+      }
+
+      .back-container {
+        grid-column: 1;
+        grid-row: 1;
+      }
+
+      .dark-toggle {
+        grid-column: 2;
+        grid-row: 1;
+        justify-self: end;
+      }
+
+      .title-section {
+        grid-column: 1 / -1;
+        grid-row: 2;
+      }
+
+      .back-line {
+        height: 24px;
+      }
+
+      .back-button {
+        font-size: 0.95rem;
+        padding: 0.3rem 0.6rem;
+      }
+
+      .dark-toggle {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.85rem;
+      }
+
+      .location-title {
+        font-size: 1.4rem;
+      }
+
+      .location-address {
+        font-size: 0.75rem;
+        text-align: center;
+      }
+
+      .maps-container {
+        bottom: 1.5rem;
+        right: 1.5rem;
+        left: 1.5rem;
+      }
+
+      .maps-card {
+        padding: 1.2rem 1.5rem;
+        border-radius: 16px;
+      }
+
+      .maps-link {
+        font-size: 0.85rem;
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header-bar {
+        padding: 0.8rem;
+      }
+
+      .controls-container {
+        gap: 0.5rem;
+      }
+
+      .back-button {
+        font-size: 0.85rem;
+        padding: 0.3rem 0.5rem;
+      }
+
+      .back-line {
+        height: 20px;
+        width: 2px;
+      }
+
+      .dark-toggle {
+        font-size: 0.8rem;
+        padding: 0.35rem 0.7rem;
+        white-space: nowrap;
+      }
+
+      .location-title {
+        font-size: 1.2rem;
+      }
+
+      .location-address {
+        font-size: 0.7rem;
+      }
+
+      .maps-container {
+        bottom: 1rem;
+        right: 1rem;
+        left: 1rem;
+      }
+
+      .maps-card {
+        padding: 1rem;
+        border-radius: 12px;
+      }
+
+      .maps-link {
+        font-size: 0.8rem;
+        padding: 0.4rem 0.8rem;
+      }
+
+      .maps-link svg {
+        width: 16px;
+        height: 16px;
+      }
+    }
+
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .header-bar {
+        padding: 1rem 1.5rem;
+      }
+
+      .location-title {
+        font-size: 1.6rem;
+      }
+
+      .maps-container {
+        bottom: 2rem;
+        right: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Full screen map -->
+  <iframe
+    class="map-frame"
+    src="https://www.google.com/maps?q=Calantas,+Floridablanca,+Pampanga,+Philippines&output=embed"
+    allowfullscreen
+    loading="lazy"
+    referrerpolicy="no-referrer-when-downgrade"
+    title="Google Maps - Calantas, Floridablanca, Pampanga, Philippines"
+  ></iframe>
+
+  <!-- Overlay controls -->
+  <div class="controls-overlay">
+    <div class="header-bar">
+      <!-- Back button -->
+      <div class="back-container">
+        <span class="back-line"></span>
+        <a class="back-button" href="portfolio.html" id="backToPortfolio">Back to Home</a>
+      </div>
+
+      <!-- Location info -->
+      <div class="title-section">
+        <h1 class="location-title">My Location</h1>
+        <p class="location-address">Bayabas Street, Calantas, Floridablanca, Pampanga, Philippines</p>
+      </div>
+
+      <!-- Dark mode -->
+      <label class="dark-toggle">
+        <input type="checkbox" id="darkToggle">
+        <span>Dark Mode</span>
+      </label>
+    </div>
+  </div>
+
+  <!-- Google Maps Container -->
+  <div class="maps-container">
+    <a class="maps-link" href="https://www.google.com/maps/place/Calantas,+Floridablanca,+Pampanga,+Philippines" target="_blank">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+        <circle cx="12" cy="10" r="3"></circle>
+      </svg>
+      View on Google Maps
+    </a>
+  </div>
+
+  <script>
+    // Dark mode toggle logic
+    const toggle = document.getElementById("darkToggle");
+    
+    // Load dark mode state from localStorage
+    if (localStorage.getItem("darkMode") === "true") {
+      document.body.classList.add("dark");
+      toggle.checked = true;
+    }
+    
+    toggle.addEventListener("change", () => {
+      document.body.classList.toggle("dark", toggle.checked);
+      localStorage.setItem("darkMode", toggle.checked);
+    });
+    
+    // Back button navigation
+    document.getElementById('backToPortfolio').addEventListener('click', function(e) {
+      e.preventDefault();
+      sessionStorage.setItem('restoreCertBack', '1');
+      window.location.href = 'portfolio.html#personal-info';
+    });
+  </script>
+</body>
+</html>

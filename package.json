@@ -1,0 +1,20 @@
+{
+  "name": "greatest-p",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start-server": "http-server -p 8080 -c-1 .",
+    "screenshot": "node scripts/screenshot.js",
+    "pa11y-audit": "pa11y http://localhost:8080/certif.html --reporter json --standard WCAG2AA > .dist/a11y/pa11y-certif.json || true",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "http-server": "^14.1.1",
+    "pa11y": "^9.0.1",
+    "playwright": "^1.57.0"
+  }
+}
